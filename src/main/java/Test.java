@@ -1,1 +1,5 @@
-public class Test {}
+public class Test {
+    public int prova() {
+        return 1;
+    }
+}
