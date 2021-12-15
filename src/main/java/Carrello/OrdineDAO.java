@@ -4,7 +4,7 @@ import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
 import main.java.Catalogo.ProdottoDAO;
 import main.java.Storage.ConPool;
-import main.java.Validator.CarrelloValidator;
+import main.java.Validator.ValidatorFacade;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class OrdineDAO {
 
             PreparedStatement ps =
                     con.prepareStatement("SELECT * FROM Ordine WHERE utente=?");
-            ps.setInt(1, u.getId());
+            ps.setString(1, u.getUsername());
             ResultSet rs= ps.executeQuery();
             ArrayList<Ordine> ordini= new ArrayList<>();
             Ordine o;
@@ -102,7 +102,7 @@ public class OrdineDAO {
             while(rs.next()){
                 o= new Ordine();
                 Utente u= new Utente();
-                u.setId(rs.getInt(1));
+                u.setUsername(rs.getString(1));
                 o.setUtente(u);
                 o.setNumero(rs.getInt(2));
                 o.setTotale(rs.getDouble(3));
@@ -138,12 +138,22 @@ public class OrdineDAO {
         }
     }
 
-    public int doSaveOrdine(Carrello carrello, String indirizzoSpedizione, String metodoPagamento, CarrelloValidator validator) {
+    public int doSaveOrdine(Carrello carrello, String indirizzoSpedizione, String metodoPagamento, ValidatorFacade validator) throws InvalidProductQuantityException{
         try (Connection con = ConPool.getConnection()) {
-            if(validator.validateQuantitaProdotti(carrello)){
+
+
+            LinkedHashMap<Prodotto, Integer> prodotti = carrello.getProdotti();
+            Set<Prodotto> key = prodotti.keySet();
+            for(Prodotto p: key) {
+                boolean isValid = validator.validateQuantitaProdotto(p, prodotti.get(p));
+                if(!isValid){
+                    throw new InvalidProductQuantityException("Invalid Quantity", p);
+                }
+            }
+
                 PreparedStatement ps =
                         con.prepareStatement("INSERT INTO Ordine(utente, totale, numeroArticoli, indirizzoSpedizione, metodoPagamento, dataOrdine, stato) VALUES(?,?,?,?,?,?,?)");
-                ps.setInt(1, carrello.getUtente().getId());
+                ps.setString(1, carrello.getUtente().getUsername());
                 ps.setDouble(2, carrello.getTotale());
                 ps.setInt(3, carrello.getNumeroArticoli());
                 ps.setString(4, indirizzoSpedizione);
@@ -153,7 +163,7 @@ public class OrdineDAO {
                 int rows= ps.executeUpdate();
 
                 ps = con.prepareStatement("SELECT numero FROM Ordine WHERE utente=? ORDER BY numero DESC LIMIT 1");
-                ps.setInt(1, carrello.getUtente().getId());
+                ps.setString(1, carrello.getUtente().getUsername());
 
                 ResultSet resultSet = ps.executeQuery();
                 int numeroOrdine = 0;
@@ -162,8 +172,6 @@ public class OrdineDAO {
                     numeroOrdine = resultSet.getInt("numero");
                 }
 
-                LinkedHashMap<Prodotto, Integer> prodotti = carrello.getProdotti();
-                Set<Prodotto> key = prodotti.keySet();
 
                 ProdottoDAO prodottoDAO = new ProdottoDAO();
 
@@ -181,11 +189,6 @@ public class OrdineDAO {
                 carrelloDAO.doClearCarrello(carrello);
 
                 return (rows>0)==true?1:0;
-            }
-
-            else{
-                return 0;
-            }
 
 
         } catch (SQLException e) {

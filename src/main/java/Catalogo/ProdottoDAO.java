@@ -179,6 +179,25 @@ public class ProdottoDAO {
 
     }
 
+    public int doRetrieveQuantitaProdottoByCodice(int codice){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT quantita FROM Prodotto WHERE codice=?");
+            ps.setInt(1,codice);
+
+            ResultSet rs= ps.executeQuery();
+            int quantita = 0;
+
+            if(rs.next()){
+                quantita = rs.getInt("quantita");
+            }
+            return quantita;
+
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

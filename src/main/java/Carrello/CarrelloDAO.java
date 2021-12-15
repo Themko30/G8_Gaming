@@ -21,11 +21,11 @@ public class CarrelloDAO {
 
             ps.setDouble(1, carrello.getTotale());
             ps.setInt(2, carrello.getNumeroArticoli());
-            ps.setInt(3, carrello.getUtente().getId());
+            ps.setString(3, carrello.getUtente().getUsername());
             int x= ps.executeUpdate();
 
             ps= con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
-            ps.setInt(1,carrello.getUtente().getId());
+            ps.setString(1,carrello.getUtente().getUsername());
 
             x+=ps.executeUpdate();
 
@@ -34,7 +34,7 @@ public class CarrelloDAO {
 
             for(Prodotto key: keys){
                 ps= con.prepareStatement("INSERT INTO ArticoloSelezionato(utente, articolo, quantita) VALUES(?,?,?)");
-                ps.setInt(1,carrello.getUtente().getId());
+                ps.setString(1,carrello.getUtente().getUsername());
                 ps.setInt(2, key.getCodice());
                 ps.setInt(3,articoli.get(key));
                 x+= ps.executeUpdate();
@@ -54,7 +54,7 @@ public class CarrelloDAO {
 
             PreparedStatement ps =
                     con.prepareStatement("INSERT INTO Carrello(utente, totale, numeroArticoli) VALUES(?,?,?)");
-            ps.setInt(1, u.getId());
+            ps.setString(1, u.getUsername());
             ps.setDouble(2,0);
             ps.setInt(3, 0);
 
@@ -75,11 +75,11 @@ public class CarrelloDAO {
 
             ps.setDouble(1,0);
             ps.setInt(2, 0);
-            ps.setInt(3, carrello.getUtente().getId());
+            ps.setString(3, carrello.getUtente().getUsername());
             int x= ps.executeUpdate();
 
             ps= con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
-            ps.setInt(1,carrello.getUtente().getId());
+            ps.setString(1,carrello.getUtente().getUsername());
 
             x+=ps.executeUpdate();
 
@@ -98,7 +98,7 @@ public class CarrelloDAO {
             PreparedStatement ps =
                     con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato as, Prodotto p WHERE c.utente=as.utente AND as.articolo=p.codice AND c.utente=?");
 
-            ps.setInt(1, u.getId());
+            ps.setString(1, u.getUsername());
             ResultSet rs = ps.executeQuery();
             Carrello carrello = new Carrello();
             carrello.setUtente(u);
