@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 public class Ordine {
     private int numero;
     private double totale;
-    private int numeroElementi;
+    private int numeroArticoli;
     private String indirizzoSpedizione;
     private String metodoPagamento;
     private LocalDate data;
@@ -39,12 +39,12 @@ public class Ordine {
         this.totale = totale;
     }
 
-    public int getNumeroElementi() {
-        return numeroElementi;
+    public int getNumeroArticoli() {
+        return numeroArticoli;
     }
 
-    public void setNumeroElementi(int numeroElementi) {
-        this.numeroElementi = numeroElementi;
+    public void setNumeroArticoli(int numeroArticoli) {
+        this.numeroArticoli = numeroArticoli;
     }
 
     public String getIndirizzoSpedizione() {

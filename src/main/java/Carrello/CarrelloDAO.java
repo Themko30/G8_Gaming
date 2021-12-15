@@ -67,7 +67,7 @@ public class CarrelloDAO {
         }
     }
 
-    public int doClearCarrello(Utente u){
+    public int doClearCarrello(Carrello carrello){
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps =
@@ -75,11 +75,11 @@ public class CarrelloDAO {
 
             ps.setDouble(1,0);
             ps.setInt(2, 0);
-            ps.setInt(3, u.getId());
+            ps.setInt(3, carrello.getUtente().getId());
             int x= ps.executeUpdate();
 
             ps= con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
-            ps.setInt(1,u.getId());
+            ps.setInt(1,carrello.getUtente().getId());
 
             x+=ps.executeUpdate();
 
@@ -92,36 +92,35 @@ public class CarrelloDAO {
         }
     }
 
-    public Carrello doRetrieveCarrelloByUtente(Utente u){
+    public Carrello doRetrieveCarrelloByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps =
                     con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato as, Prodotto p WHERE c.utente=as.utente AND as.articolo=p.codice AND c.utente=?");
 
             ps.setInt(1, u.getId());
-            ResultSet rs= ps.executeQuery();
-            Carrello carrello= new Carrello();
+            ResultSet rs = ps.executeQuery();
+            Carrello carrello = new Carrello();
             carrello.setUtente(u);
             carrello.setTotale(0);
             carrello.setNumeroArticoli(0);
             LinkedHashMap<Prodotto, Integer> prodotti = new LinkedHashMap<>();
             Prodotto prodotto;
-            boolean firstElement=true;
+            boolean firstElement = true;
 
-            if(!rs.next()){
+            if (!rs.next()) {
                 carrello.setUtente(u);
                 carrello.setTotale(0);
                 carrello.setNumeroArticoli(0);
-            }
-            else{
-                do{
-                    if(firstElement) {
+            } else {
+                do {
+                    if (firstElement) {
                         carrello.setUtente(u);
                         carrello.setTotale(rs.getDouble("c.totale"));
                         carrello.setNumeroArticoli(rs.getInt("c.numeroArticoli"));
-                        firstElement=false;
+                        firstElement = false;
                     }
-                    prodotto=new Prodotto();
+                    prodotto = new Prodotto();
                     prodotto.setCodice(rs.getInt("p.codice"));
                     prodotto.setNome(rs.getString("p.nome"));
                     prodotto.setCategoria(rs.getString("p.tipo"));
@@ -131,16 +130,16 @@ public class CarrelloDAO {
                     prodotto.setScontoAttivo(rs.getDouble("p.scontoAttivo"));
 
                     prodotti.put(prodotto, rs.getInt("as.quantita"));
-                }while(rs.next());
+                } while (rs.next());
             }
 
             carrello.setProdotti(prodotti);
             return carrello;
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
 
 

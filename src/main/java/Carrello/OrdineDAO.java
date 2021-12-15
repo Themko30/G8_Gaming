@@ -2,7 +2,9 @@ package main.java.Carrello;
 
 import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
+import main.java.Catalogo.ProdottoDAO;
 import main.java.Storage.ConPool;
+import main.java.Validator.CarrelloValidator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class OrdineDAO {
 
@@ -28,7 +31,7 @@ public class OrdineDAO {
                 o.setUtente(u);
                 o.setNumero(rs.getInt(2));
                 o.setTotale(rs.getDouble(3));
-                o.setNumeroElementi(rs.getInt(4));
+                o.setNumeroArticoli(rs.getInt(4));
                 o.setIndirizzoSpedizione(rs.getString(5));
                 o.setData(rs.getObject(6, LocalDate.class));
                 o.setStato(rs.getString(7));
@@ -59,7 +62,7 @@ public class OrdineDAO {
                 if(firstElement){
                     o.setNumero(rs.getInt("o.numero"));
                     o.setTotale(rs.getDouble("o.totale"));
-                    o.setNumeroElementi(rs.getInt("o.numeroElementi"));
+                    o.setNumeroArticoli(rs.getInt("o.numeroElementi"));
                     o.setIndirizzoSpedizione(rs.getString("o.indirizzoSpedizione"));
                     o.setData(rs.getObject("o.data", LocalDate.class));
                     o.setStato(rs.getString("o.stato"));
@@ -103,7 +106,7 @@ public class OrdineDAO {
                 o.setUtente(u);
                 o.setNumero(rs.getInt(2));
                 o.setTotale(rs.getDouble(3));
-                o.setNumeroElementi(rs.getInt(4));
+                o.setNumeroArticoli(rs.getInt(4));
                 o.setIndirizzoSpedizione(rs.getString(5));
                 o.setData(rs.getObject(6, LocalDate.class));
                 o.setStato(rs.getString(7));
@@ -135,6 +138,60 @@ public class OrdineDAO {
         }
     }
 
+    public int doSaveOrdine(Carrello carrello, String indirizzoSpedizione, String metodoPagamento, CarrelloValidator validator) {
+        try (Connection con = ConPool.getConnection()) {
+            if(validator.validateQuantitaProdotti(carrello)){
+                PreparedStatement ps =
+                        con.prepareStatement("INSERT INTO Ordine(utente, totale, numeroArticoli, indirizzoSpedizione, metodoPagamento, dataOrdine, stato) VALUES(?,?,?,?,?,?,?)");
+                ps.setInt(1, carrello.getUtente().getId());
+                ps.setDouble(2, carrello.getTotale());
+                ps.setInt(3, carrello.getNumeroArticoli());
+                ps.setString(4, indirizzoSpedizione);
+                ps.setString(5, metodoPagamento);
+                ps.setObject(6, java.sql.Date.valueOf(LocalDate.now()));
+                ps.setString(7, "Inviato");
+                int rows= ps.executeUpdate();
+
+                ps = con.prepareStatement("SELECT numero FROM Ordine WHERE utente=? ORDER BY numero DESC LIMIT 1");
+                ps.setInt(1, carrello.getUtente().getId());
+
+                ResultSet resultSet = ps.executeQuery();
+                int numeroOrdine = 0;
+
+                if(resultSet.next()){
+                    numeroOrdine = resultSet.getInt("numero");
+                }
+
+                LinkedHashMap<Prodotto, Integer> prodotti = carrello.getProdotti();
+                Set<Prodotto> key = prodotti.keySet();
+
+                ProdottoDAO prodottoDAO = new ProdottoDAO();
+
+
+                for(Prodotto p: key) {
+                    ps = con.prepareStatement("INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita) VALUES (?,?,?)");
+                    ps.setInt(1, p.getCodice());
+                    ps.setInt(2, numeroOrdine);
+                    ps.setInt(3, prodotti.get(p));
+                    ps.executeUpdate();
+                    prodottoDAO.doUpdateQuantita(p, prodotti.get(p));
+                }
+
+                CarrelloDAO carrelloDAO = new CarrelloDAO();
+                carrelloDAO.doClearCarrello(carrello);
+
+                return (rows>0)==true?1:0;
+            }
+
+            else{
+                return 0;
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
