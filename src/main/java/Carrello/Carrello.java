@@ -7,8 +7,8 @@ import java.util.LinkedHashMap;
 
 public class Carrello {
 
-    public double totale;
-    public int numeroArticoli;
+    private double totale;
+    private int numeroArticoli;
 
     private Utente utente;
     private LinkedHashMap<Prodotto, Integer> prodotti;

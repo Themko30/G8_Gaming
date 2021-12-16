@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 @WebServlet("/Checkout")
@@ -25,11 +26,12 @@ public class CheckoutOrdineServlet extends HttpServlet {
         synchronized (session){
             Carrello carrello = (Carrello) session.getAttribute("carrello");
 
-            OrdineDAO ordineDAO = new OrdineDAO();
-            ValidatorFacade validatorFacade = new ValidatorFacade();
             String indirizzo = request.getParameter("indirizzo");
             Integer CAP = Integer.parseInt(request.getParameter("CAP"));
             String paese = request.getParameter("paese");
+            String metodoPagamento = request.getParameter("metodoPagamento");
+
+            ValidatorFacade validatorFacade = new ValidatorFacade();
 
             try {
                 validatorFacade.validateIndirizzo(indirizzo, CAP, paese);
@@ -38,19 +40,35 @@ public class CheckoutOrdineServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
                 dispatcher.forward(request, response);
             }
+            String indirizzoSpedizione = indirizzo + ", " + CAP +", " + paese;
 
-            String metodoPagamento = request.getParameter("metodoPagamento");
+
+            OrdineDAO ordineDAO = new OrdineDAO();
+            Ordine ordine = new OrdineBuilder().utente(carrello.getUtente())
+                    .totale(carrello.getTotale())
+                    .numeroArticoli(carrello.getNumeroArticoli())
+                    .indirizzoSpedizione(indirizzoSpedizione)
+                    .metodoPagamento(metodoPagamento)
+                    .data(LocalDate.now())
+                    .build();
+
+
             try {
-                ordineDAO.doSaveOrdine(carrello, indirizzo, metodoPagamento, validatorFacade);
+                ordineDAO.doSaveOrdine(ordine,  validatorFacade);
             } catch (InvalidProductQuantityException e) {
                 Prodotto invalidProdotto = e.getProdotto();
                 request.setAttribute("prodotto", invalidProdotto);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
                 dispatcher.forward(request, response);
             }
-            Utente utente = (Utente) carrello.getUtente();
+
+            Utente utente = carrello.getUtente();
+            CarrelloDAO carrelloDAO = new CarrelloDAO();
+            carrelloDAO.doClearCarrello(carrello);
+
             carrello = new Carrello();
             carrello.setUtente(utente);
+
             session.removeAttribute("carrello");
             session.setAttribute("carrello", carrello);
 

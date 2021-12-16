@@ -139,11 +139,11 @@ public class OrdineDAO {
         }
     }
 
-    public int doSaveOrdine(Carrello carrello, String indirizzoSpedizione, String metodoPagamento, ValidatorFacade validator) throws InvalidProductQuantityException {
+    public int doSaveOrdine(Ordine o, ValidatorFacade validator) throws InvalidProductQuantityException {
         try (Connection con = ConPool.getConnection()) {
 
 
-            LinkedHashMap<Prodotto, Integer> prodotti = carrello.getProdotti();
+            LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
             Set<Prodotto> key = prodotti.keySet();
             for(Prodotto p: key) {
                 boolean isValid = validator.validateQuantitaProdotto(p, prodotti.get(p));
@@ -154,17 +154,17 @@ public class OrdineDAO {
 
                 PreparedStatement ps =
                         con.prepareStatement("INSERT INTO Ordine(utente, totale, numeroArticoli, indirizzoSpedizione, metodoPagamento, dataOrdine, stato) VALUES(?,?,?,?,?,?,?)");
-                ps.setString(1, carrello.getUtente().getUsername());
-                ps.setDouble(2, carrello.getTotale());
-                ps.setInt(3, carrello.getNumeroArticoli());
-                ps.setString(4, indirizzoSpedizione);
-                ps.setString(5, metodoPagamento);
-                ps.setObject(6, java.sql.Date.valueOf(LocalDate.now()));
+                ps.setString(1, o.getUtente().getUsername());
+                ps.setDouble(2, o.getTotale());
+                ps.setInt(3, o.getNumeroArticoli());
+                ps.setString(4, o.getIndirizzoSpedizione());
+                ps.setString(5, o.getMetodoPagamento());
+                ps.setObject(6, o.getData());
                 ps.setString(7, "Inviato");
                 int rows= ps.executeUpdate();
 
                 ps = con.prepareStatement("SELECT numero FROM Ordine WHERE utente=? ORDER BY numero DESC LIMIT 1");
-                ps.setString(1, carrello.getUtente().getUsername());
+                ps.setString(1, o.getUtente().getUsername());
 
                 ResultSet resultSet = ps.executeQuery();
                 int numeroOrdine = 0;
@@ -185,9 +185,6 @@ public class OrdineDAO {
                     ps.executeUpdate();
                     prodottoDAO.doUpdateQuantita(p, prodotti.get(p));
                 }
-
-                CarrelloDAO carrelloDAO = new CarrelloDAO();
-                carrelloDAO.doClearCarrello(carrello);
 
                 return (rows>0)==true?1:0;
 
