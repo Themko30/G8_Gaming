@@ -13,7 +13,7 @@ public class PrenotazioneDAO {
   public boolean doSavePrenotazione(Prenotazione prenotazione){
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina) VALUES(?,?,?,?,?)");
+      PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina) VALUES(?,?,?,?)");
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());

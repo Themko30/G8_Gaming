@@ -65,9 +65,13 @@ public class PrenotazioneServlet extends HttpServlet {
           }
           break;
           case "/delete":
-            if (prenotazioneDAO.doDeletePrenotazione(Integer.valueOf(req.getParameter("codice"))));
-            // SET ALERT
-            req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+        if (prenotazioneDAO.doDeletePrenotazione(Integer.valueOf(req.getParameter("codice")))) {
+          // SET ALERT
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+            }
+        else {
+          //internalError DA FARE
+        }
     }
 
   }

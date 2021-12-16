@@ -16,7 +16,9 @@ import java.util.Set;
 
 @WebServlet("/AggiungiAlCarrello")
 public class AggiungiAlCarrelloServlet extends HttpServlet {
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
         HttpSession session = request.getSession();
         int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
         int quantitaProdotto = Integer.parseInt(request.getParameter("quantita"));
