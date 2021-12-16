@@ -48,7 +48,7 @@ public class PrenotazioneServlet extends HttpServlet {
           resp.setStatus(HttpServletResponse.SC_CREATED);
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
-          //internalError DA FARE
+          throw new ServletException("Errore di inserimento...");
         }
         break;
         case "/update":
@@ -61,7 +61,7 @@ public class PrenotazioneServlet extends HttpServlet {
             // SET ALERT
             req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
           } else {
-            //internalError DA FARE
+            throw new ServletException("Errore di aggiornamento...");
           }
           break;
           case "/delete":
@@ -70,7 +70,7 @@ public class PrenotazioneServlet extends HttpServlet {
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
             }
         else {
-          //internalError DA FARE
+          throw new ServletException("Errore di eliminazione...");
         }
     }
 
