@@ -1,4 +1,4 @@
-package main.java.Carrello;
+package main.java.Validator;
 
 import main.java.Catalogo.Prodotto;
 

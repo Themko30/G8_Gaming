@@ -3,6 +3,7 @@ package main.java.Carrello;
 import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
 import main.java.Validator.InvalidIndirizzoException;
+import main.java.Validator.InvalidProductQuantityException;
 import main.java.Validator.ValidatorFacade;
 
 import javax.servlet.RequestDispatcher;
