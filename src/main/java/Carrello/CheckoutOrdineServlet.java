@@ -50,6 +50,7 @@ public class CheckoutOrdineServlet extends HttpServlet {
                     .indirizzoSpedizione(indirizzoSpedizione)
                     .metodoPagamento(metodoPagamento)
                     .data(LocalDate.now())
+                    .prodotti(carrello.getProdotti())
                     .build();
 
 
