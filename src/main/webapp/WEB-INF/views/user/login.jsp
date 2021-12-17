@@ -24,7 +24,7 @@
                 </div>
                 <input type="submit" value="Login">
                 <div class="signup_link">
-                    Non hai un account? <a href="http://localhost:8080/CultureUniverse_war_exploded/registration.html">Registrati</a>
+                    Non hai un account? <a href="http://localhost:8080/G8_Gaming_war_exploded/registrazione">Registrati</a>
                 </div>
             </form>
         </div>
