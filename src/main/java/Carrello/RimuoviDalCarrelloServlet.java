@@ -15,21 +15,20 @@ import java.util.Set;
 
 @WebServlet("/RimuoviDalCarrello")
 public class RimuoviDalCarrelloServlet extends HttpServlet {
+
+    private CarrelloService carrelloService;
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         HttpSession session = request.getSession();
         int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
-        synchronized (session){
-            Carrello carrello = (Carrello) session.getAttribute("carrello");
-            LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
-            Set<Prodotto> prodotti = prodottiMap.keySet();
-            for(Prodotto p: prodotti){
-                if(p.getCodice()==codiceProdotto){
-                    prodottiMap.remove(p);
-                    break;
-                }
-            }
 
-            carrello.setProdotti(prodottiMap);
+        carrelloService = new CarrelloServiceImpl();
+
+        synchronized (session){
+
+            Carrello carrello = (Carrello) session.getAttribute("carrello");
+            carrello = carrelloService.rimuoviProdottoCarrelloSession(carrello,codiceProdotto);
+
             session.removeAttribute("carrello");
             session.setAttribute("carrello", carrello);
         }
