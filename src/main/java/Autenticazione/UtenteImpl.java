@@ -25,4 +25,14 @@ public class UtenteImpl implements UtenteService {
   public boolean saveUtente(Utente utente) {
    return utenteDao.doSaveUtente(utente);
   }
+
+  @Override
+  public boolean updateUtente(Utente utente) {
+    return utenteDao.doUpdateUtente(utente);
+  }
+
+  @Override
+  public boolean deleteUtente(String username) {
+    return utenteDao.doDeleteUtente(username);
+  }
 }

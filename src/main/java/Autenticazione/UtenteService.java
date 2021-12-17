@@ -9,4 +9,6 @@ public interface UtenteService {
 
   public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita);
   public boolean saveUtente(Utente utente);
+  public boolean updateUtente(Utente utente);
+  public boolean deleteUtente(String username);
 }
