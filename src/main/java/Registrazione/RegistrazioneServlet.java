@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.java.Autenticazione.Utente;
 import main.java.Autenticazione.UtenteDAO;
+import main.java.Autenticazione.UtenteImpl;
+import main.java.Autenticazione.UtenteService;
 import main.java.Prenotazione.Prenotazione;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
@@ -19,6 +21,7 @@ import main.java.Validator.ValidatorImpl;
 public class RegistrazioneServlet extends HttpServlet {
 
   private Validator validator;
+  private UtenteService utenteService;
 
   @Override
   public void init() throws ServletException {
@@ -46,8 +49,11 @@ public class RegistrazioneServlet extends HttpServlet {
       throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    if(path == null)
-      path = "/";
+    validator= new ValidatorImpl();
+    path= validator.validatePath(path);
+
+    String username, email, password, nome, cognome, sesso;
+    LocalDate dataDiNascita;
 
     switch (path) {
       case "/":
@@ -55,16 +61,16 @@ public class RegistrazioneServlet extends HttpServlet {
         dispatcher.forward(req, resp);
         break;
       case "/save":
-        Utente saveUtente = new Utente();
-        saveUtente.setUsername(req.getParameter("username"));
-        saveUtente.setEmail(req.getParameter("email"));
-        saveUtente.setPassword(req.getParameter("password"));
-        saveUtente.setNome(req.getParameter("nome"));
-        saveUtente.setCognome(req.getParameter("cognome"));
-        saveUtente.setSesso(req.getParameter("sesso"));
-        saveUtente.setDataDiNascita(LocalDate.parse(req.getParameter("data")));
-        saveUtente.setAdmin(false);
-        if (utenteDAO.doSaveUtente(saveUtente)){
+        username = req.getParameter("username");
+        email =req.getParameter("email");
+        password =req.getParameter("password");
+        nome =req.getParameter("nome");
+        cognome =req.getParameter("cognome");
+        sesso =req.getParameter("sesso");
+        dataDiNascita = LocalDate.parse(req.getParameter("data"));
+        utenteService = new UtenteImpl();
+        Utente saveUtente = utenteService.createUtente(username,email,password,nome,cognome,sesso,dataDiNascita);
+        if (utenteService.saveUtente(saveUtente)){
           resp.setStatus(HttpServletResponse.SC_CREATED);
           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
@@ -72,13 +78,13 @@ public class RegistrazioneServlet extends HttpServlet {
         }
         break;
       case "/update":
-        String username = req.getParameter("username");
-        String email =req.getParameter("email");
-        String password =req.getParameter("password");
-        String nome =req.getParameter("nome");
-        String cognome =req.getParameter("cognome");
-        String sesso =req.getParameter("sesso");
-        LocalDate dataDiNascita = LocalDate.parse(req.getParameter("data"));
+        username = req.getParameter("username");
+        email =req.getParameter("email");
+        password =req.getParameter("password");
+        nome =req.getParameter("nome");
+        cognome =req.getParameter("cognome");
+        sesso =req.getParameter("sesso");
+        dataDiNascita = LocalDate.parse(req.getParameter("data"));
                 if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);

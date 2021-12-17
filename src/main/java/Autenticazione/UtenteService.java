@@ -7,5 +7,6 @@ import main.java.Prenotazione.Prenotazione;
 
 public interface UtenteService {
 
-  public Utente setUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita);
+  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita);
+  public boolean saveUtente(Utente utente);
 }
