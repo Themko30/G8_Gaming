@@ -26,13 +26,13 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 :root {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
+    --primary: #f00; /* Da cambiare */
 }
 
 /*
@@ -107,8 +107,8 @@ sup {
     top: -0.5em;
 }
 table {
-    text-indent: 0; /* 1 */
-    border-color: inherit; /* 2 */
+    text-indent: 0;
+    border-color: inherit;
 }
 button,
 input,

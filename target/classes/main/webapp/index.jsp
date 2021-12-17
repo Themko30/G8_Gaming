@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <jsp:include page="WEB-INF/views/partials/head.jsp">
+        <jsp:param name="title" value="Home"/>
+    </jsp:include>
 </head>
 <body>
 <h1><%= "Hello World!" %>

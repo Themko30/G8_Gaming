@@ -5,8 +5,10 @@ import main.java.Prenotazione.Prenotazione;
 
 public class UtenteImpl implements UtenteService {
 
+  private final UtenteDAO utenteDao = new UtenteDAO();
+
   @Override
-  public Utente setUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita) {
+  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita) {
     Utente utente = new Utente();
     utente.setUsername(username);
     utente.setEmail(email);
@@ -17,5 +19,10 @@ public class UtenteImpl implements UtenteService {
     utente.setDataDiNascita(dataDiNascita);
     utente.setAdmin(false);
     return utente;
+  }
+
+  @Override
+  public boolean saveUtente(Utente utente) {
+   return utenteDao.doSaveUtente(utente);
   }
 }
