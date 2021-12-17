@@ -4,7 +4,7 @@
 <head>
     <title>403 Forbidden - D3Games</title>
     <c:set var="context" value="${pageContext.request.contextPath}"/>
-    <link rel="icon" href="${context}/icons/favicon.ico"/>
+    <link rel="icon" href="${context}/icons/favicon.png"/>
     <link rel="stylesheet" href="${context}/css/library.css">
     <link rel="stylesheet" href="${context}/css/errorPage.css">
 </head>

@@ -33,7 +33,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
     switch (path) {
       case "/":
-        /*TODO*/ RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        /*TODO*/ RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp");
         dispatcher.forward(req, resp);
         break;
     }
