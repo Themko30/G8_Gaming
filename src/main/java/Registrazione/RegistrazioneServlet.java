@@ -15,7 +15,7 @@ import main.java.Prenotazione.Prenotazione;
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {
 
-  private UtenteDAO utenteDAO;
+  private final UtenteDAO utenteDAO = new UtenteDAO();
 
   @Override
   public void init() throws ServletException {
@@ -49,7 +49,7 @@ public class RegistrazioneServlet extends HttpServlet {
         saveUtente.setCognome(req.getParameter("cognome"));
         saveUtente.setSesso(req.getParameter("sesso"));
         saveUtente.setDataDiNascita(req.getParameter("data"));
-        saveUtente.setAdmin(Boolean.parseBoolean(req.getParameter("admin")));
+        saveUtente.setAdmin(false);
         if (utenteDAO.doSaveUtente(saveUtente)){
           resp.setStatus(HttpServletResponse.SC_CREATED);
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
@@ -66,7 +66,7 @@ public class RegistrazioneServlet extends HttpServlet {
         updateUtente.setCognome(req.getParameter("cognome"));
         updateUtente.setSesso(req.getParameter("sesso"));
         updateUtente.setDataDiNascita(req.getParameter("data"));
-        updateUtente.setAdmin(Boolean.parseBoolean(req.getParameter("admin")));
+        updateUtente.setAdmin(false);
         if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
