@@ -19,6 +19,8 @@ import java.time.LocalDate;
 
 @WebServlet("/Checkout")
 public class CheckoutOrdineServlet extends HttpServlet {
+    private OrdineBuilder ordineBuilder;
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
         HttpSession session = request.getSession();
@@ -44,7 +46,8 @@ public class CheckoutOrdineServlet extends HttpServlet {
 
 
             OrdineDAO ordineDAO = new OrdineDAO();
-            Ordine ordine = new OrdineBuilder().utente(carrello.getUtente())
+            ordineBuilder = new OrdineBuilderImpl();
+            Ordine ordine = ordineBuilder.utente(carrello.getUtente())
                     .totale(carrello.getTotale())
                     .numeroArticoli(carrello.getNumeroArticoli())
                     .indirizzoSpedizione(indirizzoSpedizione)

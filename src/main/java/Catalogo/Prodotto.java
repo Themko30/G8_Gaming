@@ -4,6 +4,7 @@ public class Prodotto {
     private int codice;
     private String categoria;
     private String nome;
+    private String piattaforma;
     private double prezzo;
     private double scontoAttivo;
     private int quantita;
@@ -34,6 +35,14 @@ public class Prodotto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getPiattaforma() {
+        return piattaforma;
+    }
+
+    public void setPiattaforma(String piattaforma) {
+        this.piattaforma = piattaforma;
     }
 
     public double getPrezzo() {
