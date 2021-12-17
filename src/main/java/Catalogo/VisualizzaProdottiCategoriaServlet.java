@@ -11,11 +11,14 @@ import java.util.ArrayList;
 
 @WebServlet("/VisualizzaCategoria")
 public class VisualizzaProdottiCategoriaServlet extends HttpServlet {
+    private ProdottoService prodottoService;
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String categoria = request.getParameter("categoria");
 
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
-        ArrayList<Prodotto> prodottiCategoria = prodottoDAO.doRetrieveProdottiByCategoria(categoria, 0, 100);
+        prodottoService = new ProdottoServiceImpl();
+        ArrayList<Prodotto> prodottiCategoria = prodottoService.prodottiCategoria(categoria);
+
 
         request.setAttribute("prodotti", prodottiCategoria);
 
