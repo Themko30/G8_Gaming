@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import main.java.Autenticazione.Utente;
 import main.java.Autenticazione.UtenteDAO;
 import main.java.Prenotazione.Prenotazione;
+import main.java.Validator.Validator;
+import main.java.Validator.ValidatorImpl;
 
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {
@@ -21,15 +23,14 @@ public class RegistrazioneServlet extends HttpServlet {
   @Override
   public void init() throws ServletException {
     super.init();
+
   }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    String path = req.getPathInfo();
-    if(path == null)
-      path = "/";
+    String path = getPath(req);
 
     switch (path) {
       case "/":

@@ -1,5 +1,6 @@
 package main.java.Validator;
 
+import javax.servlet.http.HttpServletRequest;
 import main.java.Catalogo.Prodotto;
 
 public class ValidatorImpl implements Validator{
@@ -12,5 +13,10 @@ public class ValidatorImpl implements Validator{
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException {
         validatorIndirizzo.checkIndirizzo(indirizzo, cap, paese);
+    }
+
+    @Override
+    public String getPath(HttpServletRequest req) {
+        return req.getPathInfo() != null ? req.getPathInfo() : "/";
     }
 }
