@@ -77,7 +77,7 @@ public class RegistrazioneServlet extends HttpServlet {
           throw new ServletException("Errore di inserimento...");
         }
         break;
-      case "/update":
+      /*case "/update":
         username = req.getParameter("username");
         email =req.getParameter("email");
         password =req.getParameter("password");
@@ -87,7 +87,7 @@ public class RegistrazioneServlet extends HttpServlet {
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
                 if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+          *//*TODO*//* req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -95,11 +95,11 @@ public class RegistrazioneServlet extends HttpServlet {
       case "/delete":
         if (utenteDAO.doDeleteUtente(req.getParameter("username"))) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          *//*TODO*//* req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         }
         else {
           throw new ServletException("Errore di eliminazione...");
-        }
+        }*/
         }
     }
   }
