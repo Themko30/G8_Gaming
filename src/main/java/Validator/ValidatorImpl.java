@@ -2,7 +2,7 @@ package main.java.Validator;
 
 import main.java.Catalogo.Prodotto;
 
-public class ValidatorFacade {
+public class ValidatorImpl implements Validator{
     private final ValidatorOrdine validatorOrdine = new ValidatorOrdine();
     private final ValidatorIndirizzo validatorIndirizzo = new ValidatorIndirizzo();
 

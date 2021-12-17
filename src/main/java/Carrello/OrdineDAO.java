@@ -5,7 +5,7 @@ import main.java.Catalogo.Prodotto;
 import main.java.Catalogo.ProdottoDAO;
 import main.java.Storage.ConPool;
 import main.java.Validator.InvalidProductQuantityException;
-import main.java.Validator.ValidatorFacade;
+import main.java.Validator.ValidatorImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -139,7 +139,7 @@ public class OrdineDAO {
         }
     }
 
-    public int doSaveOrdine(Ordine o, ValidatorFacade validator) throws InvalidProductQuantityException {
+    public int doSaveOrdine(Ordine o, ValidatorImpl validator) throws InvalidProductQuantityException {
         try (Connection con = ConPool.getConnection()) {
 
 

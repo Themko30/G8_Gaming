@@ -4,7 +4,7 @@ import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
 import main.java.Validator.InvalidIndirizzoException;
 import main.java.Validator.InvalidProductQuantityException;
-import main.java.Validator.ValidatorFacade;
+import main.java.Validator.ValidatorImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,10 +33,10 @@ public class CheckoutOrdineServlet extends HttpServlet {
             String paese = request.getParameter("paese");
             String metodoPagamento = request.getParameter("metodoPagamento");
 
-            ValidatorFacade validatorFacade = new ValidatorFacade();
+            ValidatorImpl validatorImpl = new ValidatorImpl();
 
             try {
-                validatorFacade.validateIndirizzo(indirizzo, CAP, paese);
+                validatorImpl.validateIndirizzo(indirizzo, CAP, paese);
             } catch (InvalidIndirizzoException e) {
                 e.printStackTrace();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
@@ -58,7 +58,7 @@ public class CheckoutOrdineServlet extends HttpServlet {
 
 
             try {
-                ordineDAO.doSaveOrdine(ordine,  validatorFacade);
+                ordineDAO.doSaveOrdine(ordine, validatorImpl);
             } catch (InvalidProductQuantityException e) {
                 Prodotto invalidProdotto = e.getProdotto();
                 request.setAttribute("prodotto", invalidProdotto);
