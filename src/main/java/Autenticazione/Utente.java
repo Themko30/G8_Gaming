@@ -4,12 +4,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.List;
 import main.java.Carrello.Ordine;
 
 public class Utente {
-    private String username, email, password, nome, cognome, sesso, dataDiNascita;
+    private String username, email, password, nome, cognome, sesso;
+    private LocalDate dataDiNascita;
     private boolean admin;
     private List<Ordine> ordini;
 
@@ -72,11 +74,11 @@ public class Utente {
         this.sesso = sesso;
     }
 
-    public String getDataDiNascita() {
+    public LocalDate getDataDiNascita() {
         return dataDiNascita;
     }
 
-    public void setDataDiNascita(String dataDiNascita) {
+    public void setDataDiNascita(LocalDate dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
     }
 
