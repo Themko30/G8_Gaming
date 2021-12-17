@@ -140,18 +140,11 @@ public class OrdineDAO {
         }
     }
 
-    public int doSaveOrdine(Ordine o, Validator validator) throws InvalidProductQuantityException {
+    public int doSaveOrdine(Ordine o) throws InvalidProductQuantityException {
         try (Connection con = ConPool.getConnection()) {
-
 
             LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
             Set<Prodotto> key = prodotti.keySet();
-            for(Prodotto p: key) {
-                boolean isValid = validator.validateQuantitaProdotto(p, prodotti.get(p));
-                if(!isValid){
-                    throw new InvalidProductQuantityException("Invalid Quantity", p);
-                }
-            }
 
                 PreparedStatement ps =
                         con.prepareStatement("INSERT INTO Ordine(utente, totale, numeroArticoli, indirizzoSpedizione, metodoPagamento, dataOrdine, stato) VALUES(?,?,?,?,?,?,?)");

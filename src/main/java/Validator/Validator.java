@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import main.java.Catalogo.Prodotto;
 
 public interface Validator {
-    public boolean validateQuantitaProdotto(Prodotto prodotto, int quantita);
+    public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException;
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException;
 

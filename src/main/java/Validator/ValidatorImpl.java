@@ -3,15 +3,20 @@ package main.java.Validator;
 import javax.servlet.http.HttpServletRequest;
 import main.java.Catalogo.Prodotto;
 import main.java.Catalogo.ProdottoDAO;
+import main.java.Catalogo.ProdottoService;
+import main.java.Catalogo.ProdottoServiceImpl;
 
 import java.util.regex.Pattern;
 
 public class ValidatorImpl implements Validator{
 
 
-    public boolean validateQuantitaProdotto(Prodotto prodotto, int quantita){
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
-        return prodottoDAO.doRetrieveQuantitaProdottoByCodice(prodotto.getCodice()) >= quantita;
+    public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException{
+        ProdottoService prodottoService = new ProdottoServiceImpl();
+        int quantitaProdottoDatabase = prodottoService.quantitaProdotto(prodotto);
+        if(quantitaProdottoDatabase<quantita){
+            throw new InvalidProductQuantityException("Quantità eccessiva", prodotto);
+        }
     }
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException {

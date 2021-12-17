@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 
 @WebServlet("/Checkout")
@@ -39,34 +41,24 @@ public class CheckoutOrdineServlet extends HttpServlet {
 
             try {
                 validator.validateIndirizzo(indirizzo, CAP, paese);
+                OrdineService ordineService = new OrdineServiceImpl();
+                Ordine ordine= ordineService.createOrdine(carrello, indirizzo, CAP, paese, metodoPagamento);
+                LinkedHashMap<Prodotto, Integer> prodotti = ordine.getProdotti();
+                Set<Prodotto> key = prodotti.keySet();
+                for(Prodotto p: key) {
+                    validator.validateQuantitaProdotto(p, prodotti.get(p));
+                }
             } catch (InvalidIndirizzoException e) {
                 e.printStackTrace();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
                 dispatcher.forward(request, response);
-            }
-            String indirizzoSpedizione = indirizzo + ", " + CAP +", " + paese;
-
-
-            OrdineDAO ordineDAO = new OrdineDAO();
-            ordineBuilder = new OrdineBuilderImpl();
-            Ordine ordine = ordineBuilder.utente(carrello.getUtente())
-                    .totale(carrello.getTotale())
-                    .numeroArticoli(carrello.getNumeroArticoli())
-                    .indirizzoSpedizione(indirizzoSpedizione)
-                    .metodoPagamento(metodoPagamento)
-                    .data(LocalDate.now())
-                    .prodotti(carrello.getProdotti())
-                    .build();
-
-
-            try {
-                ordineDAO.doSaveOrdine(ordine, validator);
-            } catch (InvalidProductQuantityException e) {
-                Prodotto invalidProdotto = e.getProdotto();
-                request.setAttribute("prodotto", invalidProdotto);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
+            }catch (InvalidProductQuantityException ex){
+                ex.printStackTrace();
+                request.setAttribute("prodotto", ex.getProdotto());
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Prodotto Failed Page");
                 dispatcher.forward(request, response);
             }
+
 
             Utente utente = carrello.getUtente();
             CarrelloDAO carrelloDAO = new CarrelloDAO();

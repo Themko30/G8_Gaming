@@ -15,4 +15,11 @@ public class ProdottoServiceImpl implements ProdottoService{
     public Prodotto prodottoCodice(int codice){
         return prodottoDAO.doRetrieveProdottoByCodice(codice);
     }
+
+    @Override
+    public int quantitaProdotto(Prodotto prodotto) {
+        return prodottoDAO.doRetrieveQuantitaProdottoByCodice(prodotto.getCodice());
+    }
+
+
 }
