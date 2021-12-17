@@ -10,11 +10,13 @@ import java.io.IOException;
 
 @WebServlet("/VisualizzaProdotto")
 public class VisualizzaProdottoServlet extends HttpServlet {
+    private ProdottoService prodottoService;
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
 
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
-        Prodotto p = prodottoDAO.doRetrieveProdottoByCodice(codiceProdotto);
+        prodottoService = new ProdottoServiceImpl();
+        Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
 
         request.setAttribute("prodotto", p);
 
