@@ -6,91 +6,39 @@ import main.java.Catalogo.Prodotto;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 
-public class OrdineBuilder {
-    private double totale;
-    private int numeroArticoli;
-    private String indirizzoSpedizione;
-    private String metodoPagamento;
-    private LocalDate data;
-    private String stato;
-    private LinkedHashMap<Prodotto, Integer> prodotti;
-    private Utente utente;
+public interface OrdineBuilder {
 
-    public OrdineBuilder(){    }
+    public OrdineBuilderImpl totale(double totale);
 
-    public OrdineBuilder totale(double totale){
-        this.totale = totale;
-        return this;
-    }
+    public OrdineBuilderImpl numeroArticoli(int numeroArticoli);
 
-    public OrdineBuilder numeroArticoli(int numeroArticoli){
-        this.numeroArticoli=numeroArticoli;
-        return this;
-    }
+    public OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione);
 
-    public OrdineBuilder indirizzoSpedizione(String indirizzoSpedizione){
-        this.indirizzoSpedizione = indirizzoSpedizione;
-        return this;
-    }
+    public OrdineBuilderImpl metodoPagamento(String metodoPagamento);
 
-    public OrdineBuilder metodoPagamento(String metodoPagamento){
-        this.metodoPagamento = metodoPagamento;
-        return this;
-    }
+    public OrdineBuilderImpl data(LocalDate data);
 
-    public OrdineBuilder data(LocalDate data){
-        this.data = data;
-        return this;
-    }
+    public OrdineBuilderImpl stato(String stato);
 
-    public OrdineBuilder stato(String stato){
-        this.stato = stato;
-        return this;
-    }
+    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti);
 
-    public OrdineBuilder prodotti(LinkedHashMap<Prodotto, Integer> prodotti){
-        this.prodotti = prodotti;
-        return this;
-    }
+    public OrdineBuilderImpl utente(Utente utente);
 
-    public OrdineBuilder utente(Utente utente){
-        this.utente = utente;
-        return this;
-    }
+    public Ordine build();
 
-    public Ordine build(){
-        return new Ordine(this);
-    }
+    public double getTotale();
 
-    public double getTotale() {
-        return totale;
-    }
+    public int getNumeroArticoli();
 
-    public int getNumeroArticoli() {
-        return numeroArticoli;
-    }
+    public String getIndirizzoSpedizione();
 
-    public String getIndirizzoSpedizione() {
-        return indirizzoSpedizione;
-    }
+    public String getMetodoPagamento();
 
-    public String getMetodoPagamento() {
-        return metodoPagamento;
-    }
+    public LocalDate getData();
 
-    public LocalDate getData() {
-        return data;
-    }
+    public String getStato();
 
-    public String getStato() {
-        return stato;
-    }
+    public LinkedHashMap<Prodotto, Integer> getProdotti();
 
-    public LinkedHashMap<Prodotto, Integer> getProdotti() {
-        return prodotti;
-    }
-
-    public Utente getUtente() {
-        return utente;
-    }
+    public Utente getUtente();
 }

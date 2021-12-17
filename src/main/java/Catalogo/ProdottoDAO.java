@@ -12,14 +12,15 @@ public class ProdottoDAO {
 
     public int doUpdateProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET categoria=?, nome=?, prezzo=?, scontoAttivo=?, quantita=(quantita+?), descrizione=? WHERE codice=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET categoria=?, nome=?, piattaforma=?, prezzo=?, scontoAttivo=?, quantita=(quantita+?), descrizione=? WHERE codice=?");
             ps.setString(1, prodotto.getCategoria());
             ps.setString(2, prodotto.getNome());
-            ps.setDouble(3, prodotto.getPrezzo());
-            ps.setDouble(4, prodotto.getScontoAttivo());
-            ps.setInt(5, prodotto.getQuantita());
-            ps.setString(6, prodotto.getDescrizione());
-            ps.setInt(7, prodotto.getCodice());
+            ps.setString(3, prodotto.getPiattaforma());
+            ps.setDouble(4, prodotto.getPrezzo());
+            ps.setDouble(5, prodotto.getScontoAttivo());
+            ps.setInt(6, prodotto.getQuantita());
+            ps.setString(7, prodotto.getDescrizione());
+            ps.setInt(8, prodotto.getCodice());
             int x=ps.executeUpdate();
             return x>0? 1:0;
         } catch (SQLException e){
@@ -42,15 +43,16 @@ public class ProdottoDAO {
     public int doSaveProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Prodotto(categoria, nome, prezzo, scontoAttivo, quantita, descrizione, copertina) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Prodotto(categoria, nome, piattaforma, prezzo, scontoAttivo, quantita, descrizione, copertina) VALUES(?,?,?,?,?,?,?,?)");
 
             ps.setString(1, prodotto.getCategoria());
             ps.setString(2, prodotto.getNome());
-            ps.setDouble(3, prodotto.getPrezzo());
-            ps.setDouble(4, prodotto.getScontoAttivo());
-            ps.setInt(5, prodotto.getQuantita());
-            ps.setString(6, prodotto.getDescrizione());
-            ps.setString(7, prodotto.getCopertina());
+            ps.setString(3, prodotto.getPiattaforma());
+            ps.setDouble(4, prodotto.getPrezzo());
+            ps.setDouble(5, prodotto.getScontoAttivo());
+            ps.setInt(6, prodotto.getQuantita());
+            ps.setString(7, prodotto.getDescrizione());
+            ps.setString(8, prodotto.getCopertina());
 
             int x= ps.executeUpdate();
 
@@ -80,6 +82,7 @@ public class ProdottoDAO {
                 p.setQuantita(rs.getInt("quantita"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
                 prodotti.add(p);
             }
@@ -92,7 +95,7 @@ public class ProdottoDAO {
 
     }
 
-    public ArrayList<Prodotto> doRetrieveArticoliByNomeLike(String nome, int offset, int limit){
+    public ArrayList<Prodotto> doRetrieveProdottiByNomeLike(String nome, int offset, int limit){
 
         try (Connection con = ConPool.getConnection()) {
 
@@ -111,6 +114,7 @@ public class ProdottoDAO {
                 p.setQuantita(rs.getInt("quantita"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
                 prodotti.add(p);
             }
@@ -138,6 +142,7 @@ public class ProdottoDAO {
                 p.setQuantita(rs.getInt("quantita"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
 
             }
@@ -168,6 +173,7 @@ public class ProdottoDAO {
                 p.setQuantita(rs.getInt("quantita"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
                 prodotti.add(p);
             }

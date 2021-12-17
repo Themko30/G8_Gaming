@@ -23,7 +23,7 @@ public class Ordine {
         prodotti = new LinkedHashMap<>();
     }
 
-    public Ordine(OrdineBuilder builder){
+    public Ordine(OrdineBuilderImpl builder){
         this.totale = builder.getTotale();
         this.numero = builder.getNumeroArticoli();
         this.indirizzoSpedizione = builder.getIndirizzoSpedizione();

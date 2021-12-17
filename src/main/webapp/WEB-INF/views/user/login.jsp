@@ -3,9 +3,10 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>Login Test</title>
-        <link rel="stylesheet" href="${context}/css/login.css">
+        <jsp:include page="../partials/head.jsp">
+            <jsp:param name="title" value="Login"/>
+            <jsp:param name="styles" value="login"/>
+        </jsp:include>
     </head>
     <body>
         <div class="center">
