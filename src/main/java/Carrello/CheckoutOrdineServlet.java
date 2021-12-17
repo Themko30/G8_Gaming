@@ -22,7 +22,6 @@ import java.util.Set;
 
 @WebServlet("/Checkout")
 public class CheckoutOrdineServlet extends HttpServlet {
-    private OrdineBuilder ordineBuilder;
     private Validator validator;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
@@ -48,10 +47,12 @@ public class CheckoutOrdineServlet extends HttpServlet {
                 for(Prodotto p: key) {
                     validator.validateQuantitaProdotto(p, prodotti.get(p));
                 }
+
             } catch (InvalidIndirizzoException e) {
                 e.printStackTrace();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
                 dispatcher.forward(request, response);
+
             }catch (InvalidProductQuantityException ex){
                 ex.printStackTrace();
                 request.setAttribute("prodotto", ex.getProdotto());
@@ -59,13 +60,8 @@ public class CheckoutOrdineServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
 
-
-            Utente utente = carrello.getUtente();
-            CarrelloDAO carrelloDAO = new CarrelloDAO();
-            carrelloDAO.doClearCarrello(carrello);
-
-            carrello = new Carrello();
-            carrello.setUtente(utente);
+            CarrelloService carrelloService = new CarrelloServiceImpl();
+            carrello = carrelloService.clearCarrello(carrello);
 
             session.removeAttribute("carrello");
             session.setAttribute("carrello", carrello);
