@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PrenotazioneServlet extends HttpServlet {
 
-  private PrenotazioneDAO prenotazioneDAO;
+  private final PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
 
   @Override
   public void init() throws ServletException{
