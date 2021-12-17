@@ -5,7 +5,7 @@ import main.java.Prenotazione.Prenotazione;
 
 public class UtenteImpl implements UtenteService {
 
-  private final UtenteDAO utenteDao = new UtenteDAO;
+  private final UtenteDAO utenteDao = new UtenteDAO();
 
   @Override
   public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita) {
