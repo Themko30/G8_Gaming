@@ -19,18 +19,20 @@ import main.java.Validator.ValidatorImpl;
 public class RegistrazioneServlet extends HttpServlet {
 
   private final UtenteDAO utenteDAO = new UtenteDAO();
+  private Validator validator;
 
   @Override
   public void init() throws ServletException {
     super.init();
-
   }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    String path = getPath(req);
+    String path = req.getPathInfo();
+    validator= new ValidatorImpl();
+    path= validator.validatePath(path);
 
     switch (path) {
       case "/":

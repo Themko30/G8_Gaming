@@ -15,8 +15,10 @@ public class ValidatorImpl implements Validator{
         validatorIndirizzo.checkIndirizzo(indirizzo, cap, paese);
     }
 
-    @Override
-    public String getPath(HttpServletRequest req) {
-        return req.getPathInfo() != null ? req.getPathInfo() : "/";
+    public String validatePath(String path) {
+        if (path == null){
+            path = "/";
+        }
+        return path;
     }
 }

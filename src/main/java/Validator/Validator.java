@@ -8,6 +8,6 @@ public interface Validator {
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException;
 
-    public String getPath(HttpServletRequest req);
+    public String validatePath(String path) ;
     }
 
