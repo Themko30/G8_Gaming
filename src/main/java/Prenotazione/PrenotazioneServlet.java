@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import main.java.Validator.Validator;
+import main.java.Validator.ValidatorImpl;
 
 @WebServlet(name = "PrenotazioneServlet", value = "/prenotazione/*")
 @MultipartConfig
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PrenotazioneServlet extends HttpServlet {
 
   private final PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
+  private Validator validator;
 
   @Override
   public void init() throws ServletException{
@@ -30,8 +33,8 @@ public class PrenotazioneServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    if(path == null)
-      path = "/";
+    validator= new ValidatorImpl();
+    path= validator.validatePath(path);
 
     switch (path){
       case "/":

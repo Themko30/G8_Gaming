@@ -18,7 +18,6 @@ import main.java.Validator.ValidatorImpl;
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {
 
-  private final UtenteDAO utenteDAO = new UtenteDAO();
   private Validator validator;
 
   @Override
@@ -73,16 +72,14 @@ public class RegistrazioneServlet extends HttpServlet {
         }
         break;
       case "/update":
-        Utente updateUtente = new Utente();
-        updateUtente.setUsername(req.getParameter("username"));
-        updateUtente.setEmail(req.getParameter("email"));
-        updateUtente.setPassword(req.getParameter("password"));
-        updateUtente.setNome(req.getParameter("nome"));
-        updateUtente.setCognome(req.getParameter("cognome"));
-        updateUtente.setSesso(req.getParameter("sesso"));
-        updateUtente.setDataDiNascita(LocalDate.parse(req.getParameter("data")));
-        updateUtente.setAdmin(false);
-        if (utenteDAO.doUpdateUtente(updateUtente)) {
+        String username = req.getParameter("username");
+        String email =req.getParameter("email");
+        String password =req.getParameter("password");
+        String nome =req.getParameter("nome");
+        String cognome =req.getParameter("cognome");
+        String sesso =req.getParameter("sesso");
+        LocalDate dataDiNascita = LocalDate.parse(req.getParameter("data"));
+                if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
