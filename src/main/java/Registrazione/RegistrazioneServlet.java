@@ -28,6 +28,8 @@ public class RegistrazioneServlet extends HttpServlet {
       throws ServletException, IOException {
 
     String path = req.getPathInfo();
+    if(path == null)
+      path = "/";
 
     switch (path) {
       case "/":
