@@ -26,6 +26,15 @@ public class RegistrazioneServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     super.doGet(req, resp);
+
+    String path = req.getPathInfo();
+
+    switch (path) {
+      case "/":
+        /*TODO*/ RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        dispatcher.forward(req, resp);
+        break;
+    }
   }
 
   @Override
@@ -37,7 +46,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
     switch (path) {
       case "/":
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        /*TODO*/  RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
         dispatcher.forward(req, resp);
         break;
       case "/save":
@@ -52,7 +61,7 @@ public class RegistrazioneServlet extends HttpServlet {
         saveUtente.setAdmin(false);
         if (utenteDAO.doSaveUtente(saveUtente)){
           resp.setStatus(HttpServletResponse.SC_CREATED);
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
           throw new ServletException("Errore di inserimento...");
         }
@@ -69,7 +78,7 @@ public class RegistrazioneServlet extends HttpServlet {
         updateUtente.setAdmin(false);
         if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -77,7 +86,7 @@ public class RegistrazioneServlet extends HttpServlet {
       case "/delete":
         if (utenteDAO.doDeleteUtente(req.getParameter("username"))) {
           // SET ALERT
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         }
         else {
           throw new ServletException("Errore di eliminazione...");
