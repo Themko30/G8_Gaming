@@ -140,7 +140,7 @@ public class OrdineDAO {
         }
     }
 
-    public int doSaveOrdine(Ordine o) throws InvalidProductQuantityException {
+    public boolean doSaveOrdine(Ordine o){
         try (Connection con = ConPool.getConnection()) {
 
             LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
@@ -180,7 +180,7 @@ public class OrdineDAO {
                     prodottoDAO.doUpdateQuantita(p, prodotti.get(p));
                 }
 
-                return (rows>0)==true?1:0;
+                return rows>0;
 
 
         } catch (SQLException e) {

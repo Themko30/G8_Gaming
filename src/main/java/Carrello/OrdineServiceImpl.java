@@ -24,8 +24,8 @@ public class OrdineServiceImpl implements OrdineService{
     }
 
     @Override
-    public void saveOrdine(Ordine ordine, Validator validator) {
-
+    public boolean saveOrdine(Ordine ordine) {
+        return ordineDAO.doSaveOrdine(ordine);
     }
 
 
