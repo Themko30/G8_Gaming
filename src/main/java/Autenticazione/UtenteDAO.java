@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import main.java.Prenotazione.Prenotazione;
 import main.java.Storage.ConPool;
@@ -13,7 +14,7 @@ public class UtenteDAO {
   public boolean doSaveUtente(Utente utente) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("INSERT INTO Utente(username, email, password, nome, cognome, sesso, dataDiNascita, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      PreparedStatement ps = con.prepareStatement("INSERT INTO Utente(username, email, password, nome, cognome, sesso, dataDiNascita, adminFlag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
       ps.setString(1, utente.getUsername());
       ps.setString(2, utente.getEmail());
@@ -21,7 +22,7 @@ public class UtenteDAO {
       ps.setString(4, utente.getNome());
       ps.setString(5, utente.getCognome());
       ps.setString(6, utente.getSesso());
-      ps.setString(7, utente.getDataDiNascita());
+      ps.setObject(7, java.sql.Date.valueOf(utente.getDataDiNascita()));
       ps.setBoolean(8, utente.isAdmin());
 
       int x= ps.executeUpdate();
@@ -52,7 +53,7 @@ public class UtenteDAO {
         utente.setNome(rs.getString("nome"));
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
-        utente.setDataDiNascita(rs.getString("dataDiNascita"));
+        utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
         utente.setAdmin(rs.getBoolean("admin"));
         utenti.add(utente);
 
@@ -82,7 +83,7 @@ public class UtenteDAO {
         utente.setNome(rs.getString("nome"));
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
-        utente.setDataDiNascita(rs.getString("dataDiNascita"));
+        utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
         utente.setAdmin(rs.getBoolean("admin"));
 
       }
@@ -104,7 +105,7 @@ public class UtenteDAO {
         ps.setString(4, utente.getNome());
         ps.setString(5, utente.getCognome());
         ps.setString(6, utente.getSesso());
-        ps.setString(7, utente.getDataDiNascita());
+        ps.setObject(7, java.sql.Date.valueOf(utente.getDataDiNascita()));
         ps.setBoolean(8, utente.isAdmin());
 
         int x=ps.executeUpdate();

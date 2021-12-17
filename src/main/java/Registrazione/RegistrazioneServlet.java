@@ -2,6 +2,7 @@ package main.java.Registrazione;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,6 @@ public class RegistrazioneServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    super.doGet(req, resp);
 
     String path = req.getPathInfo();
 
@@ -40,9 +40,10 @@ public class RegistrazioneServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    super.doPost(req, resp);
 
     String path = req.getPathInfo();
+    if(path == null)
+      path = "/";
 
     switch (path) {
       case "/":
@@ -57,7 +58,7 @@ public class RegistrazioneServlet extends HttpServlet {
         saveUtente.setNome(req.getParameter("nome"));
         saveUtente.setCognome(req.getParameter("cognome"));
         saveUtente.setSesso(req.getParameter("sesso"));
-        saveUtente.setDataDiNascita(req.getParameter("data"));
+        saveUtente.setDataDiNascita(LocalDate.parse(req.getParameter("data")));
         saveUtente.setAdmin(false);
         if (utenteDAO.doSaveUtente(saveUtente)){
           resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -74,7 +75,7 @@ public class RegistrazioneServlet extends HttpServlet {
         updateUtente.setNome(req.getParameter("nome"));
         updateUtente.setCognome(req.getParameter("cognome"));
         updateUtente.setSesso(req.getParameter("sesso"));
-        updateUtente.setDataDiNascita(req.getParameter("data"));
+        updateUtente.setDataDiNascita(LocalDate.parse(req.getParameter("data")));
         updateUtente.setAdmin(false);
         if (utenteDAO.doUpdateUtente(updateUtente)) {
           // SET ALERT
