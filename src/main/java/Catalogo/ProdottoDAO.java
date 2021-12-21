@@ -40,6 +40,22 @@ public class ProdottoDAO {
         }
     }
 
+    public int doUpdateMedia(Prodotto prodotto, int valutazione){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET numeroVoti=(numeroVoti+1), totaleVoti = (totaleVoti + ?) WHERE codice=?");
+            ps.setInt(1,valutazione);
+            ps.setInt(2, prodotto.getCodice());
+
+            int x = ps.executeUpdate();
+            ps = con.prepareStatement("UPDATE Prodotto SET media=(totaleVoti/numeroVoti) WHERE codice=?");
+            x = ps.executeUpdate();
+
+            return x>0? 1:0;
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
     public int doSaveProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
 
@@ -84,6 +100,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getLong("numeroVoti"));
+                p.setTotaleVoti(rs.getLong("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;
@@ -116,6 +135,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;
@@ -144,7 +166,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
-
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
             }
             return p;
 
@@ -175,6 +199,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;

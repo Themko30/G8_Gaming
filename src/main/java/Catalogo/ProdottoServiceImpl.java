@@ -21,5 +21,18 @@ public class ProdottoServiceImpl implements ProdottoService{
         return prodottoDAO.doRetrieveQuantitaProdottoByCodice(prodotto.getCodice());
     }
 
+    @Override
+    public int updateValutazione(Prodotto prodotto, int valutazione) {
+        return prodottoDAO.doUpdateMedia(prodotto, valutazione);
+    }
 
+    @Override
+    public ArrayList<Prodotto> prodottiNomeLike(String nome) {
+        return prodottoDAO.doRetrieveProdottiByNomeLike(nome, 100, 0);
+    }
+
+    @Override
+    public ArrayList<Prodotto> allProdotti() {
+        return prodottoDAO.doRetrieveProdotti(100, 0);
+    }
 }

@@ -3,7 +3,10 @@ package main.java.Catalogo;
 import java.util.ArrayList;
 
 public interface ProdottoService {
-    public ArrayList<Prodotto> prodottiCategoria(String categoria);
-    public Prodotto prodottoCodice(int codice);
-    public int quantitaProdotto(Prodotto prodotto);
+    ArrayList<Prodotto> prodottiCategoria(String categoria);
+    Prodotto prodottoCodice(int codice);
+    int quantitaProdotto(Prodotto prodotto);
+    int updateValutazione(Prodotto prodotto, int valutazione);
+    ArrayList<Prodotto> prodottiNomeLike(String nome);
+    ArrayList<Prodotto> allProdotti();
 }
