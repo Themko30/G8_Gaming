@@ -2,6 +2,8 @@ package main.java.Carrello;
 
 import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
+import main.java.Catalogo.ProdottoService;
+import main.java.Catalogo.ProdottoServiceImpl;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -50,5 +52,25 @@ public class CarrelloServiceImpl implements CarrelloService{
         return carrello;
     }
 
+    @Override
+    public Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita) {
+        LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap= carrello.getProdotti();
+        Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
+        boolean added = false;
+        for(Prodotto p: prodottiCarrello){
+            if(p.getCodice()==codiceProdotto){
+                prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
+                added = true;
+                break;
+            }
+        }
+        if(!added){
+            ProdottoService prodottoService = new ProdottoServiceImpl();
+            Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
+            prodottiCarrelloMap.put(p, quantita);
+        }
 
+        carrello.setProdotti(prodottiCarrelloMap);
+        return carrello;
+    }
 }

@@ -22,25 +22,14 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
         int quantitaProdotto = Integer.parseInt(request.getParameter("quantita"));
-        /*TODO*/ProdottoDAO prodottoDAO = new ProdottoDAO();
-        Prodotto prodotto = prodottoDAO.doRetrieveProdottoByCodice(codiceProdotto);
-        synchronized (session){
-            Carrello carrello = (Carrello) session.getAttribute("carrello");
-            LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap= carrello.getProdotti();
-            Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
-            boolean added = false;
-            for(Prodotto p: prodottiCarrello){
-                if(p.getCodice()==prodotto.getCodice()){
-                    prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantitaProdotto);
-                    added = true;
-                    break;
-                }
-            }
-            if(!added){
-                prodottiCarrelloMap.put(prodotto, quantitaProdotto);
-            }
 
-            carrello.setProdotti(prodottiCarrelloMap);
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
+        CarrelloService carrelloService = new CarrelloServiceImpl();
+
+        synchronized (session){
+
+            carrello = carrelloService.aggiungiProdotto(carrello, codiceProdotto, quantitaProdotto);
+
             session.removeAttribute("carrello");
             session.setAttribute("carrello", carrello);
 
