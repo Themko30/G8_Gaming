@@ -14,6 +14,8 @@ public class Prodotto {
     private long totaleVoti;
     private double media;
 
+    private int valutato;
+
     public Prodotto(){}
 
     public int getCodice() {
@@ -110,5 +112,13 @@ public class Prodotto {
 
     public void setMedia(double media) {
         this.media = media;
+    }
+
+    public int getValutato() {
+        return valutato;
+    }
+
+    public void setValutato(int valutato) {
+        this.valutato = valutato;
     }
 }

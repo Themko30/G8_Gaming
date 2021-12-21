@@ -78,6 +78,8 @@ public class OrdineDAO {
                 p.setDescrizione(rs.getString("p.descrizione"));
                 p.setCopertina(rs.getString("p.copertina"));
 
+                p.setValutato(rs.getInt("a.valutato"));
+
                 prodotti.put(p, rs.getInt("a.quantitaAcquistata"));
             }
 
@@ -184,6 +186,21 @@ public class OrdineDAO {
 
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doSetProdottoValutato(int codiceOrdine, int codiceProdotto){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps =
+                    con.prepareStatement("UPDATE ArticoloAcquistato SET valutato=1 WHERE ordine=? AND prodotto=?");
+            ps.setInt(1, codiceOrdine);
+            ps.setInt(2, codiceProdotto);
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
