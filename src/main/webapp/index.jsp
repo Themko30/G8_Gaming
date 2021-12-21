@@ -7,9 +7,9 @@
     </jsp:include>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<%@include file="WEB-INF/views/partials/header.jsp"%>
+<div class="container">
+
+</div>
 </body>
 </html>
