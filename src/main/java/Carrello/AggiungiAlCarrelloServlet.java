@@ -22,7 +22,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
         int quantitaProdotto = Integer.parseInt(request.getParameter("quantita"));
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
+        /*TODO*/ProdottoDAO prodottoDAO = new ProdottoDAO();
         Prodotto prodotto = prodottoDAO.doRetrieveProdottoByCodice(codiceProdotto);
         synchronized (session){
             Carrello carrello = (Carrello) session.getAttribute("carrello");
