@@ -9,4 +9,5 @@ public interface ProdottoService {
     int updateValutazione(Prodotto prodotto, int valutazione);
     ArrayList<Prodotto> prodottiNomeLike(String nome);
     ArrayList<Prodotto> allProdotti();
+    ArrayList<Prodotto> prodottiPiattaforma(String piattaforma);
 }

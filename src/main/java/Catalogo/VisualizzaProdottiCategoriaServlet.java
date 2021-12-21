@@ -17,10 +17,8 @@ public class VisualizzaProdottiCategoriaServlet extends HttpServlet {
         String categoria = request.getParameter("categoria");
 
         prodottoService = new ProdottoServiceImpl();
-        ArrayList<Prodotto> prodottiCategoria = prodottoService.prodottiCategoria(categoria);
 
-
-        request.setAttribute("prodotti", prodottiCategoria);
+        request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("CATEGORIA DISPLAY PAGE");
         dispatcher.forward(request, response);

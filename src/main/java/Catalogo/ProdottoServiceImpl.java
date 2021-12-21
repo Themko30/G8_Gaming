@@ -35,4 +35,9 @@ public class ProdottoServiceImpl implements ProdottoService{
     public ArrayList<Prodotto> allProdotti() {
         return prodottoDAO.doRetrieveProdotti(100, 0);
     }
+
+    @Override
+    public ArrayList<Prodotto> prodottiPiattaforma(String piattaforma) {
+        return prodottoDAO.doRetrieveProdottiByPiattaforma(piattaforma, 100, 0);
+    }
 }
