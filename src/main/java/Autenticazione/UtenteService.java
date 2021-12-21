@@ -11,4 +11,5 @@ public interface UtenteService {
   public boolean saveUtente(Utente utente);
   public boolean updateUtente(Utente utente);
   public boolean deleteUtente(String username);
+
 }

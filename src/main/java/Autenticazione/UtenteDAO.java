@@ -70,7 +70,7 @@ public class UtenteDAO {
   public Utente doRetrieveUtenteByUsername(String username){
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione WHERE username=?");
+      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=?");
       ps.setString(1,username);
 
       ResultSet rs= ps.executeQuery();

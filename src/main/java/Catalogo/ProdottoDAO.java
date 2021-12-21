@@ -40,6 +40,22 @@ public class ProdottoDAO {
         }
     }
 
+    public int doUpdateMedia(Prodotto prodotto, int valutazione){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET numeroVoti=(numeroVoti+1), totaleVoti = (totaleVoti + ?) WHERE codice=?");
+            ps.setInt(1,valutazione);
+            ps.setInt(2, prodotto.getCodice());
+
+            int x = ps.executeUpdate();
+            ps = con.prepareStatement("UPDATE Prodotto SET media=(totaleVoti/numeroVoti) WHERE codice=?");
+            x = ps.executeUpdate();
+
+            return x>0? 1:0;
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
     public int doSaveProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
 
@@ -84,6 +100,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getLong("numeroVoti"));
+                p.setTotaleVoti(rs.getLong("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;
@@ -116,6 +135,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;
@@ -144,7 +166,9 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
-
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
             }
             return p;
 
@@ -157,7 +181,7 @@ public class ProdottoDAO {
     public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int limit, int offset){
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prdotto WHERE categoria=? LIMIT ?,?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE categoria=? LIMIT ?,?");
             ps.setString(1, categoria);
             ps.setInt(2, limit);
             ps.setInt(3, offset);
@@ -175,6 +199,43 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
+                prodotti.add(p);
+            }
+            return prodotti;
+
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int limit, int offset){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE piattaforma=? LIMIT ?,?");
+            ps.setString(1, piattaforma);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+
+            ResultSet rs= ps.executeQuery();
+            ArrayList<Prodotto> prodotti= new ArrayList<>();
+
+            while (rs.next()){
+                Prodotto p= new Prodotto();
+                p.setCodice(rs.getInt("codice"));
+                p.setPrezzo(rs.getDouble("prezzo"));
+                p.setScontoAttivo(rs.getDouble("scontoAttivo"));
+                p.setQuantita(rs.getInt("quantita"));
+                p.setCopertina(rs.getString("copertina"));
+                p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
+                p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }
             return prodotti;

@@ -62,7 +62,7 @@ public class PrenotazioneServlet extends HttpServlet {
           updatePrenotazione.setDescrizione(req.getParameter("descrizione"));
           if (prenotazioneDAO.doUpdatePrenotazione(updatePrenotazione)) {
             // SET ALERT
-            req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
           } else {
             throw new ServletException("Errore di aggiornamento...");
           }
