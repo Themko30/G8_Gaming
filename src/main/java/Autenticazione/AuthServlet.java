@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import main.java.Carrello.Ordine;
 import main.java.Carrello.OrdineService;
 import main.java.Carrello.OrdineServiceImpl;
-import main.java.Catalogo.Prodotto;
 import main.java.Catalogo.ProdottoService;
 import main.java.Catalogo.ProdottoServiceImpl;
 import main.java.Validator.Validator;
@@ -64,7 +63,7 @@ public class AuthServlet extends HttpServlet {
         cognome = req.getParameter("cognome");
         sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
-        utenteService = new UtenteImpl();
+        utenteService = new UtenteServiceImpl();
         Utente updateUtente =
             utenteService.createUtente(
                 username, email, password, nome, cognome, sesso, dataDiNascita);
@@ -77,7 +76,7 @@ public class AuthServlet extends HttpServlet {
         break;
       case "/delete":
         username = req.getParameter("username");
-        utenteService = new UtenteImpl();
+        utenteService = new UtenteServiceImpl();
         if (utenteService.deleteUtente(req.getParameter("username"))) {
           // SET ALERT
           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);

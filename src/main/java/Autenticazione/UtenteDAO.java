@@ -14,7 +14,7 @@ public class UtenteDAO {
   public boolean doSaveUtente(Utente utente) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("INSERT INTO Utente(username, email, password, nome, cognome, sesso, dataDiNascita, adminFlag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      PreparedStatement ps = con.prepareStatement("INSERT INTO Utente(username, email, password, nome, cognome, sesso, dataDiNascita, adminFlag, indirizzo, cap, paese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
       ps.setString(1, utente.getUsername());
       ps.setString(2, utente.getEmail());
@@ -24,6 +24,9 @@ public class UtenteDAO {
       ps.setString(6, utente.getSesso());
       ps.setObject(7, java.sql.Date.valueOf(utente.getDataDiNascita()));
       ps.setBoolean(8, utente.isAdmin());
+      ps.setString(9, utente.getIndirizzo());
+      ps.setInt(10, utente.getCap());
+      ps.setString(11, utente.getPaese());
 
       int x= ps.executeUpdate();
 
@@ -55,6 +58,9 @@ public class UtenteDAO {
         utente.setSesso(rs.getString("sesso"));
         utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
         utente.setAdmin(rs.getBoolean("admin"));
+        utente.setIndirizzo(rs.getString("indirizzo"));
+        utente.setCap(rs.getInt("cap"));
+        utente.setPaese(rs.getString("paese"));
         utenti.add(utente);
 
       }
@@ -85,6 +91,9 @@ public class UtenteDAO {
         utente.setSesso(rs.getString("sesso"));
         utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
         utente.setAdmin(rs.getBoolean("admin"));
+        utente.setIndirizzo(rs.getString("indirizzo"));
+        utente.setCap(rs.getInt("cap"));
+        utente.setPaese(rs.getString("paese"));
 
       }
       return utente;
@@ -94,19 +103,43 @@ public class UtenteDAO {
   }
     }
 
+  public boolean doCheckUsername(String username){
+    try (Connection con = ConPool.getConnection()) {
+
+      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=?");
+      ps.setString(1,username);
+
+      ResultSet rs= ps.executeQuery();
+      Utente utente= new Utente();
+
+      if(rs.next()){
+        return true;
+
+      }
+      return false;
+
+    } catch(SQLException e){
+      throw new RuntimeException(e);
+    }
+  }
+
     public boolean doUpdateUtente(Utente utente){
 
       try (Connection con = ConPool.getConnection()) {
-        PreparedStatement ps = con.prepareStatement("UPDATE Utente SET username=?, email=?, password=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, admin=?  WHERE codice=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, password=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, admin=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
 
-        ps.setString(1, utente.getUsername());
-        ps.setString(2, utente.getEmail());
-        ps.setString(3, utente.getPassword());
-        ps.setString(4, utente.getNome());
-        ps.setString(5, utente.getCognome());
-        ps.setString(6, utente.getSesso());
-        ps.setObject(7, java.sql.Date.valueOf(utente.getDataDiNascita()));
-        ps.setBoolean(8, utente.isAdmin());
+        ps.setString(1, utente.getEmail());
+        ps.setString(2, utente.getPassword());
+        ps.setString(3, utente.getNome());
+        ps.setString(4, utente.getCognome());
+        ps.setString(5, utente.getSesso());
+        ps.setObject(6, java.sql.Date.valueOf(utente.getDataDiNascita()));
+        ps.setBoolean(7, utente.isAdmin());
+        ps.setString(8, utente.getIndirizzo());
+        ps.setInt(9, utente.getCap());
+        ps.setString(10, utente.getPaese());
+        ps.setString(11, utente.getUsername());
+
 
         int x=ps.executeUpdate();
 

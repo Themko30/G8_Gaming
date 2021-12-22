@@ -1,11 +1,13 @@
 package main.java.Validator;
 
+import java.time.LocalDate;
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
+import main.java.Autenticazione.Utente;
+import main.java.Autenticazione.UtenteServiceImpl;
+import main.java.Autenticazione.UtenteService;
 import main.java.Catalogo.Prodotto;
-import main.java.Catalogo.ProdottoDAO;
 import main.java.Catalogo.ProdottoService;
 import main.java.Catalogo.ProdottoServiceImpl;
 
@@ -13,10 +15,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.regex.Pattern;
 
 public class ValidatorImpl implements Validator{
+
+    private UtenteService utenteService;
 
 
     public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException{
@@ -27,7 +30,7 @@ public class ValidatorImpl implements Validator{
         }
     }
 
-    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException {
+    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException, InvalidUserException {
         Pattern pattern = Pattern.compile("[A-Za-z]+[ ][A-Za-z]+[,][ ]?[0-9A-Za-z]+");
         if(!(pattern.matcher(indirizzo).matches())){
             throw new InvalidIndirizzoException();
@@ -88,6 +91,62 @@ public class ValidatorImpl implements Validator{
         imgFile.delete();
 
 
+    }
+
+    @Override
+    public void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException {
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
+
+        if (!(pattern.matcher(utente.getUsername()).matches())){
+            throw new InvalidUserException();
+        }
+
+        utenteService = new UtenteServiceImpl();
+
+        if(utenteService.checkUtente(utente.getUsername())){
+            throw new InvalidUserException();
+        }
+
+        if (utente.getPassword().length() <6 || utente.getPassword().length() > 64 ){
+            throw new InvalidUserException();
+        }
+
+        pattern = Pattern.compile("[a-zA-Z ]+");
+
+        if (! pattern.matcher(utente.getNome()).matches()){
+            throw new InvalidUserException();
+        }
+
+        if (utente.getNome().length() < 2 || utente.getNome().length() > 32){
+            throw new InvalidUserException();
+        }
+
+        if (! pattern.matcher(utente.getCognome()).matches()){
+            throw new InvalidUserException();
+        }
+
+        if (utente.getCognome().length() < 2 || utente.getCognome().length() > 32){
+            throw new InvalidUserException();
+        }
+
+        if (!(utente.getSesso().equals("M") || utente.getSesso().equals("F") || utente.getSesso().equals("Altro"))){
+            throw new InvalidUserException();
+        }
+
+        LocalDate localDateStart = LocalDate.of(1900, 1 , 1);
+        LocalDate localDateFinish = LocalDate.now();
+
+        if (utente.getDataDiNascita().isBefore(localDateStart) || utente.getDataDiNascita().isAfter(localDateFinish)){
+            throw new InvalidUserException();
+        }
+
+        pattern = Pattern.compile("[(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])]");
+
+        if (! pattern.matcher(utente.getEmail()).matches()){
+            throw new InvalidUserException();
+        }
+
+        validateIndirizzo(utente.getIndirizzo(), utente.getCap(), utente.getPaese());
     }
 
 

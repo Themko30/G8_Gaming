@@ -31,6 +31,7 @@ public class Admin extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String path = req.getPathInfo();
         validator= new ValidatorImpl();
         path= validator.validatePath(path);

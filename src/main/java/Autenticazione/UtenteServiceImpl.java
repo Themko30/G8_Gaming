@@ -3,7 +3,7 @@ package main.java.Autenticazione;
 import java.time.LocalDate;
 import main.java.Prenotazione.Prenotazione;
 
-public class UtenteImpl implements UtenteService {
+public class UtenteServiceImpl implements UtenteService {
 
   private final UtenteDAO utenteDao = new UtenteDAO();
 
@@ -34,5 +34,10 @@ public class UtenteImpl implements UtenteService {
   @Override
   public boolean deleteUtente(String username) {
     return utenteDao.doDeleteUtente(username);
+  }
+
+  @Override
+  public boolean checkUtente(String username) {
+    return utenteDao.doCheckUsername(username);
   }
 }

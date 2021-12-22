@@ -10,7 +10,8 @@ import java.util.List;
 import main.java.Carrello.Ordine;
 
 public class Utente {
-    private String username, email, password, nome, cognome, sesso;
+    private String username, email, password, nome, cognome, sesso, indirizzo, paese;
+    private int cap;
     private LocalDate dataDiNascita;
     private boolean admin;
     private List<Ordine> ordini;
@@ -96,5 +97,29 @@ public class Utente {
 
     public void setOrdini(List<Ordine> ordini) {
         this.ordini = ordini;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getPaese() {
+        return paese;
+    }
+
+    public void setPaese(String paese) {
+        this.paese = paese;
+    }
+
+    public int getCap() {
+        return cap;
+    }
+
+    public void setCap(int cap) {
+        this.cap = cap;
     }
 }
