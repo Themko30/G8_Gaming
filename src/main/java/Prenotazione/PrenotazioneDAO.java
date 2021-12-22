@@ -47,6 +47,7 @@ public class PrenotazioneDAO {
         p.setDescrizione(rs.getString("descrizione"));
         p.setEmailRichiedente(rs.getString("emailRichiedente"));
         p.setCopertina(rs.getString("copertina"));
+        p.setAccettata(rs.getInt("accettata"));
         prenotazioni.add(p);
       }
       return prenotazioni;
@@ -73,6 +74,7 @@ public class PrenotazioneDAO {
         p.setDescrizione(rs.getString("descrizione"));
         p.setEmailRichiedente(rs.getString("emailRichiedente"));
         p.setCopertina(rs.getString("copertina"));
+        p.setAccettata(rs.getInt("accettata"));
 
       }
       return p;
@@ -85,13 +87,14 @@ public class PrenotazioneDAO {
   public boolean doUpdatePrenotazione(Prenotazione prenotazione){
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET numeroPrenotazione=?, categoria=?, descrizione=?, emailRichiedente=?, copertina=? WHERE codice=?");
+      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET numeroPrenotazione=?, categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettat=? WHERE codice=?");
 
       ps.setInt(1, prenotazione.getNumeroPrenotazione());
       ps.setString(2, prenotazione.getCategoria());
       ps.setString(3, prenotazione.getDescrizione());
       ps.setString(4, prenotazione.getEmailRichiedente());
       ps.setString(5, prenotazione.getCopertina());
+      ps.setInt(6, prenotazione.getAccettata());
 
       int x=ps.executeUpdate();
 
