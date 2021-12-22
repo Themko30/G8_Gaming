@@ -72,9 +72,6 @@ public class Admin extends HttpServlet {
         validator= new ValidatorImpl();
         path= validator.validatePath(path);
 
-        String username, email, password, nome, cognome, sesso;
-        LocalDate dataDiNascita;
-        int codiceOrdine, codiceProdotto;
 
         switch (path) {
             case "/SetHomePage":
