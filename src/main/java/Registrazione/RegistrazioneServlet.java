@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.java.Autenticazione.Utente;
-import main.java.Autenticazione.UtenteDAO;
-import main.java.Autenticazione.UtenteImpl;
+import main.java.Autenticazione.UtenteServiceImpl;
 import main.java.Autenticazione.UtenteService;
-import main.java.Prenotazione.Prenotazione;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
@@ -68,7 +66,7 @@ public class RegistrazioneServlet extends HttpServlet {
         cognome =req.getParameter("cognome");
         sesso =req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
-        utenteService = new UtenteImpl();
+        utenteService = new UtenteServiceImpl();
         Utente saveUtente = utenteService.createUtente(username,email,password,nome,cognome,sesso,dataDiNascita);
         if (utenteService.saveUtente(saveUtente)){
           resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -85,7 +83,7 @@ public class RegistrazioneServlet extends HttpServlet {
         cognome =req.getParameter("cognome");
         sesso =req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
-        utenteService = new UtenteImpl();
+        utenteService = new UtenteServiceImpl();
         Utente updateUtente = utenteService.createUtente(username,email,password,nome,cognome,sesso,dataDiNascita);
         if (utenteService.updateUtente(updateUtente)){
           // SET ALERT
@@ -96,7 +94,7 @@ public class RegistrazioneServlet extends HttpServlet {
         break;
       case "/delete":
         username = req.getParameter("username");
-        utenteService = new UtenteImpl();
+        utenteService = new UtenteServiceImpl();
         if (utenteService.deleteUtente(req.getParameter("username"))) {
           // SET ALERT
           /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);

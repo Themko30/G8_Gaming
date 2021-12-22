@@ -1,7 +1,7 @@
 package main.java.Prenotazione;
 
 public class Prenotazione {
-  private int numeroPrenotazione;
+  private int numeroPrenotazione, accettata;
   private String categoria, descrizione, emailRichiedente, copertina;
 
   public int getNumeroPrenotazione() {
@@ -42,5 +42,13 @@ public class Prenotazione {
 
   public void setCopertina(String copertina) {
     this.copertina = copertina;
+  }
+
+  public int getAccettata() {
+    return accettata;
+  }
+
+  public void setAccettata(int accettata) {
+    this.accettata = accettata;
   }
 }

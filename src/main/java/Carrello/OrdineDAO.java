@@ -125,13 +125,13 @@ public class OrdineDAO {
         }
     }
 
-    public int doUpdateStatoOrdine(Ordine o){
+    public int doUpdateStatoOrdine(int numero, String stato){
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps =
                     con.prepareStatement("UPDATE Ordine SET stato=? WHERE numero=?");
-            ps.setString(1, o.getStato());
-            ps.setInt(2, o.getNumero());
+            ps.setString(1, stato);
+            ps.setInt(2, numero);
             int rows= ps.executeUpdate();
 
             return rows>0 ? 1:0;
