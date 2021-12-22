@@ -10,9 +10,20 @@ import java.util.ArrayList;
 
 public class ProdottoDAO {
 
-    public int doUpdateProdotto(Prodotto prodotto){
+    public String doUpdateProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET categoria=?, nome=?, piattaforma=?, prezzo=?, scontoAttivo=?, quantita=(quantita+?), descrizione=? WHERE codice=?");
+
+            PreparedStatement ps = con.prepareStatement("SELECT copertina FROM Prodotto WHERE codice=?");
+            ps.setInt(1, prodotto.getCodice());
+
+            ResultSet rs = ps.executeQuery();
+
+            String oldCopertina = null;
+            if(rs.next()){
+                oldCopertina = rs.getString("copertina");
+            }
+
+            ps = con.prepareStatement("UPDATE Prodotto SET categoria=?, nome=?, piattaforma=?, prezzo=?, scontoAttivo=?, quantita=(quantita+?), descrizione=?, copertina=? WHERE codice=?");
             ps.setString(1, prodotto.getCategoria());
             ps.setString(2, prodotto.getNome());
             ps.setString(3, prodotto.getPiattaforma());
@@ -20,9 +31,11 @@ public class ProdottoDAO {
             ps.setDouble(5, prodotto.getScontoAttivo());
             ps.setInt(6, prodotto.getQuantita());
             ps.setString(7, prodotto.getDescrizione());
-            ps.setInt(8, prodotto.getCodice());
+            ps.setString(8, prodotto.getCopertina());
+            ps.setInt(9, prodotto.getCodice());
             int x=ps.executeUpdate();
-            return x>0? 1:0;
+
+            return oldCopertina;
         } catch (SQLException e){
             throw new RuntimeException(e);
         }

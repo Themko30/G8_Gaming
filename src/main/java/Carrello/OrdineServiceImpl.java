@@ -2,7 +2,6 @@ package main.java.Carrello;
 
 import java.util.ArrayList;
 import main.java.Autenticazione.Utente;
-import main.java.Validator.Validator;
 
 import java.time.LocalDate;
 
@@ -43,6 +42,16 @@ public class OrdineServiceImpl implements OrdineService{
     @Override
     public void setProdottoValutato(int codiceOrdine, int codiceProdotto) {
         ordineDAO.doSetProdottoValutato(codiceOrdine, codiceProdotto);
+    }
+
+    @Override
+    public ArrayList<Ordine> allOrders() {
+        return ordineDAO.doRetrieveAllOrdini(0, 100);
+    }
+
+    @Override
+    public void updateStato(int numeroOrdine, String stato) {
+        ordineDAO.doUpdateStatoOrdine(numeroOrdine, stato);
     }
 
 

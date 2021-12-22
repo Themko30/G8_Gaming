@@ -40,4 +40,30 @@ public class ProdottoServiceImpl implements ProdottoService{
     public ArrayList<Prodotto> prodottiPiattaforma(String piattaforma) {
         return prodottoDAO.doRetrieveProdottiByPiattaforma(piattaforma, 100, 0);
     }
+
+    @Override
+    public int saveProdotto(Prodotto prodotto) {
+        return prodottoDAO.doSaveProdotto(prodotto);
+    }
+
+    @Override
+    public String updateProdotto(Prodotto prodotto) {
+        return prodottoDAO.doUpdateProdotto(prodotto);
+    }
+
+    @Override
+    public Prodotto creaProdotto(String categoria, String nome, String piattaforma, double prezzo, double scontoAttivo, int quantita, String descrizione, String copertina) {
+
+        Prodotto prodotto = new Prodotto();
+        prodotto.setCategoria(categoria);
+        prodotto.setNome(nome);
+        prodotto.setPiattaforma(piattaforma);
+        prodotto.setPrezzo(prezzo);
+        prodotto.setScontoAttivo(scontoAttivo);
+        prodotto.setQuantita(quantita);
+        prodotto.setDescrizione(descrizione);
+        prodotto.setCopertina(copertina);
+
+        return prodotto;
+    }
 }

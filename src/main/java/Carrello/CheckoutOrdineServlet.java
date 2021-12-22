@@ -48,6 +48,18 @@ public class CheckoutOrdineServlet extends HttpServlet {
                     validator.validateQuantitaProdotto(p, prodotti.get(p));
                 }
 
+                ordineService.saveOrdine(ordine);
+
+                CarrelloService carrelloService = new CarrelloServiceImpl();
+                carrello = carrelloService.clearCarrello(carrello);
+
+                session.removeAttribute("carrello");
+                session.setAttribute("carrello", carrello);
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ORDINE SUCCESS PAGE");
+                dispatcher.forward(request, response);
+
+
             } catch (InvalidIndirizzoException e) {
                 e.printStackTrace();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Ordine Failed Page");
@@ -60,14 +72,7 @@ public class CheckoutOrdineServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
 
-            CarrelloService carrelloService = new CarrelloServiceImpl();
-            carrello = carrelloService.clearCarrello(carrello);
 
-            session.removeAttribute("carrello");
-            session.setAttribute("carrello", carrello);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ORDINE SUCCESS PAGE");
-            dispatcher.forward(request, response);
         }
     }
 

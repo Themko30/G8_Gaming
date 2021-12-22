@@ -59,11 +59,11 @@ public class PrenotazioneDAO {
 
   }
 
-  public Prenotazione doRetrievePrenotazioneByCodice(int codice){
+  public Prenotazione doRetrievePrenotazioneByCodice(int numeroPrenotazione){
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione WHERE codice=?");
-      ps.setInt(1,codice);
+      PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione WHERE numeroPrenotazione=?");
+      ps.setInt(1,numeroPrenotazione);
 
       ResultSet rs= ps.executeQuery();
       Prenotazione p= new Prenotazione();
@@ -87,14 +87,15 @@ public class PrenotazioneDAO {
   public boolean doUpdatePrenotazione(Prenotazione prenotazione){
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET numeroPrenotazione=?, categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettat=? WHERE codice=?");
+      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettata=? WHERE numeroPrenotazione=?");
 
-      ps.setInt(1, prenotazione.getNumeroPrenotazione());
-      ps.setString(2, prenotazione.getCategoria());
-      ps.setString(3, prenotazione.getDescrizione());
-      ps.setString(4, prenotazione.getEmailRichiedente());
-      ps.setString(5, prenotazione.getCopertina());
-      ps.setInt(6, prenotazione.getAccettata());
+
+      ps.setString(1, prenotazione.getCategoria());
+      ps.setString(2, prenotazione.getDescrizione());
+      ps.setString(3, prenotazione.getEmailRichiedente());
+      ps.setString(4, prenotazione.getCopertina());
+      ps.setInt(5, prenotazione.getAccettata());
+      ps.setInt(6, prenotazione.getNumeroPrenotazione());
 
       int x=ps.executeUpdate();
 
@@ -105,11 +106,27 @@ public class PrenotazioneDAO {
     }
   }
 
-  public boolean doDeletePrenotazione(int codice) {
+  public boolean doAcceptPrenotazione(int numeroPrenotazione){
+
+    try (Connection con = ConPool.getConnection()) {
+      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET accettata=1 WHERE numeroPrenotazione=?");
+
+      ps.setInt(1, numeroPrenotazione);
+
+      int x=ps.executeUpdate();
+
+      return x == 1;
+
+    } catch (SQLException e){
+      throw new RuntimeException(e);
+    }
+  }
+
+  public boolean doDeletePrenotazione(int numeroPrenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("DELETE FROM Prenotazione WHERE codice=?");
-      ps.setInt(1, codice);
+      PreparedStatement ps = con.prepareStatement("DELETE FROM Prenotazione WHERE numeroPrenotazione=?");
+      ps.setInt(1, numeroPrenotazione);
 
       int x = ps.executeUpdate();
       return x == 1;

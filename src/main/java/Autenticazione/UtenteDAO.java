@@ -163,4 +163,18 @@ public class UtenteDAO {
       throw new RuntimeException(e);
     }
   }
+
+  public boolean doSetAdmin(String username){
+    try (Connection con = ConPool.getConnection()) {
+
+      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET adminFlag=1 WHERE username=?");
+      ps.setString(1, username);
+
+      int x = ps.executeUpdate();
+      return x == 1;
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
