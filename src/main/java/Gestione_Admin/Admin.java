@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -129,6 +128,16 @@ public class Admin extends HttpServlet {
 
 
         switch (path) {
+            case "/Products/AddProductHomePage":
+                /*TODO*/ArrayList<Prodotto> homeAdd = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
+                codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
+                homeAdd.add(prodottoService.prodottoCodice(codiceProdotto));
+
+                getServletContext().removeAttribute("home");
+                getServletContext().setAttribute("home", homeAdd);
+                dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
+                dispatcher.forward(req, resp);
+                break;
             case "/SetHomePage":
                 /*TODO*/ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                 codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
