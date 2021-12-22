@@ -12,7 +12,7 @@ import java.util.Collection;
 public interface Validator {
     public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException;
 
-    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException, InvalidUserException;
+    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException;
 
     public String validatePath(String path);
 
