@@ -30,7 +30,7 @@ public class ValidatorImpl implements Validator{
         }
     }
 
-    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException, InvalidUserException {
+    public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException{
         Pattern pattern = Pattern.compile("[A-Za-z]+[ ][A-Za-z]+[,][ ]?[0-9A-Za-z]+");
         if(!(pattern.matcher(indirizzo).matches())){
             throw new InvalidIndirizzoException();
@@ -84,10 +84,12 @@ public class ValidatorImpl implements Validator{
         int height = bimg.getHeight();
 
         if(width > 1300 || width < 800 || height > 1600 || height < 1000){
+            //noinspection ResultOfMethodCallIgnored
             imgFile.delete();
             throw new InvalidProductException();
         }
 
+        //noinspection ResultOfMethodCallIgnored
         imgFile.delete();
 
 
