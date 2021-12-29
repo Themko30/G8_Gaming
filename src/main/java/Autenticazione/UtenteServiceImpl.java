@@ -2,10 +2,8 @@ package main.java.Autenticazione;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import main.java.Carrello.CarrelloService;
 import main.java.Carrello.CarrelloServiceImpl;
-import main.java.Prenotazione.Prenotazione;
 
 public class UtenteServiceImpl implements UtenteService {
 
@@ -29,7 +27,7 @@ public class UtenteServiceImpl implements UtenteService {
   @Override
   public boolean saveUtente(Utente utente) {
     carrelloService.creaCarrello(utente);
-   return utenteDao.doSaveUtente(utente);
+    return utenteDao.doSaveUtente(utente);
   }
 
   @Override
@@ -55,6 +53,11 @@ public class UtenteServiceImpl implements UtenteService {
   @Override
   public ArrayList<Utente> allUtenti() {
     return utenteDao.doRetrieveAllUtente(0, 100);
+  }
+
+  @Override
+  public int counterUtente() {
+    return utenteDao.doRetrieveCounterUtenti();
   }
 
 
