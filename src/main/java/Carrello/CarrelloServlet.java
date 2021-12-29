@@ -58,8 +58,6 @@ public class CarrelloServlet extends HttpServlet {
                 codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
                 int quantita = Integer.parseInt(request.getParameter("quantita"));
 
-                carrelloService = new CarrelloServiceImpl();
-
                 synchronized (session){
                     carrello = (Carrello) session.getAttribute("carrello");
                     carrello = carrelloService.updateQuantitaCarrelloSession(carrello, codiceProdotto, quantita);
@@ -75,7 +73,6 @@ public class CarrelloServlet extends HttpServlet {
                 session = request.getSession();
                 codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
 
-                carrelloService = new CarrelloServiceImpl();
 
                 synchronized (session){
 
@@ -113,7 +110,6 @@ public class CarrelloServlet extends HttpServlet {
 
                         ordineService.saveOrdine(ordine);
 
-                        CarrelloService carrelloService = new CarrelloServiceImpl();
                         carrello = carrelloService.clearCarrello(carrello);
 
                         session.removeAttribute("carrello");

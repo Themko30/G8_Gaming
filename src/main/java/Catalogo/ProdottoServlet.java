@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ProdottoServlet", value = "/*")
+@WebServlet(name = "ProdottoServlet", value = "/Prodotto")
 public class ProdottoServlet extends HttpServlet{
     ProdottoService prodottoService = new ProdottoServiceImpl();
 
@@ -19,9 +19,7 @@ public class ProdottoServlet extends HttpServlet{
 
         switch (path){
             case "/":
-                ArrayList<Prodotto> homepage = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
-                request.setAttribute("home", homepage);
-                request.getRequestDispatcher("HOMEPAGE").forward(request, response);
+                request.getRequestDispatcher("").forward(request, response);
                 break;
             case "/Categoria":
                 String categoria = request.getParameter("categoria");
