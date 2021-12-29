@@ -74,7 +74,7 @@ input[type="submit"]{
     background: var(--primary);
     border-radius: 25px;
     font-size: 18px;
-    color: #e9f4fb;
+    color: var(--d3light);
     font-weight: 700;
     cursor: pointer;
     outline: none;

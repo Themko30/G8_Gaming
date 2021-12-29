@@ -19,3 +19,13 @@ function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+function alertBox(message, type) {
+    let alertPlaceholder = $('#liveAlertPlaceholder');
+    alertPlaceholder.hide();
+    alertPlaceholder.empty();
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    alertPlaceholder.append(wrapper);
+    alertPlaceholder.show(300);
+}

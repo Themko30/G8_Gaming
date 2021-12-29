@@ -118,9 +118,9 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container text-center">
         <h2>Prenotazione</h2>
-        <p>Non trovi un videogioco? <a href="${context}/prenota.jsp">Effettua una prenotazione</a></p>
+        <p>Non trovi un videogioco? <a href="${context}/prenotazione">Effettua una prenotazione</a></p>
     </div>
 </div>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>

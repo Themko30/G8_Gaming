@@ -1,15 +1,14 @@
 body{
     margin: 0;
     padding: 0;
-    background: linear-gradient(120deg, var(--side), var(--secondary));
-    height: 100vh;
-    overflow: hidden;
+    background: linear-gradient(120deg, var(--side), var(--secondary)) no-repeat fixed;
+    display: flex;
+    justify-content: center;
 }
 .center{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 48px;
+    margin-bottom: 36px;
     width: 400px;
     background: white;
     border-radius: 10px;
@@ -17,21 +16,21 @@ body{
 }
 .center h1{
     text-align: center;
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 1px solid silver;
 }
 .center form{
-    padding: 0 40px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 form .txt_field{
     position: relative;
     border-bottom: 2px solid #adadad;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 .txt_field input{
     width: 100%;
-    padding: 0 5px;
+    padding: 0 3px;
     height: 40px;
     font-size: 16px;
     border: none;
@@ -76,6 +75,7 @@ input[type="submit"]{
     border-radius: 25px;
     font-size: 18px;
     color: var(--d3light);
+    margin-bottom: 16px;
     font-weight: 700;
     cursor: pointer;
     outline: none;
@@ -84,16 +84,17 @@ input[type="submit"]:hover{
     background-color: var(--secondary);
     transition: .5s;
 }
-.signup_link{
-    margin: 30px 0;
-    text-align: center;
-    font-size: 16px;
-    color: #666666;
+#immagine {
+    margin-bottom: 20px;
 }
-.signup_link a{
-    color: var(--primary);
-    text-decoration: none;
+#liveAlertPlaceholder ul {
+    margin-bottom: 0;
+    font-size: 14px;
+    padding-left: 1rem;
 }
-.signup_link a:hover{
-    text-decoration: underline;
+
+@media screen and (max-width: 800px) {
+    .center {
+        width: 360px;
+    }
 }
