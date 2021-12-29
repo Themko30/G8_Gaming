@@ -131,24 +131,29 @@ public class Admin extends HttpServlet {
             case "/Products/AddProductHomePage":
                 /*TODO*/ArrayList<Prodotto> homeAdd = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                 codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
-                homeAdd.add(prodottoService.prodottoCodice(codiceProdotto));
 
-                getServletContext().removeAttribute("home");
-                getServletContext().setAttribute("home", homeAdd);
+                synchronized(homeAdd){
+                    homeAdd.add(prodottoService.prodottoCodice(codiceProdotto));
+                    getServletContext().removeAttribute("home");
+                    getServletContext().setAttribute("home", homeAdd);
+                }
+
                 dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
                 dispatcher.forward(req, resp);
                 break;
             case "/SetHomePage":
                 /*TODO*/ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                 codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
-                for(Prodotto p: home){
-                    if(p.getCodice()==codiceProdotto){
-                        home.remove(p);
-                        break;
+                synchronized (home) {
+                    for (Prodotto p : home) {
+                        if (p.getCodice() == codiceProdotto) {
+                            home.remove(p);
+                            break;
+                        }
                     }
+                    getServletContext().removeAttribute("home");
+                    getServletContext().setAttribute("home", home);
                 }
-                getServletContext().removeAttribute("home");
-                getServletContext().setAttribute("home", home);
                 dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
                 dispatcher.forward(req, resp);
                 break;
@@ -174,6 +179,9 @@ public class Admin extends HttpServlet {
                         if(part.getContentType() != null)
                             part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+copertina);
                     }
+
+                    dispatcher = req.getRequestDispatcher("PRODUCT PAGE");
+                    dispatcher.forward(req, resp);
                 }
                 catch (InvalidProductException e){
                     dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
@@ -194,15 +202,9 @@ public class Admin extends HttpServlet {
                 Part filePartM = req.getPart("copertina");
                 String copertinaM = filePartM.getSubmittedFileName();
 
-                Prodotto prodottoM = new Prodotto();
-                prodottoM.setCategoria(categoriaM);
-                prodottoM.setNome(nomeM);
-                prodottoM.setPiattaforma(piattaformaM);
-                prodottoM.setPrezzo(prezzoM);
-                prodottoM.setScontoAttivo(scontoAttivoM);
-                prodottoM.setQuantita(quantitaM);
-                prodottoM.setDescrizione(descrizioneM);
-                prodottoM.setCopertina(copertinaM);
+                Prodotto prodottoM = prodottoService.creaProdotto(categoriaM, nomeM, piattaformaM, prezzoM, scontoAttivoM, quantitaM, descrizioneM, copertinaM);
+                prodottoM.setCodice(codiceProdotto);
+
 
                 try{
                     validator.validateProdotto(prodottoM, req.getParts());
@@ -216,6 +218,9 @@ public class Admin extends HttpServlet {
                         if(part.getContentType() != null)
                             part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+copertinaM);
                     }
+                    dispatcher = req.getRequestDispatcher("PRODUCT ADMIN PAGE");
+                    dispatcher.forward(req, resp);
+
                 }
                 catch (InvalidProductException e){
                     dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
