@@ -29,7 +29,7 @@
         <div class="txt_field">
             <input type="text" id="name" name="name" required>
             <span></span>
-            <label for="name">Nome</label>
+            <label for="name">Nome gioco</label>
         </div>
         <select class="form-select" name="categoria" id="categoria" required>
             <option selected disabled value="categoria">Categoria</option>
