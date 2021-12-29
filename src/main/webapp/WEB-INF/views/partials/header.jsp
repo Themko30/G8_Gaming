@@ -1,5 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
+<c:choose>
+    <c:when test="${not empty utente}">
+        <c:set var="account" scope="session" value="account/profile"/>
+        <c:set var="cart" scope="session" value="account/cart"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="account" scope="session" value="account/login"/>
+        <c:set var="cart" scope="session" value="account/login"/>
+    </c:otherwise>
+</c:choose>
 <nav class="navbar navbar-expand-lg navbar-light py-0" id="header" style="background-color: var(--primary);">
     <div class="container-fluid" id="header-container">
         <a class="navbar-brand" href="${context}/">
@@ -37,10 +47,10 @@
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light) !important;" href="#"><i class="bi bi-person-fill"></i> Account</a>
+                    <a class="nav-link" style="color: var(--d3light) !important;" href="${context}/${account}"><i class="bi bi-person-fill"></i> Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light) !important;" href="#"><i class="bi bi-cart-fill"></i> Carrello</a>
+                    <a class="nav-link" style="color: var(--d3light) !important;" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
                 </li>
             </ul>
         </div>

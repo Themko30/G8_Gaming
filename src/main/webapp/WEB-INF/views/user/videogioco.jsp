@@ -53,6 +53,6 @@
         </div>
     </div>
 </div>
-<%@include file="../partials/header.jsp"%>
+<%@include file="../partials/footer.jsp"%>
 </body>
 </html>

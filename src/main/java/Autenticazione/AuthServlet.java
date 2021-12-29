@@ -53,7 +53,7 @@ public class AuthServlet extends HttpServlet {
         dispatcher.forward(req, resp);
         break;
       case "/login":
-        req.getRequestDispatcher("DA FARE").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         break;
       case "/logout":
         HttpSession session = req.getSession(false);
