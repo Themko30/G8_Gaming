@@ -11,13 +11,11 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ProdottoServlet", value = "/*")
 public class ProdottoServlet extends HttpServlet{
+    ProdottoService prodottoService = new ProdottoServiceImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
-
-        ProdottoService prodottoService = new ProdottoServiceImpl();
-
 
         switch (path){
             case "/":
