@@ -54,9 +54,6 @@ public class AuthServlet extends HttpServlet {
       case "/login":
         req.getRequestDispatcher("DA FARE").forward(req, resp);
         break;
-      case "/signup":
-        req.getRequestDispatcher("DA FARE").forward(req, resp);
-        break;
       case "/logout":
         HttpSession session = req.getSession(false);
         Utente utente = (Utente) session.getAttribute("utente");
