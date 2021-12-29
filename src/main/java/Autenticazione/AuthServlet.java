@@ -47,6 +47,7 @@ public class AuthServlet extends HttpServlet {
 
     switch (path) {
       case "/":
+        //"we"
         /*TODO*/
         RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
         dispatcher.forward(req, resp);
