@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
 import main.java.Validator.InvalidProductException;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
@@ -30,6 +29,16 @@ public class PrenotazioneServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String path = req.getPathInfo();
+    validator = new ValidatorImpl();
+    path = validator.validatePath(path);
+
+    switch (path) {
+      case "/":
+        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        dispatcher.forward(req, resp);
+        break;
+    }
   }
 
   @Override
@@ -57,13 +66,14 @@ public class PrenotazioneServlet extends HttpServlet {
         savePrenotazione.setDescrizione(req.getParameter("descrizione"));
         prenotazioneService = new PrenotazioneServiceImpl();
 
-        try{
+        try {
           validator.validateImage(copertina, req.getParts());
-          for(Part part: req.getParts()){
-            if(part.getContentType() != null)
-              part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\prenotazioni\\"+copertina);
+          for (Part part : req.getParts()) {
+            if (part.getContentType() != null) {
+              part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\prenotazioni\\" + copertina);
+            }
           }
-        }catch (InvalidProductException e) {
+        } catch (InvalidProductException e) {
           req.getRequestDispatcher("ERRORE PRENOTAZIONE").forward(req, resp);
         }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {

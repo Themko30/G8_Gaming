@@ -278,6 +278,24 @@ public class ProdottoDAO {
         }
     }
 
+    public int doRetrieveCounterProdotti(){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Prodotto");
+
+            ResultSet rs= ps.executeQuery();
+            int quantita = 0;
+
+            if(rs.next()){
+                quantita = rs.getInt(1);
+            }
+            return quantita;
+
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

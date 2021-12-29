@@ -6,13 +6,13 @@ public interface CarrelloService {
 
     Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita);
 
-    public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita);
+    Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita);
 
-    public Carrello rimuoviProdottoCarrelloSession(Carrello carrello, int codiceProdotto);
+    Carrello rimuoviProdottoCarrelloSession(Carrello carrello, int codiceProdotto);
 
-    public Carrello clearCarrello(Carrello carrello);
+    Carrello clearCarrello(Carrello carrello);
 
-    public boolean updateCarrello(Carrello carrello);
+    boolean updateCarrello(Carrello carrello);
 
     void creaCarrello(Utente utente);
 }

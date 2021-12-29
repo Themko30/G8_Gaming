@@ -39,6 +39,7 @@ public class Admin extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+
     }
 
     @Override

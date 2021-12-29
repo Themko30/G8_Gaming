@@ -17,7 +17,7 @@
 
     <!-- TODO: dettagli dinamici delle cards -->
     <div class="row my-2">
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -97,7 +97,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -107,7 +107,7 @@
             </div>
         </div>
 
-        <div class="col-sm m-1">
+        <div class="col-sm m-3">
             <div class="card text-center" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
@@ -116,6 +116,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container">
+        <h2>Prenotazione</h2>
+        <p>Non trovi un videogioco? <a href="${context}/prenota.jsp">Effettua una prenotazione</a></p>
     </div>
 </div>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>

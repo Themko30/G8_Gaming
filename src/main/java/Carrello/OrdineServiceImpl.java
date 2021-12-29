@@ -54,5 +54,8 @@ public class OrdineServiceImpl implements OrdineService{
         ordineDAO.doUpdateStatoOrdine(numeroOrdine, stato);
     }
 
-
+    @Override
+    public int counterOrdini() {
+        return ordineDAO.doRetrieveCounterOrdini();
+    }
 }
