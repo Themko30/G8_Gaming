@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import main.java.Carrello.Carrello;
+import main.java.Carrello.CarrelloService;
+import main.java.Carrello.CarrelloServiceImpl;
 import main.java.Carrello.Ordine;
 import main.java.Carrello.OrdineService;
 import main.java.Carrello.OrdineServiceImpl;
@@ -27,6 +30,8 @@ public class AuthServlet extends HttpServlet {
   private UtenteService utenteService;
   private OrdineService ordineService;
   private ProdottoService prodottoService;
+  private CarrelloService carrelloService;
+
 
   @Override
   public void init() throws ServletException {
@@ -35,26 +40,51 @@ public class AuthServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    super.doGet(req, resp);
+
+    String path = req.getPathInfo();
+    validator = new ValidatorImpl();
+    path = validator.validatePath(path);
+
+    switch (path) {
+      case "/":
+        /*TODO*/
+        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        dispatcher.forward(req, resp);
+        break;
+      case "/login":
+        req.getRequestDispatcher("DA FARE").forward(req, resp);
+        break;
+      case "/signup":
+        req.getRequestDispatcher("DA FARE").forward(req, resp);
+        break;
+      case "/logout":
+        HttpSession session = req.getSession(false);
+        Utente utente = (Utente) session.getAttribute("utente");
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
+        carrelloService = new CarrelloServiceImpl();
+        carrelloService.clearCarrello(carrello);
+        carrelloService.updateCarrello(carrello);
+        session.removeAttribute("utente");
+        session.invalidate();
+        String redirect = "DA FARE";
+        resp.sendRedirect(redirect);
+        break;
+    }
+
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    validator= new ValidatorImpl();
-    path= validator.validatePath(path);
+    validator = new ValidatorImpl();
+    path = validator.validatePath(path);
 
     String username, email, password, nome, cognome, sesso;
     LocalDate dataDiNascita;
     int codiceOrdine, codiceProdotto;
 
     switch (path) {
-      case "/":
-        /*TODO*/ RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
-        dispatcher.forward(req, resp);
-        break;
       case "/update":
         username = req.getParameter("username");
         email = req.getParameter("email");
@@ -64,12 +94,11 @@ public class AuthServlet extends HttpServlet {
         sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
         utenteService = new UtenteServiceImpl();
-        Utente updateUtente =
-            utenteService.createUtente(
-                username, email, password, nome, cognome, sesso, dataDiNascita);
+        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
         if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          /*TODO*/
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -79,7 +108,8 @@ public class AuthServlet extends HttpServlet {
         utenteService = new UtenteServiceImpl();
         if (utenteService.deleteUtente(req.getParameter("username"))) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          /*TODO*/
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
           throw new ServletException("Errore di eliminazione...");
         }
@@ -102,8 +132,7 @@ public class AuthServlet extends HttpServlet {
         codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
         req.setAttribute("codiceOrdine", codiceOrdine);
         prodottoService = new ProdottoServiceImpl();
-        prodottoService.updateValutazione(
-          prodottoService.prodottoCodice(codiceProdotto), valutazione);
+        prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
         req.getRequestDispatcher("DA FARE").forward(req, resp);
     }

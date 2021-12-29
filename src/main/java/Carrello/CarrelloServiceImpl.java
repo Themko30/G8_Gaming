@@ -1,16 +1,16 @@
 package main.java.Carrello;
 
+import java.util.LinkedHashMap;
+import java.util.Set;
 import main.java.Autenticazione.Utente;
 import main.java.Catalogo.Prodotto;
 import main.java.Catalogo.ProdottoService;
 import main.java.Catalogo.ProdottoServiceImpl;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
-
-public class CarrelloServiceImpl implements CarrelloService{
+public class CarrelloServiceImpl implements CarrelloService {
 
     private CarrelloDAO carrelloDAO = new CarrelloDAO();
+
     @Override
     public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita) {
         LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
@@ -30,8 +30,8 @@ public class CarrelloServiceImpl implements CarrelloService{
 
         LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
         Set<Prodotto> prodotti = prodottiMap.keySet();
-        for(Prodotto p: prodotti){
-            if(p.getCodice()==codiceProdotto){
+        for (Prodotto p : prodotti) {
+            if (p.getCodice() == codiceProdotto) {
                 prodottiMap.remove(p);
                 break;
             }
@@ -53,18 +53,23 @@ public class CarrelloServiceImpl implements CarrelloService{
     }
 
     @Override
+    public boolean updateCarrello(Carrello carrello) {
+        return carrelloDAO.doUpdateCarrello(carrello);
+    }
+
+    @Override
     public Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita) {
-        LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap= carrello.getProdotti();
+        LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap = carrello.getProdotti();
         Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
         boolean added = false;
-        for(Prodotto p: prodottiCarrello){
-            if(p.getCodice()==codiceProdotto){
+        for (Prodotto p : prodottiCarrello) {
+            if (p.getCodice() == codiceProdotto) {
                 prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
                 added = true;
                 break;
             }
         }
-        if(!added){
+        if (!added) {
             ProdottoService prodottoService = new ProdottoServiceImpl();
             Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
             prodottiCarrelloMap.put(p, quantita);
