@@ -1,93 +1,86 @@
 package main.java.Carrello;
 
-import main.java.Autenticazione.Utente;
-import main.java.Catalogo.Prodotto;
-import main.java.Storage.ConPool;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import main.java.Autenticazione.Utente;
+import main.java.Catalogo.Prodotto;
+import main.java.Storage.ConPool;
 
 public class CarrelloDAO {
 
-    public int doUpdateCarrello(Carrello carrello){
+    public Boolean doUpdateCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps =
-                    con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
 
             ps.setDouble(1, carrello.getTotale());
             ps.setInt(2, carrello.getNumeroArticoli());
             ps.setString(3, carrello.getUtente().getUsername());
-            int x= ps.executeUpdate();
+            int x = ps.executeUpdate();
 
-            ps= con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
-            ps.setString(1,carrello.getUtente().getUsername());
+            ps = con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
+            ps.setString(1, carrello.getUtente().getUsername());
 
-            x+=ps.executeUpdate();
+            x += ps.executeUpdate();
 
             LinkedHashMap<Prodotto, Integer> articoli = carrello.getProdotti();
             Set<Prodotto> keys = articoli.keySet();
 
-            for(Prodotto key: keys){
-                ps= con.prepareStatement("INSERT INTO ArticoloSelezionato(utente, articolo, quantita) VALUES(?,?,?)");
-                ps.setString(1,carrello.getUtente().getUsername());
+            for (Prodotto key : keys) {
+                ps = con.prepareStatement("INSERT INTO ArticoloSelezionato(utente, articolo, quantita) VALUES(?,?,?)");
+                ps.setString(1, carrello.getUtente().getUsername());
                 ps.setInt(2, key.getCodice());
-                ps.setInt(3,articoli.get(key));
-                x+= ps.executeUpdate();
+                ps.setInt(3, articoli.get(key));
+                x += ps.executeUpdate();
             }
 
-            return x>0? 1:0;
+            return x == 1;
 
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doCreateCarrello(Utente u){
+    public int doCreateCarrello(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps =
-                    con.prepareStatement("INSERT INTO Carrello(utente, totale, numeroArticoli) VALUES(?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Carrello(utente, totale, numeroArticoli) VALUES(?,?,?)");
             ps.setString(1, u.getUsername());
-            ps.setDouble(2,0);
+            ps.setDouble(2, 0);
             ps.setInt(3, 0);
 
-            int x=ps.executeUpdate();
-            return x>0? 1:0;
+            int x = ps.executeUpdate();
+            return x;
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doClearCarrello(Carrello carrello){
+    public int doClearCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps =
-                    con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
 
-            ps.setDouble(1,0);
+            ps.setDouble(1, 0);
             ps.setInt(2, 0);
             ps.setString(3, carrello.getUtente().getUsername());
-            int x= ps.executeUpdate();
+            int x = ps.executeUpdate();
 
-            ps= con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
-            ps.setString(1,carrello.getUtente().getUsername());
+            ps = con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
+            ps.setString(1, carrello.getUtente().getUsername());
 
-            x+=ps.executeUpdate();
+            x += ps.executeUpdate();
 
-            return x>0? 1:0;
+            return x > 0 ? 1 : 0;
 
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -95,8 +88,7 @@ public class CarrelloDAO {
     public Carrello doRetrieveCarrelloByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato as, Prodotto p WHERE c.utente=as.utente AND as.articolo=p.codice AND c.utente=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato as, Prodotto p WHERE c.utente=as.utente AND as.articolo=p.codice AND c.utente=?");
 
             ps.setString(1, u.getUsername());
             ResultSet rs = ps.executeQuery();
@@ -140,7 +132,6 @@ public class CarrelloDAO {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }
