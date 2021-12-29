@@ -172,7 +172,8 @@ public class Admin extends HttpServlet {
                 Prodotto prodotto = prodottoService.creaProdotto(categoria, nome, piattaforma, prezzo, scontoAttivo, quantita, descrizione, copertina);
 
                 try{
-                    validator.validateProdotto(prodotto, req.getParts());
+                    validator.validateProdotto(prodotto);
+                    validator.validateImage(copertina, req.getParts());
                     prodottoService.saveProdotto(prodotto);
 
                     for(Part part: req.getParts()){
@@ -207,7 +208,8 @@ public class Admin extends HttpServlet {
 
 
                 try{
-                    validator.validateProdotto(prodottoM, req.getParts());
+                    validator.validateProdotto(prodottoM);
+                    validator.validateImage(copertinaM, req.getParts());
                     String oldCopertina = prodottoService.updateProdotto(prodottoM);
 
                     File oldCopertinaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+oldCopertina);

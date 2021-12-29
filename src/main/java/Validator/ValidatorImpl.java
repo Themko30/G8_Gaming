@@ -56,7 +56,7 @@ public class ValidatorImpl implements Validator{
     }
 
     @Override
-    public void validateProdotto(Prodotto prodotto, Collection<Part> image) throws InvalidProductException, IOException {
+    public void validateProdotto(Prodotto prodotto) throws InvalidProductException, IOException {
         if(prodotto.getNome().length() < 3 || prodotto.getNome().length() > 100)
             throw new InvalidProductException();
         if(prodotto.getDescrizione().length() < 10 || prodotto.getDescrizione().length() > 2048)
@@ -70,14 +70,17 @@ public class ValidatorImpl implements Validator{
         if(prodotto.getScontoAttivo() < 0 || prodotto.getScontoAttivo() > 0.99)
             throw new InvalidProductException();
 
+    }
 
+    @Override
+    public void validateImage(String copertina, Collection<Part> image) throws IOException, InvalidProductException {
         for(Part part: image){
             if(part.getContentType() != null)
-                part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\tmp\\"+prodotto.getCopertina());
+                part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\tmp\\"+copertina);
         }
 
 
-        File imgFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\tmp\\"+prodotto.getCopertina());
+        File imgFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\tmp\\"+copertina);
 
         BufferedImage bimg = ImageIO.read(imgFile);
         int width = bimg.getWidth();
@@ -91,8 +94,6 @@ public class ValidatorImpl implements Validator{
 
         //noinspection ResultOfMethodCallIgnored
         imgFile.delete();
-
-
     }
 
     @Override

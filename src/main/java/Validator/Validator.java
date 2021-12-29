@@ -16,8 +16,9 @@ public interface Validator {
 
     String validatePath(String path);
 
-    void validateProdotto(Prodotto prodotto, Collection<Part> image) throws InvalidProductException, IOException;
+    void validateProdotto(Prodotto prodotto) throws InvalidProductException, IOException;
 
     void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException;
+    void validateImage(String copertina, Collection<Part> image) throws IOException, InvalidProductException;
     }
 

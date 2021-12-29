@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import main.java.Validator.InvalidProductException;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
@@ -45,9 +48,24 @@ public class PrenotazioneServlet extends HttpServlet {
         Prenotazione savePrenotazione = new Prenotazione();
         savePrenotazione.setEmailRichiedente(req.getParameter("email"));
         savePrenotazione.setCategoria(req.getParameter("categoria"));
-        /*savePrenotazione.setCopertina();*/ // DA FARE PER CONFING MULTIPART
+
+        Part filePart = req.getPart("copertina");
+        String copertina = filePart.getSubmittedFileName();
+
+        savePrenotazione.setCopertina(copertina);
+
         savePrenotazione.setDescrizione(req.getParameter("descrizione"));
         prenotazioneService = new PrenotazioneServiceImpl();
+
+        try{
+          validator.validateImage(copertina, req.getParts());
+          for(Part part: req.getParts()){
+            if(part.getContentType() != null)
+              part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\prenotazioni\\"+copertina);
+          }
+        }catch (InvalidProductException e) {
+          req.getRequestDispatcher("ERRORE PRENOTAZIONE").forward(req, resp);
+        }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
@@ -59,7 +77,6 @@ public class PrenotazioneServlet extends HttpServlet {
         Prenotazione updatePrenotazione = new Prenotazione();
         updatePrenotazione.setEmailRichiedente(req.getParameter("email"));
         updatePrenotazione.setCategoria(req.getParameter("categoria"));
-        /*updatePrenotazione.setCopertina();*/ // DA FARE PER CONFING MULTIPART
         updatePrenotazione.setDescrizione(req.getParameter("descrizione"));
         prenotazioneService = new PrenotazioneServiceImpl();
         if (prenotazioneService.updatePrenotazione(updatePrenotazione)) {
