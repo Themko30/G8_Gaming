@@ -14,6 +14,7 @@ import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,19 @@ public class Admin extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        utenteService = new UtenteServiceImpl();
+        ordineService = new OrdineServiceImpl();
+        prodottoService = new ProdottoServiceImpl();
+        prenotazioneService = new PrenotazioneServiceImpl();
+        ServletContext ctx = getServletContext();
+        HashMap<String, Integer> statistics = new HashMap<>();
+        statistics.put("Utenti", utenteService.counterUtente());
+        statistics.put("Ordini", ordineService.counterOrdini());
+        statistics.put("Prodotti", prodottoService.counterProdotti());
+        statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
+        synchronized (ctx){
+            ctx.setAttribute("statistics", statistics);
+        }
 
     }
 
@@ -74,8 +88,25 @@ public class Admin extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/Statistics":
-                /*TODO*/HashMap<String, Integer> statistics = (HashMap<String, Integer>) getServletContext().getAttribute("statistics");
-                req.setAttribute("statistics", statistics);
+                dispatcher = req.getRequestDispatcher("DISPLAY STATISTICS ADMIN PAGE");
+                dispatcher.forward(req, resp);
+                break;
+            case "/Statistics/Update":
+
+                utenteService = new UtenteServiceImpl();
+                ordineService = new OrdineServiceImpl();
+                prodottoService = new ProdottoServiceImpl();
+                prenotazioneService = new PrenotazioneServiceImpl();
+                ServletContext ctx = getServletContext();
+                HashMap<String, Integer> statistics = new HashMap<>();
+                statistics.put("Utenti", utenteService.counterUtente());
+                statistics.put("Ordini", ordineService.counterOrdini());
+                statistics.put("Prodotti", prodottoService.counterProdotti());
+                statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
+                synchronized (ctx){
+                    ctx.setAttribute("statistics", statistics);
+                }
+
                 dispatcher = req.getRequestDispatcher("DISPLAY STATISTICS ADMIN PAGE");
                 dispatcher.forward(req, resp);
                 break;
@@ -86,7 +117,6 @@ public class Admin extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/ShowHomePage":
-                /*TODO*/ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
 
                 dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
                 dispatcher.forward(req, resp);
