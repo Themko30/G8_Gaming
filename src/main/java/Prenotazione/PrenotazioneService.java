@@ -15,4 +15,6 @@ public interface PrenotazioneService {
     boolean updatePrenotazione(Prenotazione prenotazione);
 
     boolean deletePrenotazione(int codice);
+
+    int counterPrenotazioni();
 }

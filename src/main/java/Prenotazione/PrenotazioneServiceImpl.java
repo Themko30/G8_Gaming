@@ -37,5 +37,8 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
         return prenotazioneDAO.doDeletePrenotazione(codice);
     }
 
-
+    @Override
+    public int counterPrenotazioni() {
+        return prenotazioneDAO.doRetrieveCounterPrenotazioni();
+    }
 }

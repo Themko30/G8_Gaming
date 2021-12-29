@@ -51,8 +51,9 @@ public class ProdottoServlet extends HttpServlet{
                 Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
 
                 request.setAttribute("prodotto", p);
+                /*TODO prodotti consigliati*/
 
-                dispatcher = request.getRequestDispatcher("PRODUCT DISPLAY PAGE");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/videogioco.jsp");
                 dispatcher.forward(request, response);
         }
     }

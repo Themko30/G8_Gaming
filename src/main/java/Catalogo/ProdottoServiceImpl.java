@@ -66,4 +66,9 @@ public class ProdottoServiceImpl implements ProdottoService{
 
         return prodotto;
     }
+
+    @Override
+    public int counterProdotti() {
+        return prodottoDAO.doRetrieveCounterProdotti();
+    }
 }

@@ -12,4 +12,5 @@ public interface OrdineService {
     void setProdottoValutato(int codiceOrdine, int codiceProdotto);
     ArrayList<Ordine> allOrders();
     void updateStato(int numeroOrdine, String stato);
+    int counterOrdini();
 }
