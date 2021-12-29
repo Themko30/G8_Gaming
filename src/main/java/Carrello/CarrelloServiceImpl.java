@@ -58,6 +58,11 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
+    public void creaCarrello(Utente utente) {
+        carrelloDAO.doCreateCarrello(utente);
+    }
+
+    @Override
     public Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita) {
         LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap = carrello.getProdotti();
         Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
