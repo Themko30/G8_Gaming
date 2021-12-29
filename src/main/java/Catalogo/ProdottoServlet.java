@@ -18,9 +18,6 @@ public class ProdottoServlet extends HttpServlet{
         RequestDispatcher dispatcher;
 
         switch (path){
-            case "/":
-                request.getRequestDispatcher("").forward(request, response);
-                break;
             case "/Categoria":
                 String categoria = request.getParameter("categoria");
 
@@ -48,7 +45,7 @@ public class ProdottoServlet extends HttpServlet{
                 dispatcher.forward(request, response);
                 break;
 
-            case "/Prodotto":
+            case "/Visualizza":
                 int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
 
                 Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
