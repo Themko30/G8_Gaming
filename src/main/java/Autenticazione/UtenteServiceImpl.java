@@ -3,11 +3,14 @@ package main.java.Autenticazione;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import main.java.Carrello.CarrelloService;
+import main.java.Carrello.CarrelloServiceImpl;
 import main.java.Prenotazione.Prenotazione;
 
 public class UtenteServiceImpl implements UtenteService {
 
   private final UtenteDAO utenteDao = new UtenteDAO();
+  private final CarrelloService carrelloService = new CarrelloServiceImpl();
 
   @Override
   public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita) {
@@ -25,6 +28,7 @@ public class UtenteServiceImpl implements UtenteService {
 
   @Override
   public boolean saveUtente(Utente utente) {
+    carrelloService.creaCarrello(utente);
    return utenteDao.doSaveUtente(utente);
   }
 
