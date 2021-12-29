@@ -32,7 +32,14 @@
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
-    --primary: #f00; /* Da cambiare */
+    --primary: #6e00ee;
+    --secondary: #4a019f;
+    --side : #260251;
+    --d3light: #fcfcfc;
+    --d3dark: #030303;
+}
+#header {
+    font-size: 115%;
 }
 
 /*
