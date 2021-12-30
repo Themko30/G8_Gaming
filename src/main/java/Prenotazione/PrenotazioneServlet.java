@@ -105,6 +105,7 @@ public class PrenotazioneServlet extends HttpServlet {
         } else {
           throw new ServletException("Errore di eliminazione...");
         }
+        break;
     }
 
   }

@@ -118,11 +118,13 @@ public class AuthServlet extends HttpServlet {
         ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
         req.setAttribute("ordini", ordini);
         req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+        break;
       case "/orderView":
         codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
         ordineService = new OrdineServiceImpl();
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
+        break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
         int valutazione = Integer.parseInt(req.getParameter("valutazione"));
@@ -132,6 +134,7 @@ public class AuthServlet extends HttpServlet {
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
         req.getRequestDispatcher("DA FARE").forward(req, resp);
+        break;
     }
   }
 }

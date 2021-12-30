@@ -1,60 +1,61 @@
 package main.java.Catalogo;
 
+import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "ProdottoServlet", value = "/Prodotto")
-public class ProdottoServlet extends HttpServlet{
-    ProdottoService prodottoService = new ProdottoServiceImpl();
+public class ProdottoServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getPathInfo();
-        RequestDispatcher dispatcher;
+  ProdottoService prodottoService = new ProdottoServiceImpl();
 
-        switch (path){
-            case "/Categoria":
-                String categoria = request.getParameter("categoria");
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String path = request.getPathInfo();
+    RequestDispatcher dispatcher;
 
-                request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
+    switch (path) {
+      case "/Categoria":
+        String categoria = request.getParameter("categoria");
 
-                dispatcher = request.getRequestDispatcher("CATEGORIA DISPLAY PAGE");
-                dispatcher.forward(request, response);
-                break;
+        request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
 
-            case "/Piattaforma":
-                String piattaforma = request.getParameter("piattaforma");
+        dispatcher = request.getRequestDispatcher("CATEGORIA DISPLAY PAGE");
+        dispatcher.forward(request, response);
+        break;
 
-                request.setAttribute("prodotti", prodottoService.prodottiPiattaforma(piattaforma));
+      case "/Piattaforma":
+        String piattaforma = request.getParameter("piattaforma");
 
-                dispatcher = request.getRequestDispatcher("PRODOTTI DISPLAY PAGE");
-                dispatcher.forward(request, response);
-                break;
+        request.setAttribute("prodotti", prodottoService.prodottiPiattaforma(piattaforma));
 
-            case "/Ricerca":
-                String nomeProdotto = request.getParameter("nome");
+        dispatcher = request.getRequestDispatcher("PRODOTTI DISPLAY PAGE");
+        dispatcher.forward(request, response);
+        break;
 
-                request.setAttribute("prodotti", prodottoService.prodottiNomeLike(nomeProdotto));
+      case "/Ricerca":
+        String nomeProdotto = request.getParameter("nome");
 
-                dispatcher = request.getRequestDispatcher("PRODOTTI DISPLAY PAGE");
-                dispatcher.forward(request, response);
-                break;
+        request.setAttribute("prodotti", prodottoService.prodottiNomeLike(nomeProdotto));
 
-            case "/Visualizza":
-                int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
+        dispatcher = request.getRequestDispatcher("PRODOTTI DISPLAY PAGE");
+        dispatcher.forward(request, response);
+        break;
 
-                Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
+      case "/Visualizza":
+        int codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
 
-                request.setAttribute("prodotto", p);
-                /*TODO prodotti consigliati*/
+        Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
 
-                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/videogioco.jsp");
-                dispatcher.forward(request, response);
-        }
+        request.setAttribute("prodotto", p);
+        /*TODO prodotti consigliati*/
+
+        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/videogioco.jsp");
+        dispatcher.forward(request, response);
+        break;
     }
+  }
 }
