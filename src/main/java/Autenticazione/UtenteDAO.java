@@ -126,7 +126,7 @@ public class UtenteDAO {
   public Utente doRetrieveUtenteByUsernameAndPassword(String username, String password) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=? AND password=?");
+      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=? AND passwordhash=?");
       ps.setString(1, username);
       ps.setString(2, password);
 
