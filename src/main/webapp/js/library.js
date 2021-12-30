@@ -1,10 +1,3 @@
-function hover(element) {
-    //element.setAttribute('src', '${context}/icons/ylogo.png');
-}
-function unhover(element) {
-    //element.setAttribute('src', '${context}/icons/logo.png');
-}
-
 // bottone per tornare all'inizio della pagina
 const mybutton = document.getElementById("backtotop");
 window.onscroll = function() {scrollFunction()};
@@ -20,6 +13,7 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
+// Errori validator
 function alertBox(message, type) {
     let alertPlaceholder = $('#liveAlertPlaceholder');
     alertPlaceholder.hide();
