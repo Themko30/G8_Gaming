@@ -131,9 +131,10 @@ public class UtenteDAO {
       ps.setString(2, password);
 
       ResultSet rs = ps.executeQuery();
-      Utente utente = new Utente();
+      Utente utente = null;
 
       if (rs.next()) {
+        utente = new Utente();
         utente.setUsername(rs.getString("username"));
         utente.setEmail(rs.getString("email"));
         utente.setPassword(rs.getString("password"));

@@ -124,11 +124,18 @@ public class AuthServlet extends HttpServlet {
         tmpUtente.setPassword(req.getParameter("password"));
         utenteService = new UtenteServiceImpl();
         Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
-        carrelloService = new CarrelloServiceImpl();
-        Carrello carrello = carrelloService.recuperaCarrello(utente);
-        HttpSession session2 = req.getSession(false);
-        session2.setAttribute("utente", utente);
-        session2.setAttribute("carrello", carrello);
+        if(utente == null){
+          req.getRequestDispatcher("ERROR LOGIN").forward(req, resp);
+        }
+        else{
+          carrelloService = new CarrelloServiceImpl();
+          Carrello carrello = carrelloService.recuperaCarrello(utente);
+          HttpSession session2 = req.getSession(false);
+          session2.setAttribute("utente", utente);
+          session2.setAttribute("carrello", carrello);
+          resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");
+        }
+
         break;
       case "/delete":
         username = req.getParameter("username");
