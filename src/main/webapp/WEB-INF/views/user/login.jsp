@@ -11,7 +11,7 @@
     <body>
         <div class="center">
             <h1>Login</h1>
-            <form method="post" onsubmit="return validate()" action="">
+            <form method="post" onsubmit="return validate()" action="${context}/account/login">
                 <div class="txt_field">
                     <input type="text" name="username" id="username" required>
                     <span></span>
@@ -25,7 +25,7 @@
                 <div id="liveAlertPlaceholder"></div>
                 <input type="submit" value="Login">
                 <div class="signup_link">
-                    Non hai un account? <a href="http://localhost:8080/G8_Gaming_war_exploded/registrazione">Registrati</a>
+                    Non hai un account? <a href="${context}/registrazione/">Registrati</a>
                 </div>
             </form>
         </div>
@@ -35,7 +35,7 @@
             let password = $('#password').val();
             let message = "<ul>";
             let valid = true;
-            let regex = /^[a-zA-Z0-9]+$/
+            let regex = /^[a-zA-Z0-9]+[.]?[a-zA-Z0-9]+$/
 
             if(!regex.test(username)) {
                 message += "<li>L'username non rispetta il formato adatto.</li>";

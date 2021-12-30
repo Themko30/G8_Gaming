@@ -44,3 +44,6 @@
         font-size: 12px;
     }
 }
+.btn:hover {
+    background-color: var(--secondary) !important;
+}

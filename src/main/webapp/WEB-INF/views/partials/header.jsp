@@ -2,11 +2,9 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <c:choose>
     <c:when test="${not empty utente}">
-        <c:set var="account" scope="session" value="account/profile"/>
         <c:set var="cart" scope="session" value="account/cart"/>
     </c:when>
     <c:otherwise>
-        <c:set var="account" scope="session" value="account/login"/>
         <c:set var="cart" scope="session" value="account/login"/>
     </c:otherwise>
 </c:choose>
@@ -46,9 +44,24 @@
                 <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light);" href="${context}/${account}"><i class="bi bi-person-fill"></i> Account</a>
-                </li>
+                <c:choose>
+                    <c:when test="${not empty utente}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill"></i> Account
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <li><a class="dropdown-item" href="${context}/account/profile"><i class="bi bi-person-lines-fill"></i> Profilo</a></li>
+                                <li><a class="dropdown-item" href="${context}/account/logout"><i class="bi bi-box-arrow-left"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: var(--d3light);" href="${context}/account/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
                 <li class="nav-item">
                     <a class="nav-link" style="color: var(--d3light);" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
                 </li>
