@@ -13,41 +13,41 @@
     <table class="table table-bordered border-secondary table-striped table-hover">
         <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome</th>
             <th scope="col">Username</th>
+            <th scope="col">Nome</th>
             <th scope="col">Email</th>
+            <th scope="col">Sesso</th>
             <th scope="col">Admin</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td><a href="#">Giovanni Donisi</a></td>
-            <td>g.donisi1</td>
+            <th scope="row"><a href="#">g.donisi1</a></th>
+            <td>Giovanni Donisi</td>
             <td>g.donisi1@studenti.unisa.it</td>
+            <td>Maschio</td>
             <td><button type="button" class="btn" style="background-color: var(--primary); color: var(--d3light);" disabled>Eleggi</button></td>
         </tr>
         <tr>
-            <th scope="row">2</th>
-            <td><a href="#">Giulio Enzo</a></td>
-            <td>giulio01</td>
+            <th scope="row"><a href="#">giulio01</a></th>
+            <td>Giulio Enzo</td>
             <td>giulio.enzo@gmail.com</td>
-            <td><button type="button" class="btn" style="background-color:var(--primary); color: var(--d3light);">Eleggi</button></td>
+            <td>Maschio</td>
+            <td><button type="button" class="btn" style="background-color: var(--primary); color: var(--d3light);">Eleggi</button></td>
         </tr>
         <tr>
-            <th scope="row">3</th>
-            <td><a href="#">Giulio Enzo</a></td>
-            <td>giulio01</td>
+            <th scope="row"><a href="#">giulio01</a></th>
+            <td>Giulio Enzo</td>
             <td>giulio.enzo@gmail.com</td>
-            <td><button type="button" class="btn" style="background-color:var(--primary); color: var(--d3light);">Eleggi</button></td>
+            <td>Maschio</td>
+            <td><button type="button" class="btn" style="background-color: var(--primary); color: var(--d3light);">Eleggi</button></td>
         </tr>
         <tr>
-            <th scope="row">4</th>
-            <td><a href="#">Giulio Enzo</a></td>
-            <td>giulio01</td>
+            <th scope="row"><a href="#">giulio01</a></th>
+            <td>Giulio Enzo</td>
             <td>giulio.enzo@gmail.com</td>
-            <td><button type="button" class="btn" style="background-color:var(--primary); color: var(--d3light);">Eleggi</button></td>
+            <td>Maschio</td>
+            <td><button type="button" class="btn" style="background-color: var(--primary); color: var(--d3light);">Eleggi</button></td>
         </tr>
         </tbody>
     </table>

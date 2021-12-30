@@ -20,7 +20,7 @@
 <body>
 <div class="center">
     <h1>Prenotazione</h1>
-    <form method="post" onsubmit="return validate()" action="#">
+    <form method="post" onsubmit="return validate()" action="${context}/prenotazione/save" enctype="multipart/form-data">
         <div class="txt_field">
             <input type="text" id="email" name="email" value="${email}" required>
             <span></span>

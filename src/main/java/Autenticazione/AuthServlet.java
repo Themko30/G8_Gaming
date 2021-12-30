@@ -74,8 +74,7 @@ public class AuthServlet extends HttpServlet {
         session.removeAttribute("utente");
         session.removeAttribute("carrello");
         session.invalidate();
-        String redirect = "DA FARE";
-        resp.sendRedirect(redirect);
+        resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");
         break;
     }
 
@@ -133,7 +132,7 @@ public class AuthServlet extends HttpServlet {
           HttpSession session2 = req.getSession(false);
           session2.setAttribute("utente", utente);
           session2.setAttribute("carrello", carrello);
-          if(utente.isAdmin()==true)
+          if(utente.isAdmin())
             req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp").forward(req, resp);
           else
             resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");

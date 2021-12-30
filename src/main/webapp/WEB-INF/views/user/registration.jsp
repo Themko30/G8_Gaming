@@ -12,7 +12,7 @@
 <body>
 <div class="center">
     <h1>Registrazione</h1>
-    <form method="post" onsubmit="return validate()" action="#">
+    <form method="post" onsubmit="return validate()" action="${context}/registrazione/save">
         <div class="txt_field">
             <input type="text" id="name" name="name" required>
             <span></span>
@@ -57,7 +57,7 @@
         <div id="liveAlertPlaceholder"></div>
         <input type="submit" id="register" value="Registrati">
         <div class="signup_link">
-            Hai già un account? <a href="http://localhost:8080/G8_Gaming_war_exploded/account/login">Accedi</a>
+            Hai già un account? <a href="${context}/account/login">Accedi</a>
         </div>
     </form>
 </div>
