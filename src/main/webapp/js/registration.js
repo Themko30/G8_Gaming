@@ -1,14 +1,3 @@
-let alertPlaceholder = $('#liveAlertPlaceholder');
-
-function alertBox(message, type) {
-    alertPlaceholder.hide();
-    alertPlaceholder.empty();
-    let wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-    alertPlaceholder.append(wrapper);
-    alertPlaceholder.show(300);
-}
-
 function validate() {
     let name = $('#name').val().trim();
     let surname = $('#surname').val().trim();
@@ -22,7 +11,6 @@ function validate() {
     let valid = true;
     let regex = /^[a-zA-Z ]+$/
 
-    console.log(sesso);
     if(!regex.test(name)) {
         message += "<li>Il nome non rispetta il formato adatto.</li>";
         valid = false;

@@ -57,6 +57,11 @@ footer { /* Posiziona il footer in basso */
 
 .footer-bottom a {
     color: var(--d3light);
+    text-decoration: none;
+}
+.footer-bottom a:hover {
+    color: var(--d3light);
+    text-decoration: underline;
 }
 #backtotop {
     display: none;

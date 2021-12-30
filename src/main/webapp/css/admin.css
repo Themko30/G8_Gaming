@@ -3,40 +3,44 @@
         transform: scale(1);
     }
     to {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 }
+
 @keyframes mymoveback {
     from {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
     to {
         transform: scale(1);
     }
 }
 .card {
-    -webkit-animation: mymove 0.2s;
+    -webkit-animation: mymove 0.3s;
     -webkit-animation-fill-mode: forwards;
-    animation: mymoveback 0.2s;
+    animation: mymoveback 0.3s;
     animation-fill-mode: forwards;
 }
 .card:hover {
     cursor: pointer;
     -webkit-animation-fill-mode: forwards;
-    animation: mymove 0.2s;
+    animation: mymove 0.3s;
     animation-fill-mode: forwards;
-}
-.col-sm {
-    max-width: 14.5rem;
 }
 
 @media screen and (max-width: 768px) {
     .card {
         margin-left: 6rem;
     }
+    .table {
+        font-size: 14px;
+    }
 }
 @media screen and (max-width: 576px) {
     .card {
         margin-left: 4rem;
+    }
+    .table {
+        font-size: 12px;
     }
 }

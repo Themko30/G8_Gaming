@@ -1,11 +1,8 @@
 package main.java.Carrello;
 
-import main.java.Catalogo.Prodotto;
-import main.java.Validator.InvalidIndirizzoException;
-import main.java.Validator.InvalidProductQuantityException;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
-
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import main.java.Catalogo.Prodotto;
+import main.java.Validator.InvalidIndirizzoException;
+import main.java.Validator.InvalidProductQuantityException;
+import main.java.Validator.Validator;
+import main.java.Validator.ValidatorImpl;
 
 @WebServlet(name = "CarrelloServlet", value = "/cart/*")
 public class CarrelloServlet extends HttpServlet {
@@ -32,7 +31,7 @@ public class CarrelloServlet extends HttpServlet {
         Carrello carrello;
         int codiceProdotto;
 
-        switch (path){
+        switch (path) {
             case "/Add":
 
                 codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
@@ -40,8 +39,7 @@ public class CarrelloServlet extends HttpServlet {
 
                 carrello = (Carrello) session.getAttribute("carrello");
 
-
-                synchronized (session){
+                synchronized (session) {
 
                     carrello = carrelloService.aggiungiProdotto(carrello, codiceProdotto, quantitaProdotto);
 
@@ -50,7 +48,7 @@ public class CarrelloServlet extends HttpServlet {
 
                 }
 
-                dispatcher= request.getRequestDispatcher("PRODOTTO AGGIUNTO AL CARRELLO PAGE");
+                dispatcher = request.getRequestDispatcher("PRODOTTO AGGIUNTO AL CARRELLO PAGE");
                 dispatcher.forward(request, response);
                 break;
 
@@ -58,7 +56,7 @@ public class CarrelloServlet extends HttpServlet {
                 codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
                 int quantita = Integer.parseInt(request.getParameter("quantita"));
 
-                synchronized (session){
+                synchronized (session) {
                     carrello = (Carrello) session.getAttribute("carrello");
                     carrello = carrelloService.updateQuantitaCarrelloSession(carrello, codiceProdotto, quantita);
                     session.removeAttribute("carrello");
@@ -73,11 +71,10 @@ public class CarrelloServlet extends HttpServlet {
                 session = request.getSession();
                 codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
 
-
-                synchronized (session){
+                synchronized (session) {
 
                     carrello = (Carrello) session.getAttribute("carrello");
-                    carrello = carrelloService.rimuoviProdottoCarrelloSession(carrello,codiceProdotto);
+                    carrello = carrelloService.rimuoviProdottoCarrelloSession(carrello, codiceProdotto);
 
                     session.removeAttribute("carrello");
                     session.setAttribute("carrello", carrello);
@@ -89,7 +86,7 @@ public class CarrelloServlet extends HttpServlet {
 
             case "/Checkout":
 
-                synchronized (session){
+                synchronized (session) {
                     carrello = (Carrello) session.getAttribute("carrello");
 
                     String indirizzo = request.getParameter("indirizzo");
@@ -97,14 +94,12 @@ public class CarrelloServlet extends HttpServlet {
                     String paese = request.getParameter("paese");
                     String metodoPagamento = request.getParameter("metodoPagamento");
 
-
-
                     try {
                         validator.validateIndirizzo(indirizzo, CAP, paese);
-                        Ordine ordine= ordineService.createOrdine(carrello, indirizzo, CAP, paese, metodoPagamento);
+                        Ordine ordine = ordineService.createOrdine(carrello, indirizzo, CAP, paese, metodoPagamento);
                         LinkedHashMap<Prodotto, Integer> prodotti = ordine.getProdotti();
                         Set<Prodotto> key = prodotti.keySet();
-                        for(Prodotto p: key) {
+                        for (Prodotto p : key) {
                             validator.validateQuantitaProdotto(p, prodotti.get(p));
                         }
 
@@ -124,7 +119,7 @@ public class CarrelloServlet extends HttpServlet {
                         dispatcher = request.getRequestDispatcher("Ordine Failed Page");
                         dispatcher.forward(request, response);
 
-                    }catch (InvalidProductQuantityException ex){
+                    } catch (InvalidProductQuantityException ex) {
                         ex.printStackTrace();
                         request.setAttribute("prodotto", ex.getProdotto());
                         dispatcher = request.getRequestDispatcher("Ordine Prodotto Failed Page");
@@ -138,15 +133,16 @@ public class CarrelloServlet extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
 
-        switch (path){
+        switch (path) {
             case "/":
                 dispatcher = request.getRequestDispatcher("CART DISPLAY PAGE"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
                 dispatcher.forward(request, response);
+                break;
         }
 
     }

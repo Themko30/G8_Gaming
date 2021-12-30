@@ -22,6 +22,7 @@ import main.java.Catalogo.ProdottoServiceImpl;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
+
 @WebServlet(name = "AuthServlet", value = "/account/*")
 
 public class AuthServlet extends HttpServlet {
@@ -33,10 +34,21 @@ public class AuthServlet extends HttpServlet {
   private CarrelloService carrelloService;
 
 
+  /**
+   * @throws ServletException
+   */
+
   @Override
   public void init() throws ServletException {
     super.init();
   }
+
+  /**
+   * @param req
+   * @param resp
+   * @throws ServletException
+   * @throws IOException
+   */
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,7 +64,7 @@ public class AuthServlet extends HttpServlet {
         dispatcher.forward(req, resp);
         break;
       case "/login":
-        req.getRequestDispatcher("DA FARE").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         break;
       case "/logout":
         HttpSession session = req.getSession(false);
@@ -69,6 +81,13 @@ public class AuthServlet extends HttpServlet {
     }
 
   }
+
+  /**
+   * @param req
+   * @param resp
+   * @throws ServletException
+   * @throws IOException
+   */
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -118,11 +137,13 @@ public class AuthServlet extends HttpServlet {
         ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
         req.setAttribute("ordini", ordini);
         req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+        break;
       case "/orderView":
         codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
         ordineService = new OrdineServiceImpl();
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
+        break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
         int valutazione = Integer.parseInt(req.getParameter("valutazione"));
@@ -132,6 +153,7 @@ public class AuthServlet extends HttpServlet {
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
         req.getRequestDispatcher("DA FARE").forward(req, resp);
+        break;
     }
   }
 }

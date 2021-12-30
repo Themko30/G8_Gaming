@@ -35,7 +35,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
     switch (path) {
       case "/":
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user/prenota.jsp");
         dispatcher.forward(req, resp);
         break;
     }
@@ -105,6 +105,7 @@ public class PrenotazioneServlet extends HttpServlet {
         } else {
           throw new ServletException("Errore di eliminazione...");
         }
+        break;
     }
 
   }

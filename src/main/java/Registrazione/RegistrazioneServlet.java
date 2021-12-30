@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.java.Autenticazione.Utente;
-import main.java.Autenticazione.UtenteServiceImpl;
 import main.java.Autenticazione.UtenteService;
+import main.java.Autenticazione.UtenteServiceImpl;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
@@ -27,12 +27,11 @@ public class RegistrazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    validator= new ValidatorImpl();
-    path= validator.validatePath(path);
+    validator = new ValidatorImpl();
+    path = validator.validatePath(path);
 
     switch (path) {
       case "/":
@@ -43,51 +42,53 @@ public class RegistrazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    validator= new ValidatorImpl();
-    path= validator.validatePath(path);
+    validator = new ValidatorImpl();
+    path = validator.validatePath(path);
 
     String username, email, password, nome, cognome, sesso;
     LocalDate dataDiNascita;
 
     switch (path) {
       case "/":
-        /*TODO*/  RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
+        /*TODO*/
+        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
         dispatcher.forward(req, resp);
         break;
       case "/save":
         username = req.getParameter("username");
-        email =req.getParameter("email");
-        password =req.getParameter("password");
-        nome =req.getParameter("nome");
-        cognome =req.getParameter("cognome");
-        sesso =req.getParameter("sesso");
+        email = req.getParameter("email");
+        password = req.getParameter("password");
+        nome = req.getParameter("nome");
+        cognome = req.getParameter("cognome");
+        sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
         utenteService = new UtenteServiceImpl();
-        Utente saveUtente = utenteService.createUtente(username,email,password,nome,cognome,sesso,dataDiNascita);
-        if (utenteService.saveUtente(saveUtente)){
+        Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
+        if (utenteService.saveUtente(saveUtente)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+          /*TODO*/
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
           throw new ServletException("Errore di inserimento...");
         }
         break;
       case "/update":
         username = req.getParameter("username");
-        email =req.getParameter("email");
-        password =req.getParameter("password");
-        nome =req.getParameter("nome");
-        cognome =req.getParameter("cognome");
-        sesso =req.getParameter("sesso");
+        email = req.getParameter("email");
+        password = req.getParameter("password");
+        nome = req.getParameter("nome");
+        cognome = req.getParameter("cognome");
+        sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
         utenteService = new UtenteServiceImpl();
-        Utente updateUtente = utenteService.createUtente(username,email,password,nome,cognome,sesso,dataDiNascita);
-        if (utenteService.updateUtente(updateUtente)){
+        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
+        if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req,resp);
+          /*TODO*/
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -97,12 +98,13 @@ public class RegistrazioneServlet extends HttpServlet {
         utenteService = new UtenteServiceImpl();
         if (utenteService.deleteUtente(req.getParameter("username"))) {
           // SET ALERT
-          /*TODO*/ req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        }
-        else {
+          /*TODO*/
+          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+        } else {
           throw new ServletException("Errore di eliminazione...");
         }
-        }
+        break;
     }
   }
+}
 
