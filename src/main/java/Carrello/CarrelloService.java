@@ -15,4 +15,6 @@ public interface CarrelloService {
     boolean updateCarrello(Carrello carrello);
 
     void creaCarrello(Utente utente);
+
+    Carrello recuperaCarrello(Utente utente);
 }

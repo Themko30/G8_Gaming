@@ -21,4 +21,6 @@ public interface UtenteService {
 
   int counterUtente();
 
+  Utente login(String username, String password);
+
 }

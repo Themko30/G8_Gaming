@@ -60,5 +60,10 @@ public class UtenteServiceImpl implements UtenteService {
     return utenteDao.doRetrieveCounterUtenti();
   }
 
+  @Override
+  public Utente login(String username, String password) {
+    return utenteDao.doRetrieveUtenteByUsernameAndPassword(username, password);
+  }
+
 
 }

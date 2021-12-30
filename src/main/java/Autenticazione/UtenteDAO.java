@@ -123,6 +123,37 @@ public class UtenteDAO {
     }
   }
 
+  public Utente doRetrieveUtenteByUsernameAndPassword(String username, String password) {
+    try (Connection con = ConPool.getConnection()) {
+
+      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=? AND password=?");
+      ps.setString(1, username);
+      ps.setString(2, password);
+
+      ResultSet rs = ps.executeQuery();
+      Utente utente = new Utente();
+
+      if (rs.next()) {
+        utente.setUsername(rs.getString("username"));
+        utente.setEmail(rs.getString("email"));
+        utente.setPassword(rs.getString("password"));
+        utente.setNome(rs.getString("nome"));
+        utente.setCognome(rs.getString("cognome"));
+        utente.setSesso(rs.getString("sesso"));
+        utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
+        utente.setAdmin(rs.getBoolean("admin"));
+        utente.setIndirizzo(rs.getString("indirizzo"));
+        utente.setCap(rs.getInt("cap"));
+        utente.setPaese(rs.getString("paese"));
+
+      }
+      return utente;
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public boolean doCheckUsername(String username) {
     try (Connection con = ConPool.getConnection()) {
 

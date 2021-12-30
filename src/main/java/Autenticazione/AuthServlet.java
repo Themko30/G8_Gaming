@@ -68,12 +68,11 @@ public class AuthServlet extends HttpServlet {
         break;
       case "/logout":
         HttpSession session = req.getSession(false);
-        Utente utente = (Utente) session.getAttribute("utente");
         Carrello carrello = (Carrello) session.getAttribute("carrello");
         carrelloService = new CarrelloServiceImpl();
-        carrelloService.clearCarrello(carrello);
         carrelloService.updateCarrello(carrello);
         session.removeAttribute("utente");
+        session.removeAttribute("carrello");
         session.invalidate();
         String redirect = "DA FARE";
         resp.sendRedirect(redirect);
@@ -118,6 +117,18 @@ public class AuthServlet extends HttpServlet {
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
+        break;
+      case "/login":
+        Utente tmpUtente = new Utente();
+        tmpUtente.setUsername(req.getParameter("username"));
+        tmpUtente.setPassword(req.getParameter("password"));
+        utenteService = new UtenteServiceImpl();
+        Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
+        carrelloService = new CarrelloServiceImpl();
+        Carrello carrello = carrelloService.recuperaCarrello(utente);
+        HttpSession session2 = req.getSession(false);
+        session2.setAttribute("utente", utente);
+        session2.setAttribute("carrello", carrello);
         break;
       case "/delete":
         username = req.getParameter("username");
