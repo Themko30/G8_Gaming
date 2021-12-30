@@ -137,7 +137,7 @@ public class UtenteDAO {
         utente = new Utente();
         utente.setUsername(rs.getString("username"));
         utente.setEmail(rs.getString("email"));
-        utente.setPassword(rs.getString("password"));
+        utente.setPassword(rs.getString("passwordhash"));
         utente.setNome(rs.getString("nome"));
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
