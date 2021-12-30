@@ -77,7 +77,7 @@ public class UtenteDAO {
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
         utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
-        utente.setAdmin(rs.getBoolean("admin"));
+        utente.setAdmin(rs.getBoolean("adminFlag"));
         utente.setIndirizzo(rs.getString("indirizzo"));
         utente.setCap(rs.getInt("cap"));
         utente.setPaese(rs.getString("paese"));
@@ -110,7 +110,7 @@ public class UtenteDAO {
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
         utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
-        utente.setAdmin(rs.getBoolean("admin"));
+        utente.setAdmin(rs.getBoolean("adminFlag"));
         utente.setIndirizzo(rs.getString("indirizzo"));
         utente.setCap(rs.getInt("cap"));
         utente.setPaese(rs.getString("paese"));
@@ -142,7 +142,7 @@ public class UtenteDAO {
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
         utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
-        utente.setAdmin(rs.getBoolean("admin"));
+        utente.setAdmin(rs.getBoolean("adminFlag"));
         utente.setIndirizzo(rs.getString("indirizzo"));
         utente.setCap(rs.getInt("cap"));
         utente.setPaese(rs.getString("paese"));
@@ -178,7 +178,7 @@ public class UtenteDAO {
   public boolean doUpdateUtente(Utente utente) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, password=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, admin=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
+      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, password=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, adminFlag=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
 
       ps.setString(1, utente.getEmail());
       ps.setString(2, utente.getPassword());
