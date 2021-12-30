@@ -22,6 +22,7 @@ import main.java.Catalogo.ProdottoServiceImpl;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
+
 @WebServlet(name = "AuthServlet", value = "/account/*")
 
 public class AuthServlet extends HttpServlet {
@@ -33,10 +34,21 @@ public class AuthServlet extends HttpServlet {
   private CarrelloService carrelloService;
 
 
+  /**
+   * @throws ServletException
+   */
+
   @Override
   public void init() throws ServletException {
     super.init();
   }
+
+  /**
+   * @param req
+   * @param resp
+   * @throws ServletException
+   * @throws IOException
+   */
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -69,6 +81,13 @@ public class AuthServlet extends HttpServlet {
     }
 
   }
+
+  /**
+   * @param req
+   * @param resp
+   * @throws ServletException
+   * @throws IOException
+   */
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
