@@ -113,8 +113,8 @@ public class ProdottoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
                 p.setCategoria(rs.getString("categoria"));
-                p.setNumeroVoti(rs.getLong("numeroVoti"));
-                p.setTotaleVoti(rs.getLong("totaleVoti"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
                 p.setMedia(rs.getDouble("media"));
                 prodotti.add(p);
             }

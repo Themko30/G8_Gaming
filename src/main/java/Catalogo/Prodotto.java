@@ -10,8 +10,8 @@ public class Prodotto {
     private int quantita;
     private String descrizione;
     private String copertina;
-    private long numeroVoti;
-    private long totaleVoti;
+    private int numeroVoti;
+    private int totaleVoti;
     private double media;
 
     private int valutato;
@@ -90,19 +90,19 @@ public class Prodotto {
         this.copertina = copertina;
     }
 
-    public long getNumeroVoti() {
+    public int getNumeroVoti() {
         return numeroVoti;
     }
 
-    public void setNumeroVoti(long numeroVoti) {
+    public void setNumeroVoti(int numeroVoti) {
         this.numeroVoti = numeroVoti;
     }
 
-    public long getTotaleVoti() {
+    public int getTotaleVoti() {
         return totaleVoti;
     }
 
-    public void setTotaleVoti(long totaleVoti) {
+    public void setTotaleVoti(int totaleVoti) {
         this.totaleVoti = totaleVoti;
     }
 
