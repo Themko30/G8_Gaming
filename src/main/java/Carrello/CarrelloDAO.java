@@ -88,7 +88,7 @@ public class CarrelloDAO {
     public Carrello doRetrieveCarrelloByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato as, Prodotto p WHERE c.utente=as.utente AND as.prodotto=p.codice AND c.utente=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato a, Prodotto p WHERE c.utente=a.utente AND a.prodotto=p.codice AND c.utente=?");
 
             ps.setString(1, u.getUsername());
             ResultSet rs = ps.executeQuery();
@@ -121,7 +121,7 @@ public class CarrelloDAO {
                     prodotto.setCopertina(rs.getString("p.copertina"));
                     prodotto.setScontoAttivo(rs.getDouble("p.scontoAttivo"));
 
-                    prodotti.put(prodotto, rs.getInt("as.quantita"));
+                    prodotti.put(prodotto, rs.getInt("a.quantita"));
                 } while (rs.next());
             }
 
