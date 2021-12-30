@@ -20,13 +20,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" style="color: var(--d3light) !important;" href="${context}/"><i class="bi bi-house-fill"></i> Home</a>
+                    <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/"><i class="bi bi-house-fill"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" style="color: var(--d3light) !important;" href="${context}/categorie"><i class="bi bi-tag-fill"></i> Categorie</a>
+                    <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/categorie"><i class="bi bi-tag-fill"></i> Categorie</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light) !important;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-joystick"></i> Piattaforme
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -47,10 +47,10 @@
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light) !important;" href="${context}/${account}"><i class="bi bi-person-fill"></i> Account</a>
+                    <a class="nav-link" style="color: var(--d3light);" href="${context}/${account}"><i class="bi bi-person-fill"></i> Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light) !important;" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
+                    <a class="nav-link" style="color: var(--d3light);" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
                 </li>
             </ul>
         </div>

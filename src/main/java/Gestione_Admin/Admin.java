@@ -66,25 +66,25 @@ public class Admin extends HttpServlet {
 
         switch (path) {
             case "/":
-                dispatcher = req.getRequestDispatcher("DISPLAY ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Products":
                 prodottoService = new ProdottoServiceImpl();
                 req.setAttribute("prodotti", prodottoService.allProdotti());
-                dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prodotti.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Orders":
                 ordineService = new OrdineServiceImpl();
                 req.setAttribute("ordini", ordineService.allOrders());
-                dispatcher = req.getRequestDispatcher("DISPLAY ORDERS ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/ordini.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Users":
                 utenteService = new UtenteServiceImpl();
                 req.setAttribute("utenti", utenteService.allUtenti());
-                dispatcher = req.getRequestDispatcher("DISPLAY USERS ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/utenti.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Statistics":
@@ -113,11 +113,10 @@ public class Admin extends HttpServlet {
             case "/Booking":
                 prenotazioneService = new PrenotazioneServiceImpl();
                 req.setAttribute("prenotazioni", prenotazioneService.allPrenotazioni());
-                dispatcher = req.getRequestDispatcher("DISPLAY PRENOTAZIONI ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prenotazioni.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/ShowHomePage":
-
                 dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
                 dispatcher.forward(req, resp);
                 break;
