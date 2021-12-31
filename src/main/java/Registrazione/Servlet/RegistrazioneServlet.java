@@ -16,6 +16,7 @@ import main.java.Carrello.Service.CarrelloService;
 import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
 import main.java.Validator.Service.Validator;
 import main.java.Validator.Service.ValidatorImpl;
 
@@ -77,6 +78,7 @@ public class RegistrazioneServlet extends HttpServlet {
         utenteService = new UtenteServiceImpl();
         Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         try {
+          validator.validateUtente(saveUtente);
           utenteService.saveUtente(saveUtente);
           resp.setStatus(HttpServletResponse.SC_CREATED);
           HttpSession session = req.getSession(false);
@@ -98,6 +100,8 @@ public class RegistrazioneServlet extends HttpServlet {
           session2.setAttribute("ca", cap);
           session2.setAttribute("errore", 1);
           req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
+        } catch (InvalidIndirizzoException e) {
+          throw new ServletException("Errore...");
         }
         break;
       case "/update":
