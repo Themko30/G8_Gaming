@@ -31,7 +31,7 @@ public class UtenteDAO {
 
   }
 
-  public boolean doSaveUtente(Utente utente) {
+  public boolean doSaveUtente(Utente utente) throws Exception {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement(
@@ -54,7 +54,7 @@ public class UtenteDAO {
       return x == 1;
 
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     }
 
   }
