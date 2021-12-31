@@ -28,8 +28,9 @@ public class UtenteServiceImpl implements UtenteService {
 
   @Override
   public boolean saveUtente(Utente utente) {
+    boolean result = utenteDao.doSaveUtente(utente);
     carrelloService.creaCarrello(utente);
-    return utenteDao.doSaveUtente(utente);
+    return result;
   }
 
   @Override
