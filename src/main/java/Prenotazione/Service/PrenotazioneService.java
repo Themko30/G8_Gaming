@@ -9,7 +9,7 @@ public interface PrenotazioneService {
 
     Prenotazione retrievePrenotazione(int codice);
 
-    void acceptPrenotazione(int numero);
+    boolean acceptPrenotazione(int numero);
 
     boolean savePrenotazione(Prenotazione prenotazione);
 
