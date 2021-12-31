@@ -130,7 +130,11 @@ public class AuthServlet extends HttpServlet {
         utenteService = new UtenteServiceImpl();
         Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
         if (utente == null) {
-          req.getRequestDispatcher("ERROR LOGIN").forward(req, resp);
+          HttpSession session2 = req.getSession(false);
+          session2.setAttribute("errate", 1);
+          session2.setAttribute("us", req.getParameter("username"));
+          session2.setAttribute("pw", req.getParameter("password"));
+          req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         } else {
           carrelloService = new CarrelloServiceImpl();
           Carrello carrello = carrelloService.recuperaCarrello(utente);
@@ -138,9 +142,9 @@ public class AuthServlet extends HttpServlet {
           session2.setAttribute("utente", utente);
           session2.setAttribute("carrello", carrello);
           if (utente.isAdmin()) {
-            req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp").forward(req, resp);
+            resp.sendRedirect("/G8_Gaming_war_exploded/admin/");
           } else {
-            resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");
+            resp.sendRedirect("/G8_Gaming_war_exploded/");
           }
         }
 

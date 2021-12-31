@@ -14,14 +14,14 @@
     <h1>Registrazione</h1>
     <form method="post" onsubmit="return validate()" action="${context}/registrazione/save">
         <div class="txt_field">
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="nome" name="nome" required>
             <span></span>
-            <label for="name">Nome</label>
+            <label for="nome">Nome</label>
         </div>
         <div class="txt_field">
-            <input type="text" id="surname" name="surname" required>
+            <input type="text" id="cognome" name="cognome" required>
             <span></span>
-            <label for="surname">Cognome</label>
+            <label for="cognome">Cognome</label>
         </div>
         <div class="txt_field">
             <input type="text" id="email" name="email" required>
@@ -44,9 +44,9 @@
             <label for="confirmPassword">Conferma password</label>
         </div>
         <div class="txt_field">
-            <input type="date" id="dataDiNascita" name="dataDiNascita" required>
+            <input type="date" id="data" name="data" required>
             <span></span>
-            <label for="dataDiNascita">Data di nascita</label>
+            <label for="data">Data di nascita</label>
         </div>
         <select class="form-select" name="sesso" id="sesso" required>
             <option selected disabled value="maschio">Sesso</option>
@@ -54,6 +54,21 @@
             <option value="femmina">Femmina</option>
             <option value="altro">Altro</option>
         </select>
+        <div class="txt_field">
+            <input type="text" id="indirizzo" name="indirizzo" required>
+            <span></span>
+            <label for="username">Indirizzo</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" id="cap" name="cap" minlength="5" maxlength="5" required>
+            <span></span>
+            <label for="username">CAP</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" id="paese" name="paese" required>
+            <span></span>
+            <label for="username">Paese</label>
+        </div>
         <div id="liveAlertPlaceholder"></div>
         <input type="submit" id="register" value="Registrati">
         <div class="signup_link">
