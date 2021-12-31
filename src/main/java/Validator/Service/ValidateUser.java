@@ -1,6 +1,7 @@
-package main.java.Validator;
+package main.java.Validator.Service;
 
 import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidUserException;
 
 public interface ValidateUser {
 

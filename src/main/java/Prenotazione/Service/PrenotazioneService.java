@@ -1,4 +1,4 @@
-package main.java.Prenotazione;
+package main.java.Prenotazione.Service;
 
 import java.util.ArrayList;
 import main.java.Storage.Entity.Prenotazione;

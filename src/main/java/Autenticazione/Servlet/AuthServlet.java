@@ -1,4 +1,4 @@
-package main.java.Autenticazione;
+package main.java.Autenticazione.Servlet;
 
 
 import java.io.IOException;
@@ -11,17 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import main.java.Carrello.CarrelloService;
-import main.java.Carrello.CarrelloServiceImpl;
-import main.java.Carrello.OrdineService;
-import main.java.Carrello.OrdineServiceImpl;
-import main.java.Catalogo.ProdottoService;
-import main.java.Catalogo.ProdottoServiceImpl;
+
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Utente;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
 
 
 @WebServlet(name = "AuthServlet", value = "/account/*")

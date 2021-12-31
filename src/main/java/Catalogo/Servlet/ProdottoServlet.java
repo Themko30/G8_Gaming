@@ -1,4 +1,4 @@
-package main.java.Catalogo;
+package main.java.Catalogo.Servlet;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Prodotto;
 
 @WebServlet(name = "ProdottoServlet", value = "/Prodotto")

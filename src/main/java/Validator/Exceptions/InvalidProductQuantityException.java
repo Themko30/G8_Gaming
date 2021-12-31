@@ -1,4 +1,4 @@
-package main.java.Validator;
+package main.java.Validator.Exceptions;
 
 import main.java.Storage.Entity.Prodotto;
 

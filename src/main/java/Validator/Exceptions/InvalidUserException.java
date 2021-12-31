@@ -1,4 +1,4 @@
-package main.java.Validator;
+package main.java.Validator.Exceptions;
 
 
 public class InvalidUserException extends Exception{

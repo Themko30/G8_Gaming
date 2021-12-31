@@ -1,4 +1,4 @@
-package main.java.Registrazione;
+package main.java.Registrazione.Servlet;
 
 
 import java.io.IOException;
@@ -9,11 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import main.java.Autenticazione.UtenteService;
-import main.java.Autenticazione.UtenteServiceImpl;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Storage.Entity.Utente;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
 
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {

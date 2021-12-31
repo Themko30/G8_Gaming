@@ -1,9 +1,9 @@
-package main.java.Carrello;
+package main.java.Carrello.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
-import main.java.Catalogo.ProdottoService;
-import main.java.Catalogo.ProdottoServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Dao.CarrelloDAO;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Prodotto;

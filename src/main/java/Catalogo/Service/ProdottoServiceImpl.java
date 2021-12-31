@@ -1,4 +1,4 @@
-package main.java.Catalogo;
+package main.java.Catalogo.Service;
 
 import java.util.ArrayList;
 import main.java.Storage.Dao.ProdottoDAO;

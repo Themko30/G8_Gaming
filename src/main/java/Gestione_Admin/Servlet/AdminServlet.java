@@ -1,4 +1,4 @@
-package main.java.Gestione_Admin;
+package main.java.Gestione_Admin.Servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import main.java.Autenticazione.UtenteService;
-import main.java.Autenticazione.UtenteServiceImpl;
-import main.java.Carrello.OrdineService;
-import main.java.Carrello.OrdineServiceImpl;
-import main.java.Catalogo.ProdottoService;
-import main.java.Catalogo.ProdottoServiceImpl;
-import main.java.Prenotazione.PrenotazioneService;
-import main.java.Prenotazione.PrenotazioneServiceImpl;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
+import main.java.Prenotazione.Service.PrenotazioneService;
+import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
 import main.java.Storage.Entity.Prodotto;
-import main.java.Validator.InvalidProductException;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
 
 
 @WebServlet(name = "Admin", value = "/admin/*")

@@ -1,4 +1,4 @@
-package main.java.Prenotazione;
+package main.java.Prenotazione.Servlet;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import main.java.Prenotazione.Service.PrenotazioneService;
+import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
 import main.java.Storage.Dao.PrenotazioneDAO;
 import main.java.Storage.Entity.Prenotazione;
-import main.java.Validator.InvalidProductException;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
 
 @WebServlet(name = "PrenotazioneServlet", value = "/prenotazione/*")
 @MultipartConfig

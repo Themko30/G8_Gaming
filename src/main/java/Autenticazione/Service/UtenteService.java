@@ -1,4 +1,4 @@
-package main.java.Autenticazione;
+package main.java.Autenticazione.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

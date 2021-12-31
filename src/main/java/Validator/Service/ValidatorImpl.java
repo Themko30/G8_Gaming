@@ -1,4 +1,4 @@
-package main.java.Validator;
+package main.java.Validator.Service;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,12 +8,16 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
-import main.java.Autenticazione.UtenteService;
-import main.java.Autenticazione.UtenteServiceImpl;
-import main.java.Catalogo.ProdottoService;
-import main.java.Catalogo.ProdottoServiceImpl;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Exceptions.InvalidProductQuantityException;
+import main.java.Validator.Exceptions.InvalidUserException;
 
 public class ValidatorImpl implements Validator {
 

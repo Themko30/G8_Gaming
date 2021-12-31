@@ -1,4 +1,4 @@
-package main.java.Carrello;
+package main.java.Carrello.Servlet;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -10,13 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
-import main.java.Validator.InvalidIndirizzoException;
-import main.java.Validator.InvalidProductQuantityException;
-import main.java.Validator.Validator;
-import main.java.Validator.ValidatorImpl;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidProductQuantityException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
 
 @WebServlet(name = "CarrelloServlet", value = "/cart/*")
 public class CarrelloServlet extends HttpServlet {
