@@ -35,7 +35,7 @@ public class UtenteDAO {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement(
-        "INSERT INTO Utente(username, email, password, nome, cognome, sesso, dataDiNascita, adminFlag, indirizzo, cap, paese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        "INSERT INTO Utente(username, email, passwordhash, nome, cognome, sesso, dataDiNascita, adminFlag, indirizzo, cap, paese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
       ps.setString(1, utente.getUsername());
       ps.setString(2, utente.getEmail());
@@ -73,7 +73,7 @@ public class UtenteDAO {
         Utente utente = new Utente();
         utente.setUsername(rs.getString("username"));
         utente.setEmail(rs.getString("email"));
-        utente.setPassword(rs.getString("password"));
+        utente.setPassword(rs.getString("passwordhash"));
         utente.setNome(rs.getString("nome"));
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
@@ -106,7 +106,7 @@ public class UtenteDAO {
       if (rs.next()) {
         utente.setUsername(rs.getString("username"));
         utente.setEmail(rs.getString("email"));
-        utente.setPassword(rs.getString("password"));
+        utente.setPassword(rs.getString("passwordhash"));
         utente.setNome(rs.getString("nome"));
         utente.setCognome(rs.getString("cognome"));
         utente.setSesso(rs.getString("sesso"));
@@ -179,7 +179,7 @@ public class UtenteDAO {
   public boolean doUpdateUtente(Utente utente) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, password=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, adminFlag=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
+      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, passwordhash=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, adminFlag=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
 
       ps.setString(1, utente.getEmail());
       ps.setString(2, utente.getPassword());
