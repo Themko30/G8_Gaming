@@ -30,7 +30,7 @@ public class UtenteServiceImpl implements UtenteService {
   }
 
   @Override
-  public boolean saveUtente(Utente utente) {
+  public boolean saveUtente(Utente utente) throws Exception {
     boolean result = utenteDao.doSaveUtente(utente);
     carrelloService.creaCarrello(utente);
     return result;

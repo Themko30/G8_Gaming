@@ -72,15 +72,16 @@ public class RegistrazioneServlet extends HttpServlet {
         paese = req.getParameter("paese");
         utenteService = new UtenteServiceImpl();
         Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
-        if (utenteService.saveUtente(saveUtente)) {
+        try {
+          utenteService.saveUtente(saveUtente);
           resp.setStatus(HttpServletResponse.SC_CREATED);
           HttpSession session = req.getSession(false);
           session.setAttribute("utente", saveUtente);
           resp.sendRedirect("");
           /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di inserimento...");
+
+        } catch (Exception e) {
+          req.getRequestDispatcher("ERRORE REGISTRAZIONE").forward(req, resp);
         }
         break;
       case "/update":
