@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Storage.Entity.Utente;
@@ -48,8 +49,9 @@ public class RegistrazioneServlet extends HttpServlet {
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
-    String username, email, password, nome, cognome, sesso;
+    String username, email, password, nome, cognome, sesso, indirizzo, paese;
     LocalDate dataDiNascita;
+    int cap;
 
     switch (path) {
       case "/":
@@ -65,10 +67,16 @@ public class RegistrazioneServlet extends HttpServlet {
         cognome = req.getParameter("cognome");
         sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
+        indirizzo = req.getParameter("indirizzo");
+        cap = Integer.parseInt(req.getParameter("cap"));
+        paese = req.getParameter("paese");
         utenteService = new UtenteServiceImpl();
-        Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
+        Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.saveUtente(saveUtente)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
+          HttpSession session = req.getSession(false);
+          session.setAttribute("utente", saveUtente);
+          resp.sendRedirect("");
           /*TODO*/
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
@@ -83,8 +91,11 @@ public class RegistrazioneServlet extends HttpServlet {
         cognome = req.getParameter("cognome");
         sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
+        indirizzo = req.getParameter("indirizzo");
+        cap = Integer.parseInt(req.getParameter("cap"));
+        paese = req.getParameter("paese");
         utenteService = new UtenteServiceImpl();
-        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
+        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
           /*TODO*/

@@ -13,7 +13,7 @@ public class UtenteServiceImpl implements UtenteService {
   private final CarrelloService carrelloService = new CarrelloServiceImpl();
 
   @Override
-  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita) {
+  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese) {
     Utente utente = new Utente();
     utente.setUsername(username);
     utente.setEmail(email);
@@ -23,6 +23,9 @@ public class UtenteServiceImpl implements UtenteService {
     utente.setSesso(sesso);
     utente.setDataDiNascita(dataDiNascita);
     utente.setAdmin(false);
+    utente.setIndirizzo(indirizzo);
+    utente.setCap(cap);
+    utente.setPaese(paese);
     return utente;
   }
 
