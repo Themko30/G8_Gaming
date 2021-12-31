@@ -1,6 +1,7 @@
 package main.java.Prenotazione;
 
 import java.util.ArrayList;
+import main.java.Storage.Entity.Prenotazione;
 
 public interface PrenotazioneService {
 

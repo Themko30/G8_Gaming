@@ -1,6 +1,7 @@
 package main.java.Carrello;
 
-import main.java.Autenticazione.Utente;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Utente;
 
 public interface CarrelloService {
 

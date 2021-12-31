@@ -1,6 +1,7 @@
-package main.java.Prenotazione;
+package main.java.Storage.Entity;
 
 public class Prenotazione {
+
   private int numeroPrenotazione, accettata;
   private String categoria, descrizione, emailRichiedente, copertina;
 

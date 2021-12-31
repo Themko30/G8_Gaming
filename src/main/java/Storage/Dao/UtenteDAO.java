@@ -1,4 +1,4 @@
-package main.java.Autenticazione;
+package main.java.Storage.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Utente;
 
 public class UtenteDAO {
 

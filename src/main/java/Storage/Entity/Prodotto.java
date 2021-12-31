@@ -1,6 +1,7 @@
-package main.java.Catalogo;
+package main.java.Storage.Entity;
 
 public class Prodotto {
+
     private int codice;
     private String categoria;
     private String nome;
@@ -16,7 +17,7 @@ public class Prodotto {
 
     private int valutato;
 
-    public Prodotto(){}
+    public Prodotto() {}
 
     public int getCodice() {
         return codice;

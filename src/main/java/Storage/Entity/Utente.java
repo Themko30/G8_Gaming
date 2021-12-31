@@ -1,15 +1,14 @@
-package main.java.Autenticazione;
+package main.java.Storage.Entity;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
 import java.util.List;
-import main.java.Carrello.Ordine;
 
 public class Utente {
+
     private String username, email, password, nome, cognome, sesso, indirizzo, paese;
     private int cap;
     private LocalDate dataDiNascita;

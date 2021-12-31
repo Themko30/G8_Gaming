@@ -1,6 +1,8 @@
 package main.java.Prenotazione;
 
 import java.util.ArrayList;
+import main.java.Storage.Dao.PrenotazioneDAO;
+import main.java.Storage.Entity.Prenotazione;
 
 public class PrenotazioneServiceImpl implements PrenotazioneService {
 

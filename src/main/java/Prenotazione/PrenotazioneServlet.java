@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import main.java.Storage.Dao.PrenotazioneDAO;
+import main.java.Storage.Entity.Prenotazione;
 import main.java.Validator.InvalidProductException;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;

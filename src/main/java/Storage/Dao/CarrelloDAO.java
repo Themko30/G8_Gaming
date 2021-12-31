@@ -1,4 +1,4 @@
-package main.java.Carrello;
+package main.java.Storage.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Set;
-import main.java.Autenticazione.Utente;
-import main.java.Catalogo.Prodotto;
 import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
 
 public class CarrelloDAO {
 

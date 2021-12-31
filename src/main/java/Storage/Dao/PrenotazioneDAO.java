@@ -1,16 +1,16 @@
-package main.java.Prenotazione;
+package main.java.Storage.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import main.java.Catalogo.Prodotto;
 import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Prenotazione;
 
 public class PrenotazioneDAO {
 
-  public boolean doSavePrenotazione(Prenotazione prenotazione){
+  public boolean doSavePrenotazione(Prenotazione prenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina) VALUES(?,?,?,?)");
@@ -20,27 +20,26 @@ public class PrenotazioneDAO {
       ps.setString(3, prenotazione.getEmailRichiedente());
       ps.setString(4, prenotazione.getCopertina());
 
-      int x= ps.executeUpdate();
+      int x = ps.executeUpdate();
 
       return x == 1;
 
-    }
-    catch (SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public ArrayList<Prenotazione> doRetrievePrenotazione(int limit, int offset){
+  public ArrayList<Prenotazione> doRetrievePrenotazione(int limit, int offset) {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione LIMIT ?,?");
       ps.setInt(1, limit);
       ps.setInt(2, offset);
 
-      ResultSet rs= ps.executeQuery();
-      ArrayList<Prenotazione> prenotazioni= new ArrayList<>();
+      ResultSet rs = ps.executeQuery();
+      ArrayList<Prenotazione> prenotazioni = new ArrayList<>();
 
-      while (rs.next()){
+      while (rs.next()) {
         Prenotazione p = new Prenotazione();
         p.setNumeroPrenotazione(rs.getInt("numeroPrenotazione"));
         p.setCategoria(rs.getString("categoria"));
@@ -53,22 +52,22 @@ public class PrenotazioneDAO {
       return prenotazioni;
 
 
-    } catch(SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
 
   }
 
-  public Prenotazione doRetrievePrenotazioneByCodice(int numeroPrenotazione){
+  public Prenotazione doRetrievePrenotazioneByCodice(int numeroPrenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione WHERE numeroPrenotazione=?");
-      ps.setInt(1,numeroPrenotazione);
+      ps.setInt(1, numeroPrenotazione);
 
-      ResultSet rs= ps.executeQuery();
-      Prenotazione p= new Prenotazione();
+      ResultSet rs = ps.executeQuery();
+      Prenotazione p = new Prenotazione();
 
-      if(rs.next()){
+      if (rs.next()) {
         p.setNumeroPrenotazione(rs.getInt("numeroPrenotazione"));
         p.setCategoria(rs.getString("categoria"));
         p.setDescrizione(rs.getString("descrizione"));
@@ -79,16 +78,15 @@ public class PrenotazioneDAO {
       }
       return p;
 
-    } catch(SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public boolean doUpdatePrenotazione(Prenotazione prenotazione){
+  public boolean doUpdatePrenotazione(Prenotazione prenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
       PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettata=? WHERE numeroPrenotazione=?");
-
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());
@@ -97,27 +95,27 @@ public class PrenotazioneDAO {
       ps.setInt(5, prenotazione.getAccettata());
       ps.setInt(6, prenotazione.getNumeroPrenotazione());
 
-      int x=ps.executeUpdate();
+      int x = ps.executeUpdate();
 
       return x == 1;
 
-    } catch (SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public boolean doAcceptPrenotazione(int numeroPrenotazione){
+  public boolean doAcceptPrenotazione(int numeroPrenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
       PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET accettata=1 WHERE numeroPrenotazione=?");
 
       ps.setInt(1, numeroPrenotazione);
 
-      int x=ps.executeUpdate();
+      int x = ps.executeUpdate();
 
       return x == 1;
 
-    } catch (SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
@@ -136,20 +134,20 @@ public class PrenotazioneDAO {
     }
   }
 
-  public int doRetrieveCounterPrenotazioni(){
+  public int doRetrieveCounterPrenotazioni() {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Prenotazione");
 
-      ResultSet rs= ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
       int quantita = 0;
 
-      if(rs.next()){
+      if (rs.next()) {
         quantita = rs.getInt(1);
       }
       return quantita;
 
-    } catch(SQLException e){
+    } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }

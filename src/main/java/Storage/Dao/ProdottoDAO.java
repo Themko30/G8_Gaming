@@ -1,16 +1,16 @@
-package main.java.Catalogo;
-
-import main.java.Storage.ConPool;
+package main.java.Storage.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Prodotto;
 
 public class ProdottoDAO {
 
-    public String doUpdateProdotto(Prodotto prodotto){
+    public String doUpdateProdotto(Prodotto prodotto) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT copertina FROM Prodotto WHERE codice=?");
@@ -19,7 +19,7 @@ public class ProdottoDAO {
             ResultSet rs = ps.executeQuery();
 
             String oldCopertina = null;
-            if(rs.next()){
+            if (rs.next()) {
                 oldCopertina = rs.getString("copertina");
             }
 
@@ -33,43 +33,43 @@ public class ProdottoDAO {
             ps.setString(7, prodotto.getDescrizione());
             ps.setString(8, prodotto.getCopertina());
             ps.setInt(9, prodotto.getCodice());
-            int x=ps.executeUpdate();
+            int x = ps.executeUpdate();
 
             return oldCopertina;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doUpdateQuantita(Prodotto prodotto, int quantita){
+    public int doUpdateQuantita(Prodotto prodotto, int quantita) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET quantita=(quantita-?) WHERE codice=?");
-            ps.setInt(1,quantita);
+            ps.setInt(1, quantita);
             ps.setInt(2, prodotto.getCodice());
-            int x=ps.executeUpdate();
-            return x>0? 1:0;
-        } catch (SQLException e){
+            int x = ps.executeUpdate();
+            return x > 0 ? 1 : 0;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doUpdateMedia(Prodotto prodotto, int valutazione){
+    public int doUpdateMedia(Prodotto prodotto, int valutazione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET numeroVoti=(numeroVoti+1), totaleVoti = (totaleVoti + ?) WHERE codice=?");
-            ps.setInt(1,valutazione);
+            ps.setInt(1, valutazione);
             ps.setInt(2, prodotto.getCodice());
 
             int x = ps.executeUpdate();
             ps = con.prepareStatement("UPDATE Prodotto SET media=(totaleVoti/numeroVoti) WHERE codice=?");
             x = ps.executeUpdate();
 
-            return x>0? 1:0;
-        } catch (SQLException e){
+            return x > 0 ? 1 : 0;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doSaveProdotto(Prodotto prodotto){
+    public int doSaveProdotto(Prodotto prodotto) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO Prodotto(categoria, nome, piattaforma, prezzo, scontoAttivo, quantita, descrizione, copertina) VALUES(?,?,?,?,?,?,?,?)");
@@ -83,28 +83,27 @@ public class ProdottoDAO {
             ps.setString(7, prodotto.getDescrizione());
             ps.setString(8, prodotto.getCopertina());
 
-            int x= ps.executeUpdate();
+            int x = ps.executeUpdate();
 
-            return x>0? 1:0;
+            return x > 0 ? 1 : 0;
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Prodotto> doRetrieveProdotti(int limit, int offset){
+    public ArrayList<Prodotto> doRetrieveProdotti(int limit, int offset) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto LIMIT ?,?");
             ps.setInt(1, limit);
             ps.setInt(2, offset);
 
-            ResultSet rs= ps.executeQuery();
-            ArrayList<Prodotto> prodotti= new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-            while (rs.next()){
-                Prodotto p= new Prodotto();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -121,25 +120,25 @@ public class ProdottoDAO {
             return prodotti;
 
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public ArrayList<Prodotto> doRetrieveProdottiByNomeLike(String nome, int offset, int limit){
+    public ArrayList<Prodotto> doRetrieveProdottiByNomeLike(String nome, int offset, int limit) {
 
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE nome LIKE ? LIMIT ?,?");
-            ps.setString(1, "%"+nome+"%");
+            ps.setString(1, "%" + nome + "%");
             ps.setInt(2, offset);
             ps.setInt(3, limit);
 
-            ResultSet rs= ps.executeQuery();
-            ArrayList<Prodotto> prodotti= new ArrayList<>();
-            while (rs.next()){
-                Prodotto p= new Prodotto();
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -156,21 +155,21 @@ public class ProdottoDAO {
             return prodotti;
 
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Prodotto doRetrieveProdottoByCodice(int codice){
+    public Prodotto doRetrieveProdottoByCodice(int codice) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE codice=?");
-            ps.setInt(1,codice);
+            ps.setInt(1, codice);
 
-            ResultSet rs= ps.executeQuery();
-            Prodotto p= new Prodotto();
+            ResultSet rs = ps.executeQuery();
+            Prodotto p = new Prodotto();
 
-            if(rs.next()){
+            if (rs.next()) {
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -185,13 +184,13 @@ public class ProdottoDAO {
             }
             return p;
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int limit, int offset){
+    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int limit, int offset) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE categoria=? LIMIT ?,?");
@@ -199,11 +198,11 @@ public class ProdottoDAO {
             ps.setInt(2, limit);
             ps.setInt(3, offset);
 
-            ResultSet rs= ps.executeQuery();
-            ArrayList<Prodotto> prodotti= new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-            while (rs.next()){
-                Prodotto p= new Prodotto();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -219,13 +218,13 @@ public class ProdottoDAO {
             }
             return prodotti;
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int limit, int offset){
+    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int limit, int offset) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE piattaforma=? LIMIT ?,?");
@@ -233,11 +232,11 @@ public class ProdottoDAO {
             ps.setInt(2, limit);
             ps.setInt(3, offset);
 
-            ResultSet rs= ps.executeQuery();
-            ArrayList<Prodotto> prodotti= new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-            while (rs.next()){
-                Prodotto p= new Prodotto();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -253,49 +252,48 @@ public class ProdottoDAO {
             }
             return prodotti;
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public int doRetrieveQuantitaProdottoByCodice(int codice){
+    public int doRetrieveQuantitaProdottoByCodice(int codice) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT quantita FROM Prodotto WHERE codice=?");
-            ps.setInt(1,codice);
+            ps.setInt(1, codice);
 
-            ResultSet rs= ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             int quantita = 0;
 
-            if(rs.next()){
+            if (rs.next()) {
                 quantita = rs.getInt("quantita");
             }
             return quantita;
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int doRetrieveCounterProdotti(){
+    public int doRetrieveCounterProdotti() {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Prodotto");
 
-            ResultSet rs= ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             int quantita = 0;
 
-            if(rs.next()){
+            if (rs.next()) {
                 quantita = rs.getInt(1);
             }
             return quantita;
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }

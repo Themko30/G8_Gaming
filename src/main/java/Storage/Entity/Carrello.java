@@ -1,7 +1,4 @@
-package main.java.Carrello;
-
-import main.java.Autenticazione.Utente;
-import main.java.Catalogo.Prodotto;
+package main.java.Storage.Entity;
 
 import java.util.LinkedHashMap;
 
@@ -13,7 +10,7 @@ public class Carrello {
     private Utente utente;
     private LinkedHashMap<Prodotto, Integer> prodotti;
 
-    public Carrello(){
+    public Carrello() {
         prodotti = new LinkedHashMap<>();
     }
 
@@ -41,11 +38,11 @@ public class Carrello {
         this.prodotti = prodotti;
     }
 
-    public Utente getUtente(){
+    public Utente getUtente() {
         return utente;
     }
 
-    public void setUtente(Utente u){
+    public void setUtente(Utente u) {
         utente = u;
     }
 }

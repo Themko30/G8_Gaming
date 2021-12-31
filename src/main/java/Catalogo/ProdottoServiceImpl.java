@@ -1,8 +1,10 @@
 package main.java.Catalogo;
 
 import java.util.ArrayList;
+import main.java.Storage.Dao.ProdottoDAO;
+import main.java.Storage.Entity.Prodotto;
 
-public class ProdottoServiceImpl implements ProdottoService{
+public class ProdottoServiceImpl implements ProdottoService {
 
     private final ProdottoDAO prodottoDAO = new ProdottoDAO();
 
@@ -12,7 +14,7 @@ public class ProdottoServiceImpl implements ProdottoService{
     }
 
     @Override
-    public Prodotto prodottoCodice(int codice){
+    public Prodotto prodottoCodice(int codice) {
         return prodottoDAO.doRetrieveProdottoByCodice(codice);
     }
 

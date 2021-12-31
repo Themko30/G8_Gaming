@@ -1,12 +1,11 @@
-package main.java.Carrello;
-
-import main.java.Autenticazione.Utente;
-import main.java.Catalogo.Prodotto;
+package main.java.Storage.Entity;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
+import main.java.Carrello.OrdineBuilderImpl;
 
 public class Ordine {
+
     private int numero;
     private double totale;
     private int numeroArticoli;
@@ -19,11 +18,11 @@ public class Ordine {
 
     private Utente utente;
 
-    public Ordine(){
+    public Ordine() {
         prodotti = new LinkedHashMap<>();
     }
 
-    public Ordine(OrdineBuilderImpl builder){
+    public Ordine(OrdineBuilderImpl builder) {
         this.totale = builder.getTotale();
         this.numero = builder.getNumeroArticoli();
         this.indirizzoSpedizione = builder.getIndirizzoSpedizione();
@@ -97,11 +96,12 @@ public class Ordine {
     public void setProdotti(LinkedHashMap<Prodotto, Integer> prodotti) {
         this.prodotti = prodotti;
     }
-    public Utente getUtente(){
+
+    public Utente getUtente() {
         return utente;
     }
 
-    public void setUtente(Utente u){
+    public void setUtente(Utente u) {
         utente = u;
     }
 }
