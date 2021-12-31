@@ -19,7 +19,12 @@ public class CarrelloServiceImpl implements CarrelloService {
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() - p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
                 prodottiMap.replace(p, quantita);
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli() + prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() + p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
+
                 break;
             }
         }
@@ -34,7 +39,10 @@ public class CarrelloServiceImpl implements CarrelloService {
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() - p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
                 prodottiMap.remove(p);
+
                 break;
             }
         }
@@ -60,8 +68,8 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public void creaCarrello(Utente utente) {
-        carrelloDAO.doCreateCarrello(utente);
+    public boolean creaCarrello(Utente utente) {
+        return carrelloDAO.doCreateCarrello(utente);
     }
 
     @Override
@@ -71,23 +79,29 @@ public class CarrelloServiceImpl implements CarrelloService {
 
     @Override
     public Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita) {
-        LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap = carrello.getProdotti();
-        Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
-        boolean added = false;
-        for (Prodotto p : prodottiCarrello) {
-            if (p.getCodice() == codiceProdotto) {
-                prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
-                added = true;
-                break;
+        if(quantita>0){
+            LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap = carrello.getProdotti();
+            Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
+            boolean added = false;
+            for (Prodotto p : prodottiCarrello) {
+                if (p.getCodice() == codiceProdotto) {
+                    prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
+                    carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
+                    carrello.setTotale(carrello.getTotale() + p.getPrezzo() * p.getScontoAttivo() * quantita);
+                    added = true;
+                    break;
+                }
             }
-        }
-        if (!added) {
-            ProdottoService prodottoService = new ProdottoServiceImpl();
-            Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
-            prodottiCarrelloMap.put(p, quantita);
-        }
+            if (!added) {
+                ProdottoService prodottoService = new ProdottoServiceImpl();
+                Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
+                prodottiCarrelloMap.put(p, quantita);
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
+                carrello.setTotale(carrello.getTotale() + p.getPrezzo() * p.getScontoAttivo() * quantita);
+            }
 
-        carrello.setProdotti(prodottiCarrelloMap);
+            carrello.setProdotti(prodottiCarrelloMap);
+        }
         return carrello;
     }
 }
