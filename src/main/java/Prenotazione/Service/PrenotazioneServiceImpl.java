@@ -20,8 +20,8 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
     }
 
     @Override
-    public void acceptPrenotazione(int numero) {
-        prenotazioneDAO.doAcceptPrenotazione(numero);
+    public boolean acceptPrenotazione(int numero) {
+        return prenotazioneDAO.doAcceptPrenotazione(numero);
     }
 
     @Override
