@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import main.java.Carrello.Carrello;
 import main.java.Carrello.CarrelloService;
 import main.java.Carrello.CarrelloServiceImpl;
-import main.java.Carrello.Ordine;
 import main.java.Carrello.OrdineService;
 import main.java.Carrello.OrdineServiceImpl;
 import main.java.Catalogo.ProdottoService;
 import main.java.Catalogo.ProdottoServiceImpl;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Utente;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
