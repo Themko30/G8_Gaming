@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Utente;
 import main.java.Validator.Service.Validator;
 import main.java.Validator.Service.ValidatorImpl;
@@ -21,6 +24,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
   private Validator validator;
   private UtenteService utenteService;
+  private CarrelloService carrelloService;
 
   @Override
   public void init() throws ServletException {
@@ -77,6 +81,10 @@ public class RegistrazioneServlet extends HttpServlet {
           resp.setStatus(HttpServletResponse.SC_CREATED);
           HttpSession session = req.getSession(false);
           session.setAttribute("utente", saveUtente);
+          carrelloService = new CarrelloServiceImpl();
+          Carrello carrello = carrelloService.recuperaCarrello(saveUtente);
+          session.setAttribute("carrello", carrello);
+
           resp.sendRedirect("");
           /*TODO*/
 
