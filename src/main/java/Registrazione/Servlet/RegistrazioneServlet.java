@@ -84,12 +84,20 @@ public class RegistrazioneServlet extends HttpServlet {
           carrelloService = new CarrelloServiceImpl();
           Carrello carrello = carrelloService.recuperaCarrello(saveUtente);
           session.setAttribute("carrello", carrello);
-
-          resp.sendRedirect("");
-          /*TODO*/
-
+          resp.sendRedirect("/G8_Gaming_war_exploded/");
         } catch (Exception e) {
-          req.getRequestDispatcher("ERRORE REGISTRAZIONE").forward(req, resp);
+          HttpSession session2 = req.getSession(false);
+          session2.setAttribute("errore", 1);
+          session2.setAttribute("us", username);
+          session2.setAttribute("pw", password);
+          session2.setAttribute("pa", paese);
+          session2.setAttribute("no", nome);
+          session2.setAttribute("em", email);
+          session2.setAttribute("co", cognome);
+          session2.setAttribute("in", indirizzo);
+          session2.setAttribute("ca", cap);
+          session2.setAttribute("errore", 1);
+          req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
         }
         break;
       case "/update":

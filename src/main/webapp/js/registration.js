@@ -69,7 +69,7 @@ function validate() {
         valid = false;
     }
 
-    regex = /[A-Za-z]+[ ][A-Za-z]+[,]?[ ]?[0-9A-Za-z]+/
+    regex = /[A-Za-z]+[ ][A-Za-z]+[,][ ]?[0-9A-Za-z]+/
     if(!regex.test(indirizzo)) {
         message += "<li>Indirizzo non valido.</li>";
         valid = false;
