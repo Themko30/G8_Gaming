@@ -1,12 +1,15 @@
 function validate() {
-    let name = $('#name').val().trim();
-    let surname = $('#surname').val().trim();
+    let name = $('#nome').val().trim();
+    let surname = $('#cognome').val().trim();
     let email = $('#email').val().trim();
+    let indirizzo = $('#indirizzo').val().trim();
+    let paese = $('#paese').val().trim();
+    let cap = $('#cap').val().trim();
     let password = $('#password').val();
     let sesso = $('#sesso').val();
     let confirmPassword = $('#confirmPassword').val();
     let username = $('#username').val().trim();
-    let dataDiNascita = $('#dataDiNascita').val().split('-');
+    let dataDiNascita = $('#data').val().split('-');
     let message = "<ul>";
     let valid = true;
     let regex = /^[a-zA-Z ]+$/
@@ -63,6 +66,33 @@ function validate() {
     }
     else if(sesso !== "maschio" && sesso !== "femmina" && sesso !== "altro") {
         message += "<li>Sesso non valido.</li>";
+        valid = false;
+    }
+
+    regex = /[A-Za-z]+[ ][A-Za-z]+[,][ ]?[0-9A-Za-z]+/
+    if(!regex.test(indirizzo)) {
+        message += "<li>Indirizzo non valido.</li>";
+        valid = false;
+    }
+    if(indirizzo.length < 4 || indirizzo.length > 64) {
+        message += "<li>L'indirizzo deve avere una lunghezza compresa tra i 4 e i 64 caratteri.</li>";
+        valid = false;
+    }
+
+    regex = /^[0-9]{5}$/
+    let c = Number(cap);
+    if(!regex.test(cap) || c < 10 || c > 97100) {
+        message += "<li>CAP non valido.</li>";
+        valid = false;
+    }
+
+    regex = /[A-Za-z]+/
+    if(!regex.test(paese)) {
+        message += "<li>Paese non valido.</li>";
+        valid = false;
+    }
+    if(paese.length < 3 || paese.length > 32) {
+        message += "<li>Il paese deve avere una lunghezza compresa tra i 3 e i 32 caratteri.</li>";
         valid = false;
     }
 

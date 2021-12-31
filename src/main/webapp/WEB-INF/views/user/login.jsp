@@ -35,7 +35,6 @@
         <c:if test="${errate == 1}">
             <script>
                 $(document).ready(function() {
-                    console.log("prova");
                     alertBox("Credenziali errate!", "danger");
                 });
             </script>
