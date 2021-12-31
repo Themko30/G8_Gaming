@@ -33,7 +33,7 @@ public class ValidatorImpl implements Validator {
     }
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException {
-        Pattern pattern = Pattern.compile("[A-Za-z]+[ ][A-Za-z]+[,][ ]?[0-9A-Za-z]+");
+        Pattern pattern = Pattern.compile("[A-Za-z ]+[,][ ]?[0-9A-Za-z]+");
         if (!(pattern.matcher(indirizzo).matches())) {
             throw new InvalidIndirizzoException();
         }
