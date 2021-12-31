@@ -2,6 +2,7 @@ package main.java.Autenticazione;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import main.java.Storage.Entity.Utente;
 
 public interface UtenteService {
 

@@ -9,9 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import main.java.Autenticazione.Utente;
 import main.java.Autenticazione.UtenteService;
 import main.java.Autenticazione.UtenteServiceImpl;
+import main.java.Storage.Entity.Utente;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 

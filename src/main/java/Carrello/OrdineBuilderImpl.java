@@ -1,12 +1,13 @@
 package main.java.Carrello;
 
-import main.java.Autenticazione.Utente;
-import main.java.Catalogo.Prodotto;
-
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
 
-public class OrdineBuilderImpl implements OrdineBuilder{
+public class OrdineBuilderImpl implements OrdineBuilder {
+
     private double totale;
     private int numeroArticoli;
     private String indirizzoSpedizione;
@@ -16,49 +17,49 @@ public class OrdineBuilderImpl implements OrdineBuilder{
     private LinkedHashMap<Prodotto, Integer> prodotti;
     private Utente utente;
 
-    public OrdineBuilderImpl(){    }
+    public OrdineBuilderImpl() {}
 
-    public OrdineBuilderImpl totale(double totale){
+    public OrdineBuilderImpl totale(double totale) {
         this.totale = totale;
         return this;
     }
 
-    public OrdineBuilderImpl numeroArticoli(int numeroArticoli){
-        this.numeroArticoli=numeroArticoli;
+    public OrdineBuilderImpl numeroArticoli(int numeroArticoli) {
+        this.numeroArticoli = numeroArticoli;
         return this;
     }
 
-    public OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione){
+    public OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione) {
         this.indirizzoSpedizione = indirizzoSpedizione;
         return this;
     }
 
-    public OrdineBuilderImpl metodoPagamento(String metodoPagamento){
+    public OrdineBuilderImpl metodoPagamento(String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
         return this;
     }
 
-    public OrdineBuilderImpl data(LocalDate data){
+    public OrdineBuilderImpl data(LocalDate data) {
         this.data = data;
         return this;
     }
 
-    public OrdineBuilderImpl stato(String stato){
+    public OrdineBuilderImpl stato(String stato) {
         this.stato = stato;
         return this;
     }
 
-    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti){
+    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti) {
         this.prodotti = prodotti;
         return this;
     }
 
-    public OrdineBuilderImpl utente(Utente utente){
+    public OrdineBuilderImpl utente(Utente utente) {
         this.utente = utente;
         return this;
     }
 
-    public Ordine build(){
+    public Ordine build() {
         return new Ordine(this);
     }
 

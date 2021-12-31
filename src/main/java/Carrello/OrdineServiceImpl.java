@@ -1,27 +1,24 @@
 package main.java.Carrello;
 
-import java.util.ArrayList;
-import main.java.Autenticazione.Utente;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import main.java.Storage.Dao.OrdineDAO;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Utente;
 
-public class OrdineServiceImpl implements OrdineService{
+public class OrdineServiceImpl implements OrdineService {
 
     private final OrdineBuilder ordineBuilder = new OrdineBuilderImpl();
     private final OrdineDAO ordineDAO = new OrdineDAO();
+
     @Override
     public Ordine createOrdine(Carrello carrello, String indirizzo, Integer CAP, String paese, String metodoPagamento) {
 
-        String indirizzoSpedizione = indirizzo + ", " + CAP +", " + paese;
+        String indirizzoSpedizione = indirizzo + ", " + CAP + ", " + paese;
 
-        return ordineBuilder.utente(carrello.getUtente())
-                .totale(carrello.getTotale())
-                .numeroArticoli(carrello.getNumeroArticoli())
-                .indirizzoSpedizione(indirizzoSpedizione)
-                .metodoPagamento(metodoPagamento)
-                .data(LocalDate.now())
-                .prodotti(carrello.getProdotti())
-                .build();
+        return ordineBuilder.utente(carrello.getUtente()).totale(carrello.getTotale()).numeroArticoli(carrello.getNumeroArticoli()).indirizzoSpedizione(indirizzoSpedizione)
+          .metodoPagamento(metodoPagamento).data(LocalDate.now()).prodotti(carrello.getProdotti()).build();
     }
 
     @Override
