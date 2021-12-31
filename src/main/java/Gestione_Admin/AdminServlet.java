@@ -1,5 +1,17 @@
 package main.java.Gestione_Admin;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import main.java.Autenticazione.UtenteService;
 import main.java.Autenticazione.UtenteServiceImpl;
 import main.java.Carrello.OrdineService;
@@ -13,22 +25,9 @@ import main.java.Validator.InvalidProductException;
 import main.java.Validator.Validator;
 import main.java.Validator.ValidatorImpl;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 
 @WebServlet(name = "Admin", value = "/admin/*")
-public class Admin extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 
     private Validator validator;
     private UtenteService utenteService;
@@ -50,7 +49,7 @@ public class Admin extends HttpServlet {
         statistics.put("Ordini", ordineService.counterOrdini());
         statistics.put("Prodotti", prodottoService.counterProdotti());
         statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
-        synchronized (ctx){
+        synchronized (ctx) {
             ctx.setAttribute("statistics", statistics);
         }
 
@@ -60,9 +59,8 @@ public class Admin extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String path = req.getPathInfo();
-        validator= new ValidatorImpl();
-        path= validator.validatePath(path);
-
+        validator = new ValidatorImpl();
+        path = validator.validatePath(path);
 
         switch (path) {
             case "/":
@@ -103,7 +101,7 @@ public class Admin extends HttpServlet {
                 statistics.put("Ordini", ordineService.counterOrdini());
                 statistics.put("Prodotti", prodottoService.counterProdotti());
                 statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
-                synchronized (ctx){
+                synchronized (ctx) {
                     ctx.setAttribute("statistics", statistics);
                 }
 
@@ -152,17 +150,17 @@ public class Admin extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
-        validator= new ValidatorImpl();
-        path= validator.validatePath(path);
+        validator = new ValidatorImpl();
+        path = validator.validatePath(path);
         int codiceProdotto;
-
 
         switch (path) {
             case "/Products/AddProductHomePage":
-                /*TODO*/ArrayList<Prodotto> homeAdd = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
+                /*TODO*/
+                ArrayList<Prodotto> homeAdd = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                 codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
 
-                synchronized(homeAdd){
+                synchronized (homeAdd) {
                     homeAdd.add(prodottoService.prodottoCodice(codiceProdotto));
                     getServletContext().removeAttribute("home");
                     getServletContext().setAttribute("home", homeAdd);
@@ -172,7 +170,8 @@ public class Admin extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/SetHomePage":
-                /*TODO*/ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
+                /*TODO*/
+                ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                 codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
                 synchronized (home) {
                     for (Prodotto p : home) {
@@ -201,20 +200,20 @@ public class Admin extends HttpServlet {
 
                 Prodotto prodotto = prodottoService.creaProdotto(categoria, nome, piattaforma, prezzo, scontoAttivo, quantita, descrizione, copertina);
 
-                try{
+                try {
                     validator.validateProdotto(prodotto);
                     validator.validateImage(copertina, req.getParts());
                     prodottoService.saveProdotto(prodotto);
 
-                    for(Part part: req.getParts()){
-                        if(part.getContentType() != null)
-                            part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+copertina);
+                    for (Part part : req.getParts()) {
+                        if (part.getContentType() != null) {
+                            part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + copertina);
+                        }
                     }
 
                     dispatcher = req.getRequestDispatcher("PRODUCT PAGE");
                     dispatcher.forward(req, resp);
-                }
-                catch (InvalidProductException e){
+                } catch (InvalidProductException e) {
                     dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                     dispatcher.forward(req, resp);
                 }
@@ -236,30 +235,26 @@ public class Admin extends HttpServlet {
                 Prodotto prodottoM = prodottoService.creaProdotto(categoriaM, nomeM, piattaformaM, prezzoM, scontoAttivoM, quantitaM, descrizioneM, copertinaM);
                 prodottoM.setCodice(codiceProdotto);
 
-
-                try{
+                try {
                     validator.validateProdotto(prodottoM);
                     validator.validateImage(copertinaM, req.getParts());
                     String oldCopertina = prodottoService.updateProdotto(prodottoM);
 
-                    File oldCopertinaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+oldCopertina);
+                    File oldCopertinaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + oldCopertina);
                     oldCopertinaFile.delete();
 
-
-                    for(Part part: req.getParts()){
-                        if(part.getContentType() != null)
-                            part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\"+copertinaM);
+                    for (Part part : req.getParts()) {
+                        if (part.getContentType() != null) {
+                            part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + copertinaM);
+                        }
                     }
                     dispatcher = req.getRequestDispatcher("PRODUCT ADMIN PAGE");
                     dispatcher.forward(req, resp);
 
-                }
-                catch (InvalidProductException e){
+                } catch (InvalidProductException e) {
                     dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                     dispatcher.forward(req, resp);
                 }
-
-
 
                 break;
             case "/Users/SetAdmin":
