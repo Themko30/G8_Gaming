@@ -15,11 +15,11 @@ public interface OrdineService {
 
     Ordine retrieveOrder(int codiceOrdine);
 
-    void setProdottoValutato(int codiceOrdine, int codiceProdotto);
+    boolean setProdottoValutato(int codiceOrdine, int codiceProdotto);
 
     ArrayList<Ordine> allOrders();
 
-    void updateStato(int numeroOrdine, String stato);
+    boolean updateStato(int numeroOrdine, String stato);
 
     int counterOrdini();
 }

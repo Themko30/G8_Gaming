@@ -115,7 +115,7 @@ public class OrdineDAO {
         }
     }
 
-    public int doUpdateStatoOrdine(int numero, String stato) {
+    public boolean doUpdateStatoOrdine(int numero, String stato) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("UPDATE Ordine SET stato=? WHERE numero=?");
@@ -123,7 +123,7 @@ public class OrdineDAO {
             ps.setInt(2, numero);
             int rows = ps.executeUpdate();
 
-            return rows > 0 ? 1 : 0;
+            return rows >0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -175,13 +175,14 @@ public class OrdineDAO {
         }
     }
 
-    public void doSetProdottoValutato(int codiceOrdine, int codiceProdotto) {
+    public boolean doSetProdottoValutato(int codiceOrdine, int codiceProdotto) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("UPDATE ArticoloAcquistato SET valutato=1 WHERE ordine=? AND prodotto=?");
             ps.setInt(1, codiceOrdine);
             ps.setInt(2, codiceProdotto);
-            ps.executeUpdate();
+            int x = ps.executeUpdate();
+            return x>0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

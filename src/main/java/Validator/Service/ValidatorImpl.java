@@ -119,9 +119,6 @@ public class ValidatorImpl implements Validator {
             throw new InvalidUserException();
         }
 
-        if (utente.getPassword().length() < 6 || utente.getPassword().length() > 64) {
-            throw new InvalidUserException();
-        }
 
         pattern = Pattern.compile("[a-zA-Z ]+");
 

@@ -8,37 +8,37 @@ import main.java.Storage.Entity.Utente;
 
 public interface OrdineBuilder {
 
-    public OrdineBuilderImpl totale(double totale);
+    OrdineBuilderImpl totale(double totale);
 
-    public OrdineBuilderImpl numeroArticoli(int numeroArticoli);
+    OrdineBuilderImpl numeroArticoli(int numeroArticoli);
 
-    public OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione);
+    OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione);
 
-    public OrdineBuilderImpl metodoPagamento(String metodoPagamento);
+    OrdineBuilderImpl metodoPagamento(String metodoPagamento);
 
-    public OrdineBuilderImpl data(LocalDate data);
+    OrdineBuilderImpl data(LocalDate data);
 
-    public OrdineBuilderImpl stato(String stato);
+    OrdineBuilderImpl stato(String stato);
 
-    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti);
+    OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti);
 
-    public OrdineBuilderImpl utente(Utente utente);
+    OrdineBuilderImpl utente(Utente utente);
 
-    public Ordine build();
+    Ordine build();
 
-    public double getTotale();
+    double getTotale();
 
-    public int getNumeroArticoli();
+    int getNumeroArticoli();
 
-    public String getIndirizzoSpedizione();
+    String getIndirizzoSpedizione();
 
-    public String getMetodoPagamento();
+    String getMetodoPagamento();
 
-    public LocalDate getData();
+    LocalDate getData();
 
-    public String getStato();
+    String getStato();
 
-    public LinkedHashMap<Prodotto, Integer> getProdotti();
+    LinkedHashMap<Prodotto, Integer> getProdotti();
 
-    public Utente getUtente();
+    Utente getUtente();
 }

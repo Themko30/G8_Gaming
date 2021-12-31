@@ -43,8 +43,8 @@ public class OrdineServiceImpl implements OrdineService {
     }
 
     @Override
-    public void setProdottoValutato(int codiceOrdine, int codiceProdotto) {
-        ordineDAO.doSetProdottoValutato(codiceOrdine, codiceProdotto);
+    public boolean setProdottoValutato(int codiceOrdine, int codiceProdotto) {
+        return ordineDAO.doSetProdottoValutato(codiceOrdine, codiceProdotto);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class OrdineServiceImpl implements OrdineService {
     }
 
     @Override
-    public void updateStato(int numeroOrdine, String stato) {
-        ordineDAO.doUpdateStatoOrdine(numeroOrdine, stato);
+    public boolean updateStato(int numeroOrdine, String stato) {
+        return ordineDAO.doUpdateStatoOrdine(numeroOrdine, stato);
     }
 
     @Override
