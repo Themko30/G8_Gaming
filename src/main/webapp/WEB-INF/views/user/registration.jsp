@@ -79,10 +79,10 @@
             <label for="data">Data di nascita</label>
         </div>
         <select class="form-select" name="sesso" id="sesso" required>
-            <option selected disabled value="maschio">Sesso</option>
-            <option value="maschio">Maschio</option>
-            <option value="femmina">Femmina</option>
-            <option value="altro">Altro</option>
+            <option selected disabled>Sesso</option>
+            <option value="Maschio">Maschio</option>
+            <option value="Femmina">Femmina</option>
+            <option value="Altro">Altro</option>
         </select>
         <div class="txt_field">
             <input type="text" id="indirizzo" name="indirizzo" value="${in}" required>
