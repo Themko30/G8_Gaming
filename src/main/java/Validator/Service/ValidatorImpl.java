@@ -141,7 +141,7 @@ public class ValidatorImpl implements Validator {
             throw new InvalidUserException();
         }
 
-        if (!(utente.getSesso().equals("M") || utente.getSesso().equals("F") || utente.getSesso().equals("Altro"))) {
+        if (!(utente.getSesso().equals("Maschio") || utente.getSesso().equals("Femmina") || utente.getSesso().equals("Altro"))) {
             throw new InvalidUserException();
         }
 
