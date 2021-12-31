@@ -17,6 +17,7 @@ import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Utente;
 import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidUserException;
 import main.java.Validator.Service.Validator;
 import main.java.Validator.Service.ValidatorImpl;
 
@@ -87,7 +88,12 @@ public class RegistrazioneServlet extends HttpServlet {
           Carrello carrello = carrelloService.recuperaCarrello(saveUtente);
           session.setAttribute("carrello", carrello);
           resp.sendRedirect("/G8_Gaming_war_exploded/");
-        } catch (Exception e) {
+        } catch (InvalidIndirizzoException e) {
+          throw new ServletException("Invalid indirizzo...");
+        }
+        catch (InvalidUserException ex){
+          throw new ServletException("Invalid user...");
+        } catch(Exception exe) {
           HttpSession session2 = req.getSession(false);
           session2.setAttribute("errore", 1);
           session2.setAttribute("us", username);
@@ -100,8 +106,6 @@ public class RegistrazioneServlet extends HttpServlet {
           session2.setAttribute("ca", cap);
           session2.setAttribute("errore", 1);
           req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
-        } catch (InvalidIndirizzoException e) {
-          throw new ServletException("Errore...");
         }
         break;
       case "/update":

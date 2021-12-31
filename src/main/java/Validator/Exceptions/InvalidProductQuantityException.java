@@ -2,7 +2,7 @@ package main.java.Validator.Exceptions;
 
 import main.java.Storage.Entity.Prodotto;
 
-public class InvalidProductQuantityException extends Throwable {
+public class InvalidProductQuantityException extends Exception {
 
     private final Prodotto prodotto;
 
