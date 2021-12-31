@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Carrello.Service.CarrelloService;
@@ -98,9 +97,9 @@ public class AuthServlet extends HttpServlet {
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
-    String username, email, password, nome, cognome, sesso;
+    String username, email, password, nome, cognome, sesso, indirizzo, paese;
     LocalDate dataDiNascita;
-    int codiceOrdine, codiceProdotto;
+    int codiceOrdine, codiceProdotto, cap;
 
     switch (path) {
       case "/update":
@@ -111,8 +110,11 @@ public class AuthServlet extends HttpServlet {
         cognome = req.getParameter("cognome");
         sesso = req.getParameter("sesso");
         dataDiNascita = LocalDate.parse(req.getParameter("data"));
+        indirizzo = req.getParameter("indirizzo");
+        cap = Integer.parseInt(req.getParameter("cap"));
+        paese = req.getParameter("paese");
         utenteService = new UtenteServiceImpl();
-        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita);
+        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
           /*TODO*/
@@ -127,19 +129,19 @@ public class AuthServlet extends HttpServlet {
         tmpUtente.setPassword(req.getParameter("password"));
         utenteService = new UtenteServiceImpl();
         Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
-        if(utente == null){
+        if (utente == null) {
           req.getRequestDispatcher("ERROR LOGIN").forward(req, resp);
-        }
-        else{
+        } else {
           carrelloService = new CarrelloServiceImpl();
           Carrello carrello = carrelloService.recuperaCarrello(utente);
           HttpSession session2 = req.getSession(false);
           session2.setAttribute("utente", utente);
           session2.setAttribute("carrello", carrello);
-          if(utente.isAdmin())
+          if (utente.isAdmin()) {
             req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp").forward(req, resp);
-          else
+          } else {
             resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");
+          }
         }
 
         break;
