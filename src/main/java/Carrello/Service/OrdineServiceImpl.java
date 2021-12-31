@@ -17,8 +17,14 @@ public class OrdineServiceImpl implements OrdineService {
 
         String indirizzoSpedizione = indirizzo + ", " + CAP + ", " + paese;
 
-        return ordineBuilder.utente(carrello.getUtente()).totale(carrello.getTotale()).numeroArticoli(carrello.getNumeroArticoli()).indirizzoSpedizione(indirizzoSpedizione)
-          .metodoPagamento(metodoPagamento).data(LocalDate.now()).prodotti(carrello.getProdotti()).build();
+        return ordineBuilder.utente(carrello.getUtente())
+                .totale(carrello.getTotale())
+                .numeroArticoli(carrello.getNumeroArticoli())
+                .indirizzoSpedizione(indirizzoSpedizione)
+                .metodoPagamento(metodoPagamento)
+                .data(LocalDate.now())
+                .prodotti(carrello.getProdotti())
+                .build();
     }
 
     @Override
