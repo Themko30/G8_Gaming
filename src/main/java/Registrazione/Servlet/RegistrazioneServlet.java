@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Storage.Entity.Utente;
@@ -73,6 +74,9 @@ public class RegistrazioneServlet extends HttpServlet {
         Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.saveUtente(saveUtente)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
+          HttpSession session = req.getSession(false);
+          session.setAttribute("utente", saveUtente);
+          resp.sendRedirect("");
           /*TODO*/
           req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
         } else {
