@@ -14,7 +14,7 @@ public class UtenteDAO {
   public int doRetrieveCounterUtenti() {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT COUNT (*) FROM Utente");
+      PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Utente");
 
       ResultSet rs = ps.executeQuery();
       int quantita = 0;

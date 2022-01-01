@@ -16,7 +16,7 @@
             <div class="card border-secondary text-center" id="Products" style="width: 18rem;">
                 <div class="card-header">Prodotti in Magazzino</div>
                 <div class="card-body">
-                    <h3 class="card-title">53</h3>
+                    <h3 class="card-title">${statistics.get("Prodotti")}</h3>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <div class="card border-secondary text-center" id="Users" style="width: 18rem;">
                 <div class="card-header">Utenti Registrati</div>
                 <div class="card-body">
-                    <h3 class="card-title">223</h3>
+                    <h3 class="card-title">${statistics.get("Utenti")}</h3>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="card border-secondary text-center" id="Orders" style="width: 18rem;">
                 <div class="card-header">Ordini Effettuati</div>
                 <div class="card-body">
-                    <h3 class="card-title">94</h3>
+                    <h3 class="card-title">${statistics.get("Ordini")}</h3>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="card border-secondary text-center" id="Booking" style="width: 18rem;">
                 <div class="card-header">Prenotazioni Ricevute</div>
                 <div class="card-body">
-                    <h3 class="card-title">7</h3>
+                    <h3 class="card-title">${statistics.get("Prenotazioni")}</h3>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
 <script>
     $(document).ready(function() {
         $('.card').click(function(){
-            window.location.href = '${context}/admin/' + this.attr("id");
+            window.location.href = '${context}/admin/' + $(this).attr("id");
         });
     });
 </script>

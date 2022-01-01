@@ -9,6 +9,7 @@
     </jsp:include>
 </head>
 <body>
+<%@include file="../partials/admin_header.jsp"%>
 <div class="container-xxl my-4">
     <button type="button" class="btn mb-4" id="aggiungi" style="background-color: var(--primary); color: var(--d3light);">Nuovo Prodotto</button>
     <table class="table table-bordered border-secondary table-striped table-hover">

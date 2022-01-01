@@ -9,6 +9,7 @@
     </jsp:include>
 </head>
 <body>
+<%@include file="../partials/admin_header.jsp"%>
 <div class="container-xxl my-5">
     <table class="table table-bordered border-secondary table-striped table-hover">
         <thead>
