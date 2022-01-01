@@ -84,7 +84,7 @@ input[type="submit"]:hover{
     background-color: var(--secondary);
     transition: .5s;
 }
-#immagine {
+#copertina {
     margin-bottom: 20px;
 }
 #liveAlertPlaceholder ul {

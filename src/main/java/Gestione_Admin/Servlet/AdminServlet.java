@@ -119,7 +119,7 @@ public class AdminServlet extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/Products/AddProduct":
-                dispatcher = req.getRequestDispatcher("DISPLAY INSERT PRODOTTO FORM ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/aggiungi_prodotto.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Products/ModifyProduct":

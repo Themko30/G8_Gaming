@@ -49,8 +49,8 @@
             <label for="name">Descrizione</label>
         </div>
         <div>
-            <label for="immagine">Immagine</label>
-            <input type="file" name="immagine" id="immagine" required>
+            <label for="copertina">Immagine</label>
+            <input type="file" name="copertina" id="copertina" required>
         </div>
         <div id="liveAlertPlaceholder"></div>
         <input type="submit" id="register" value="Prenota">
