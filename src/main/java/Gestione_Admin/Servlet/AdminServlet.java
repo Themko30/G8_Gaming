@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ import main.java.Validator.Exceptions.InvalidProductException;
 import main.java.Validator.Service.Validator;
 import main.java.Validator.Service.ValidatorImpl;
 
-
+@MultipartConfig
 @WebServlet(name = "Admin", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
 
@@ -260,8 +261,7 @@ public class AdminServlet extends HttpServlet {
             case "/Users/SetAdmin":
                 String username = req.getParameter("username");
                 utenteService.setAdmin(username);
-                dispatcher = req.getRequestDispatcher("USERS PAGE ADMIN");
-                dispatcher.forward(req, resp);
+                resp.sendRedirect("/G8_Gaming_war_exploded/admin/Users");
                 break;
             case "/Orders/ManageOrder":
                 int codiceOrdine = Integer.parseInt("ordine");
