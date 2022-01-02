@@ -6,7 +6,7 @@
     <jsp:include page="../partials/head.jsp">
         <jsp:param name="title" value="Registrazione"/>
         <jsp:param name="styles" value="registration"/>
-        <jsp:param name="scripts" value="registration"/>
+        <jsp:param name="scripts" value="validators"/>
     </jsp:include>
 </head>
 <body>
@@ -34,7 +34,7 @@
 </c:choose>
 <div class="center">
     <h1>Registrazione</h1>
-    <form method="post" onsubmit="return validate()" action="${context}/registrazione/save">
+    <form method="post" onsubmit="return validateRegistration()" action="${context}/registrazione/save">
         <div id="alertPlaceholder"></div>
         <c:if test="${errore == 1}">
             <script>

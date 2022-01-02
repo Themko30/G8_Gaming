@@ -99,11 +99,6 @@ input[type="submit"]:hover{
 #sesso {
     margin-bottom: 20px;
 }
-#liveAlertPlaceholder ul {
-    margin-bottom: 0;
-    font-size: 14px;
-    padding-left: 1rem;
-}
 
 /* Rimuovi placeholder "gg/mm/aaaa" per input type=date quando non è in focus per evitare sovrapposizione di testo */
 input[type="date"]::before {

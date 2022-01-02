@@ -41,6 +41,11 @@
 #header {
     font-size: 115%;
 }
+#liveAlertPlaceholder ul {
+    margin-bottom: 0;
+    font-size: 14px;
+    padding-left: 1rem;
+}
 
 /*
 NORMALIZE

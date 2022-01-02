@@ -16,12 +16,13 @@
     <jsp:include page="../partials/head.jsp">
         <jsp:param name="title" value="Login"/>
         <jsp:param name="styles" value="login"/>
+        <jsp:param name="scripts" value="validators"/>
     </jsp:include>
 </head>
 <body>
 <div class="center">
     <h1>Login</h1>
-    <form method="post" onsubmit="return validate()" action="${context}/account/login">
+    <form method="post" onsubmit="return validateLogin()" action="${context}/account/login">
         <div class="txt_field">
             <input type="text" name="username" id="username" value="${us}" required>
             <span></span>
@@ -46,33 +47,5 @@
         </div>
     </form>
 </div>
-<script>
-    function validate() {
-        let username = $('#username').val();
-        let password = $('#password').val();
-        let message = "<ul>";
-        let valid = true;
-        let regex = /^[a-zA-Z0-9]+[.]?[a-zA-Z0-9]+$/
-
-        if(!regex.test(username)) {
-            message += "<li>L'username non rispetta il formato adatto.</li>";
-            valid = false;
-        }
-        if(username.length < 3 || username.length > 20) {
-            message += "<li>L'username deve avere una lunghezza compresa tra i 3 e i 20 caratteri.</li>";
-            valid = false;
-        }
-        if(password.length < 6 || password.length > 64) {
-            message += "<li>La password deve avere una lunghezza compresa tra i 6 e i 64 caratteri.</li>";
-            valid = false;
-        }
-
-        if(!valid) {
-            message += "</ul>";
-            alertBox(message, "danger");
-        }
-        return valid;
-    }
-</script>
 </body>
 </html>

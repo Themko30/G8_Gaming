@@ -14,13 +14,13 @@
     <jsp:include page="../partials/head.jsp">
         <jsp:param name="title" value="Prenotazione"/>
         <jsp:param name="styles" value="prenotazione"/>
-        <jsp:param name="scripts" value="prenotazione"/>
+        <jsp:param name="scripts" value="validators"/>
     </jsp:include>
 </head>
 <body>
 <div class="center">
     <h1>Prenotazione</h1>
-    <form method="post" onsubmit="return validate()" action="${context}/prenotazione/save" enctype="multipart/form-data">
+    <form method="post" onsubmit="return validateBooking()" action="${context}/prenotazione/save" enctype="multipart/form-data">
         <div class="txt_field">
             <input type="text" id="email" name="email" value="${email}" required>
             <span></span>
@@ -50,7 +50,7 @@
         </select>
         <div>
             <label for="copertina">Immagine</label>
-            <input type="file" name="copertina" id="copertina" required>
+            <input type="file" accept=".jpg,.png" name="copertina" id="copertina" required>
         </div>
         <div id="liveAlertPlaceholder"></div>
         <input type="submit" id="register" value="Prenota">
