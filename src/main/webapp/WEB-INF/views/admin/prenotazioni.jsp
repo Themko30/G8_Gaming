@@ -22,34 +22,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row"><a href="#">1</a></th>
-            <td>giulio.enzo@gmail.com</td>
-            <td>Red Dead Redemption 2</td>
-            <td><a href="#">rdd2.jpg</a></td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">2</a></th>
-            <td>giulio.enzo@gmail.com</td>
-            <td>Red Dead Redemption 2</td>
-            <td><a href="#">rdd2.jpg</a></td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">3</a></th>
-            <td>giulio.enzo@gmail.com</td>
-            <td>Red Dead Redemption 2</td>
-            <td><a href="#">rdd2.jpg</a></td>
-            <td>Sì</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">4</a></th>
-            <td>giulio.enzo@gmail.com</td>
-            <td>Red Dead Redemption 2</td>
-            <td><a href="#">rdd2.jpg</a></td>
-            <td>Sì</td>
-        </tr>
+        <c:forEach items="${prenotazioni}" var="prenotazione">
+            <tr>
+                <th scope="row"><a href="${context}/admin/Booking/Show?numeroPrenotazione=${prenotazione.numeroPrenotazione}">${prenotazione.numeroPrenotazione}</a></th>
+                <td>${prenotazione.emailRichiedente}</td>
+                <td>${prenotazione.nome}</td>
+                <td><a href="${context}/images/${prenotazione.copertina}">${prenotazione.copertina}</a></td>
+                <c:choose>
+                    <c:when test="${prenotazione.accettata==1}">
+                        <td>Sì</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>No</td>
+                    </c:otherwise>
+                </c:choose>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
