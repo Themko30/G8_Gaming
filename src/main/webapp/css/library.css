@@ -46,6 +46,18 @@
     font-size: 14px;
     padding-left: 1rem;
 }
+.btn:not(.btn-secondary) {
+    background-color: var(--primary) !important;
+    color: var(--d3light) !important;
+}
+.btn:not(.btn-secondary):hover {
+    background-color: var(--secondary) !important;
+    color: var(--d3light) !important;
+}
+.btn-outline-light:hover {
+    background-color: var(--d3light) !important;
+    color: var(--d3dark) !important;
+}
 
 /*
 NORMALIZE

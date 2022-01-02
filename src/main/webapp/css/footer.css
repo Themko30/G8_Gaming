@@ -58,6 +58,7 @@ footer { /* Posiziona il footer in basso */
 .footer-bottom a {
     color: var(--d3light);
     text-decoration: none;
+    font-style: italic;
 }
 .footer-bottom a:hover {
     color: var(--d3light);

@@ -39,13 +39,7 @@
     text-align: center;
 }
 .carrello {
-    background: var(--secondary);
-    color: var(--d3light);
     margin-left: 16px;
-}
-.carrello:hover {
-    background: var(--side);
-    color: var(--d3light);
 }
 
 /* Rimuove le freccette dal selettore di quantità */

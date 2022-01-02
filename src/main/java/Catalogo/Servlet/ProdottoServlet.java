@@ -12,7 +12,7 @@ import main.java.Catalogo.Service.ProdottoService;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Prodotto;
 
-@WebServlet(name = "ProdottoServlet", value = "/Prodotto")
+@WebServlet(name = "ProdottoServlet", value = "/Prodotto/*")
 public class ProdottoServlet extends HttpServlet {
 
   ProdottoService prodottoService = new ProdottoServiceImpl();

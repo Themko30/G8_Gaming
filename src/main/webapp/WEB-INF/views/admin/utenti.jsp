@@ -28,8 +28,7 @@
                 <td>${utente.nome} ${utente.cognome}</td>
                 <td>${utente.email}</td>
                 <td>${utente.sesso}</td>
-                <td><button type="button" class="btn" style="background-color: var(--primary); color: var(--d3light);"
-                        <c:if test="${utente.admin}"> disabled</c:if>>Eleggi</button></td>
+                <td><button type="button" class="btn"<c:if test="${utente.admin}"> disabled</c:if>>Eleggi</button></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -47,7 +46,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
                     <form action="${context}/admin/Users/SetAdmin" method="post">
                         <input type="hidden" name="username" id="username" required>
-                        <button type="submit" class="btn" style="background-color: var(--primary); color: var(--d3light);">Sì, eleggi</button>
+                        <button type="submit" class="btn">Sì, eleggi</button>
                     </form>
                 </div>
             </div>

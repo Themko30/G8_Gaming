@@ -11,7 +11,7 @@
 <body>
 <%@include file="../partials/admin_header.jsp"%>
 <div class="container-xxl my-4">
-    <button type="button" class="btn mb-4" id="aggiungi" style="background-color: var(--primary); color: var(--d3light);">Nuovo Prodotto</button>
+    <button type="button" class="btn mb-4" id="aggiungi">Nuovo Prodotto</button>
     <table class="table table-bordered border-secondary table-striped table-hover">
         <thead>
         <tr>
@@ -24,7 +24,6 @@
         </tr>
         </thead>
         <tbody>
-        <h1>${prodotti}</h1>
         <c:forEach items="${prodotti}" var="prodotto">
             <tr>
                 <th scope="row">${prodotto.codice}</th>

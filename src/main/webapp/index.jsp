@@ -18,7 +18,7 @@
     <!-- TODO: dettagli dinamici delle cards -->
     <div class="row my-2">
         <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
+            <div class="card text-center" id="1" style="width: 12rem;">
                 <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
                 <div class="card-body">
                     <h5 class="card-title">Demon's Souls</h5>
@@ -123,6 +123,13 @@
         <p>Non trovi un videogioco? <a href="${context}/prenotazione">Effettua una prenotazione</a></p>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('.card').click(function(){
+            window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
+        });
+    });
+</script>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>
 </body>
 </html>
