@@ -24,7 +24,7 @@
         <tbody>
         <c:forEach items="${utenti}" var="utente">
             <tr>
-                <th scope="row"><a href="${context}/admin/Users/show?username=${utente.username}">${utente.username}</a></th>
+                <th scope="row"><a href="${context}/admin/Users/Show?username=${utente.username}">${utente.username}</a></th>
                 <td>${utente.nome} ${utente.cognome}</td>
                 <td>${utente.email}</td>
                 <td>${utente.sesso}</td>

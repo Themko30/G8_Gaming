@@ -24,38 +24,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td><a href="#">Demon's Souls</a></td>
-            <td>RPG</td>
-            <td>39.99€</td>
-            <td><a href="#">demons_souls_ps5.jpg</a></td>
-            <td>23</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td><a href="#">Demon's Souls</a></td>
-            <td>RPG</td>
-            <td>39.99€</td>
-            <td><a href="#">demons_souls_ps5.jpg</a></td>
-            <td>23</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td><a href="#">Demon's Souls</a></td>
-            <td>RPG</td>
-            <td>39.99€</td>
-            <td><a href="#">demons_souls_ps5.jpg</a></td>
-            <td>23</td>
-        </tr>
-        <tr>
-            <th scope="row">4</th>
-            <td><a href="#">Demon's Souls</a></td>
-            <td>RPG</td>
-            <td>39.99€</td>
-            <td><a href="#">demons_souls_ps5.jpg</a></td>
-            <td>23</td>
-        </tr>
+        <h1>${prodotti}</h1>
+        <c:forEach items="${prodotti}" var="prodotto">
+            <tr>
+                <th scope="row">${prodotto.codice}</th>
+                <td><a href="${context}/admin/Products/show?codice=${prodotto.codice}">${prodotto.nome}</a></td>
+                <td>${prodotto.categoria}</td>
+                <td>${prodotto.prezzo}€</td>
+                <td><a href="${context}/images/${prodotto.copertina}">${prodotto.copertina}</a></td>
+                <td>${prodotto.quantita}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
