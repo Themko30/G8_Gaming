@@ -31,8 +31,13 @@
             <span></span>
             <label for="name">Nome gioco</label>
         </div>
+        <div class="txt_field">
+            <input type="text" id="descrizione" name="descrizione" required>
+            <span></span>
+            <label for="name">Descrizione</label>
+        </div>
         <select class="form-select" name="categoria" id="categoria" required>
-            <option selected disabled value="categoria">Categoria</option>
+            <option selected disabled>Categoria</option>
             <option value="action">Action/Adventure</option>
             <option value="casual">Casual</option>
             <option value="guida">Guida</option>
@@ -43,11 +48,6 @@
             <option value="sport">Sport</option>
             <option value="strategia">Strategia</option>
         </select>
-        <div class="txt_field">
-            <input type="text" id="descrizione" name="descrizione" required>
-            <span></span>
-            <label for="name">Descrizione</label>
-        </div>
         <div>
             <label for="copertina">Immagine</label>
             <input type="file" name="copertina" id="copertina" required>

@@ -22,6 +22,27 @@
             <span></span>
             <label for="nome">Descrizione</label>
         </div>
+        <select class="form-select" name="categoria" id="categoria" required>
+            <option selected disabled>Categoria</option>
+            <option value="action">Action/Adventure</option>
+            <option value="casual">Casual</option>
+            <option value="guida">Guida</option>
+            <option value="picchiaduro">Picchiaduro</option>
+            <option value="rpg">RPG</option>
+            <option value="sparatutto">Sparatutto</option>
+            <option value="simulazione">Simulazione</option>
+            <option value="sport">Sport</option>
+            <option value="strategia">Strategia</option>
+        </select>
+        <select class="form-select" name="piattaforma" id="piattaforma" required>
+            <option selected disabled>Piattaforma</option>
+            <option value="ps5">PlayStation 5</option>
+            <option value="seriesx">Xbox Series X|S</option>
+            <option value="switch">Nintendo Switch</option>
+            <option value="pc">PC</option>
+            <option value="ps4">PlayStation 4</option>
+            <option value="xboxone">Xbox One</option>
+        </select>
         <div class="txt_field">
             <input type="number" step="1" id="quantita" name="quantita" required>
             <span></span>
@@ -51,6 +72,8 @@
         let descrizione = $('#descrizione').val();
         let quantita = $('#quantita').val();
         let prezzo = $('#prezzo').val();
+        let categoria = $('#categoria').val();
+        let piattaforma = $('#piattaforma').val();
         let scontoAttivo = $('#scontoAttivo').val();
         let message = "<ul>";
         let valid = true;
@@ -73,6 +96,25 @@
         }
         if(Number(scontoAttivo) < 0 || Number(scontoAttivo) > 0.99) {
             message += "<li>Lo sconto attivo deve essere compreso tra 0 e 0.99.</li>";
+            valid = false;
+        }
+        if(categoria == null) {
+            message += "<li>Inserisci la categoria.</li>";
+            valid = false;
+        }
+        else if(categoria !== "strategia" && categoria !== "sport" && categoria !== "rpg" && categoria !== "simulazione" && categoria !== "action"
+            && categoria !== "sparatutto" && categoria !== "picchiaduro" && categoria !== "guida" && categoria !== "casual") {
+            message += "<li>Categoria non valida.</li>";
+            valid = false;
+        }
+
+        if(piattaforma == null) {
+            message += "<li>Inserisci la piattaforma.</li>";
+            valid = false;
+        }
+        else if(piattaforma !== "ps5" && piattaforma !== "seriesx" && piattaforma !== "switch" && piattaforma !== "pc"
+            && piattaforma !== "ps4" && piattaforma !== "xboxone") {
+            message += "<li>Piattaforma non valida.</li>";
             valid = false;
         }
 

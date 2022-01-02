@@ -84,6 +84,9 @@ input[type="submit"]:hover{
     background-color: var(--secondary);
     transition: .5s;
 }
+#categoria {
+    margin-bottom: 8px;
+}
 #copertina {
     margin-bottom: 20px;
 }
