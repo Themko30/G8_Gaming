@@ -22,34 +22,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row"><a href="#">1</a></th>
-            <td><a href="#">giulio01</a></td>
-            <td>39.99€</td>
-            <td>30/12/2021</td>
-            <td>In lavorazione</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">2</a></th>
-            <td><a href="#">giulio01</a></td>
-            <td>39.99€</td>
-            <td>30/12/2021</td>
-            <td>In lavorazione</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">3</a></th>
-            <td><a href="#">giulio01</a></td>
-            <td>39.99€</td>
-            <td>30/12/2021</td>
-            <td>In lavorazione</td>
-        </tr>
-        <tr>
-            <th scope="row"><a href="#">4</a></th>
-            <td><a href="#">giulio01</a></td>
-            <td>39.99€</td>
-            <td>30/12/2021</td>
-            <td>In lavorazione</td>
-        </tr>
+        <c:forEach items="${ordini}" var="ordine">
+            <tr>
+                <th scope="row"><a href="${context}/admin/Orders/Show?numero=${ordine.numero}">${ordine.numero}</a></th>
+                <td><a href="${context}/admin/Users/Show?username=${ordine.utente.username}">${ordine.utente.username}</a></td>
+                <td>${ordine.totale}€</td>
+                <td>${ordine.data}</td>
+                <td>${ordine.stato}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
