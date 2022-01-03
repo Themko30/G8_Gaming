@@ -108,6 +108,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
                 p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
@@ -143,6 +144,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
                 p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
@@ -174,6 +176,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
                 p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
@@ -207,6 +210,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
                 p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
@@ -241,6 +245,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
                 p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
                 p.setCopertina(rs.getString("copertina"));
                 p.setNome(rs.getString("nome"));
                 p.setPiattaforma(rs.getString("piattaforma"));
