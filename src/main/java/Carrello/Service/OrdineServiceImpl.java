@@ -9,7 +9,7 @@ import main.java.Storage.Entity.Utente;
 
 public class OrdineServiceImpl implements OrdineService {
 
-    private final OrdineBuilder ordineBuilder = new OrdineBuilderImpl();
+    private OrdineBuilder ordineBuilder = new OrdineBuilderImpl();
     private final OrdineDAO ordineDAO = new OrdineDAO();
 
     @Override

@@ -17,6 +17,8 @@ public class OrdineBuilderImpl implements OrdineBuilder {
     private LinkedHashMap<Prodotto, Integer> prodotti;
     private Utente utente;
 
+    private Ordine ordine;
+
     public OrdineBuilderImpl() {}
 
     public OrdineBuilderImpl totale(double totale) {
@@ -60,7 +62,8 @@ public class OrdineBuilderImpl implements OrdineBuilder {
     }
 
     public Ordine build() {
-        return new Ordine(this);
+        ordine = new Ordine(this);
+        return ordine;
     }
 
     public double getTotale() {
