@@ -15,6 +15,8 @@ public class Prodotto {
     private int totaleVoti;
     private double media;
 
+    private int mediaArrotondata;
+
     private int valutato;
 
     public Prodotto() {}
@@ -121,5 +123,13 @@ public class Prodotto {
 
     public void setValutato(int valutato) {
         this.valutato = valutato;
+    }
+
+    public int getMediaArrotondata() {
+        return (int) Math.round(media);
+    }
+
+    public void setMediaArrotondata(int mediaArrotondata) {
+        this.mediaArrotondata = mediaArrotondata;
     }
 }
