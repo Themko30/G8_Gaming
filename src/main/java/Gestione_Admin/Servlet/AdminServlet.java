@@ -106,7 +106,7 @@ public class AdminServlet extends HttpServlet {
                     ctx.setAttribute("statistics", statistics);
                 }
 
-                dispatcher = req.getRequestDispatcher("DISPLAY STATISTICS ADMIN PAGE");
+                dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Booking":

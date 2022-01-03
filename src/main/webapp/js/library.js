@@ -15,7 +15,7 @@ function topFunction() {
 
 // Errori validator
 function alertBox(message, type, id) {
-    if(id === undefined) {
+    if(id === undefined || id === null) {
         id = '#liveAlertPlaceholder';
     }
     let alertPlaceholder = $(id);

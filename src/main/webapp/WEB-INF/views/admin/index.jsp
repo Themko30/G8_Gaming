@@ -10,7 +10,8 @@
 </head>
 <body>
 <%@include file="../partials/admin_header.jsp"%>
-<div class="container my-5">
+<div class="container my-3">
+    <button class="btn my-2" id="aggiorna">Aggiorna Statistiche</button>
     <div class="row">
         <div class="col-sm my-3">
             <div class="card border-secondary text-center" id="Products" style="width: 18rem;">
@@ -51,6 +52,9 @@
     $(document).ready(function() {
         $('.card').click(function(){
             window.location.href = '${context}/admin/' + $(this).attr("id");
+        });
+        $('#aggiorna').click(function(){
+            window.location.href = '${context}/admin/Statistics/Update';
         });
     });
 </script>
