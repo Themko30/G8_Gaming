@@ -69,7 +69,7 @@ public class ProdottoDAO {
         }
     }
 
-    public int doSaveProdotto(Prodotto prodotto) {
+    public boolean doSaveProdotto(Prodotto prodotto) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO Prodotto(categoria, nome, piattaforma, prezzo, scontoAttivo, quantita, descrizione, copertina) VALUES(?,?,?,?,?,?,?,?)");
@@ -85,7 +85,7 @@ public class ProdottoDAO {
 
             int x = ps.executeUpdate();
 
-            return x > 0 ? 1 : 0;
+            return x > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

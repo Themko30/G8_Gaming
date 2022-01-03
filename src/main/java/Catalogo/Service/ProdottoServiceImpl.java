@@ -44,7 +44,7 @@ public class ProdottoServiceImpl implements ProdottoService {
     }
 
     @Override
-    public int saveProdotto(Prodotto prodotto) {
+    public boolean saveProdotto(Prodotto prodotto) {
         return prodottoDAO.doSaveProdotto(prodotto);
     }
 

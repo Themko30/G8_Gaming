@@ -21,7 +21,7 @@ public interface ProdottoService {
 
     ArrayList<Prodotto> prodottiPiattaforma(String piattaforma);
 
-    int saveProdotto(Prodotto prodotto);
+    boolean saveProdotto(Prodotto prodotto);
 
     String updateProdotto(Prodotto prodotto);
 
