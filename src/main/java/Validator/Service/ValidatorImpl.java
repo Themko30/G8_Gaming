@@ -102,6 +102,7 @@ public class ValidatorImpl implements Validator {
         }
 
         //noinspection ResultOfMethodCallIgnored
+        imgFile.renameTo(new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + imgFile.getName()));
         imgFile.delete();
     }
 

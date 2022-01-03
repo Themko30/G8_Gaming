@@ -206,12 +206,6 @@ public class AdminServlet extends HttpServlet {
                     validator.validateImage(copertina, req.getParts());
                     prodottoService.saveProdotto(prodotto);
 
-                    for (Part part : req.getParts()) {
-                        if (part.getContentType() != null) {
-                            part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + copertina);
-                        }
-                    }
-
                     dispatcher = req.getRequestDispatcher("PRODUCT PAGE");
                     dispatcher.forward(req, resp);
                 } catch (InvalidProductException e) {
