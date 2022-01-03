@@ -15,114 +15,34 @@
 
     <p class="h1 text-center my-3">Videogiochi in evidenza</p>
 
-    <!-- TODO: dettagli dinamici delle cards -->
     <div class="row my-2">
-        <div class="col-sm m-3">
-            <div class="card text-center" id="1" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
+        <c:forEach items="${home}" var="prodotto">
+            <div class="col-sm m-3">
+                <div class="card text-center" id="${prodotto.codice}" style="width: 12rem;">
+                    <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">${prodotto.nome}<br>
+                            <span id="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
+                        <h6 class="card-subtitle text-muted">${prodotto.categoria}<br>${prodotto.piattaforma}</h6>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm m-3">
-            <div class="card text-center" style="width: 12rem;">
-                <img src="${context}/images/demons_souls_ps5.jpg" class="card-img-top p-2" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Demon's Souls</h5>
-                    <h6 class="card-subtitle text-muted">RPG</h6>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
     </div>
 
-    <div class="container text-center">
+    <div class="container text-center my-5">
         <h2>Prenotazione</h2>
         <p>Non trovi un videogioco? <a href="${context}/prenotazione">Effettua una prenotazione</a></p>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        let span = $('#price');
+        const prezzo = Number(span.text()); // Seleziona il prezzo e lo converte in numero
+        span.text("€" + prezzo.toFixed(2)); // Imposta due cifre decimali
+    });
+</script>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>
 </body>
 </html>

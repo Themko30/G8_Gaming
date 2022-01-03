@@ -121,7 +121,7 @@ public class AdminServlet extends HttpServlet {
                     dispatcher.forward(req, resp);
                     break;
                 case "/ShowHomePage":
-                    dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
+                    dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prodotti_home.jsp");
                     dispatcher.forward(req, resp);
                     break;
                 case "/Products/AddProduct":
@@ -178,9 +178,7 @@ public class AdminServlet extends HttpServlet {
                         getServletContext().removeAttribute("home");
                         getServletContext().setAttribute("home", homeAdd);
                     }
-
-                    dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
-                    dispatcher.forward(req, resp);
+                    resp.sendRedirect("/G8_Gaming_war_exploded/admin/ShowHomePage");
                     break;
                 case "/SetHomePage":
                     /*TODO*/
@@ -196,8 +194,7 @@ public class AdminServlet extends HttpServlet {
                         getServletContext().removeAttribute("home");
                         getServletContext().setAttribute("home", home);
                     }
-                    dispatcher = req.getRequestDispatcher("DISPLAY PRODOTTI HOME ADMIN PAGE");
-                    dispatcher.forward(req, resp);
+                    resp.sendRedirect("/G8_Gaming_war_exploded/admin/ShowHomePage");
                     break;
                 case "/Products/AddProduct":
                     String categoria = req.getParameter("categoria");
