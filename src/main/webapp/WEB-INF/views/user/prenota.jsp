@@ -27,14 +27,14 @@
             <label for="email">Email</label>
         </div>
         <div class="txt_field">
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="nomeProdotto" name="nomeProdotto" required>
             <span></span>
-            <label for="name">Nome gioco</label>
+            <label for="nomeProdotto">Nome gioco</label>
         </div>
         <div class="txt_field">
             <input type="text" id="descrizione" name="descrizione" required>
             <span></span>
-            <label for="name">Descrizione</label>
+            <label for="descrizione">Descrizione</label>
         </div>
         <select class="form-select" name="categoria" id="categoria" required>
             <option selected disabled>Categoria</option>

@@ -39,7 +39,7 @@
         <c:if test="${errore == 1}">
             <script>
                 $(document).ready(function() {
-                    alertError("Username o email già in uso!", "danger");
+                    alertBox("Username o email già in uso!", "danger", "#alertPlaceholder");
                 });
             </script>
         </c:if>
