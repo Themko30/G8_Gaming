@@ -13,19 +13,43 @@
 <div class="container my-4">
     <div class="row">
         <div class="col-md-5">
-            <img src="${context}/images/demons_souls_ps5.jpg" class="w-75 img-fluid rounded">
+            <img src="${context}/images/${prodotto.copertina}" class="w-75 img-fluid rounded">
         </div>
         <div class="col-md-7 mt-3">
-            <p class="platf text-center"><a href="${context}/piattaforma/ps5">PlayStation 5</a></p>
-            <h2>Demon's Souls</h2>
-            <p class="categ"><a href="${context}/categoria/RPG">RPG</a></p>
-            <span class="bi bi-star-fill"></span>
-            <span class="bi bi-star-fill"></span>
-            <span class="bi bi-star-fill"></span>
-            <span class="bi bi-star-half"></span>
-            <span class="bi bi-star"></span>
-            <p class="prezzo">€39.99 <span class="sconto text-center">-50%</span></p>
-            <p class="disponibilita">Disponibilità: In stock</p>
+            <p class="platf text-center"><a href="${context}/Prodotto/Piattaforma?piattaforma=${prodotto.piattaforma}">${prodotto.piattaforma}</a></p>
+            <h2>${prodotto.nome}</h2>
+            <p class="categ"><a href="${context}/Prodotto/Categoria?categoria=${prodotto.categoria}">${prodotto.categoria}</a></p>
+
+            <c:forEach begin="1" end="${prodotto.mediaArrotondata}">
+                <span class="bi bi-star-fill"></span>
+            </c:forEach>
+            <c:forEach begin="1" end="${5 - prodotto.mediaArrotondata}">
+                <span class="bi bi-star"></span>
+            </c:forEach>
+
+            <!-- Se c'è lo sconto, calcolo il prezzo e aggiungo il vecchio prezzo e lo sconto applicato -->
+            <c:choose>
+                <c:when test="${prodotto.scontoAttivo > 0}">
+                    <c:set var="prezzo" scope="session" value="${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="prezzo" scope="session" value="${prodotto.prezzo}"/>
+                </c:otherwise>
+            </c:choose>
+            <p class="prezzo"><span id="actualPrice">${prezzo}</span>
+                <c:if test="${prodotto.scontoAttivo > 0}">
+                    <span style="text-decoration: line-through; font-size: 18px; margin: 0 4px;">€${prodotto.prezzo}</span> <span class="sconto text-center">-${prodotto.scontoAttivo*100}%</span>
+                </c:if> </p>
+
+            <c:choose>
+                <c:when test="${prodotto.quantita > 0}">
+                    <c:set var="disponibilita" scope="session" value="${prodotto.quantita}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="disponibilita" scope="session" value="Esaurito"/>
+                </c:otherwise>
+            </c:choose>
+            <p class="disponibilita">Disponibilità: ${disponibilita}</p>
             <label>Quantità:</label>
             <input id="quantita" type="number" value="1" min="1" step="1" required>
             <button class="btn carrello">Aggiungi al carrello</button>
@@ -38,14 +62,7 @@
                     </h2>
                     <div id="collapse" class="accordion-collapse collapse" aria-labelledby="heading" data-bs-parent="#accordionDescrizione">
                         <div class="accordion-body">
-                            Da PlayStation Studios e Bluepoint Games arriva il remake di un classico di PlayStation, Demon's Souls. Interamente ricostruito da zero e magnificamente migliorato,
-                            questo remake presenta gli orrori di una terra di fantasia oscura e schiacciata dalla nebbia, a una nuova generazione di giocatori. Coloro che hanno già affrontato
-                            le sue sfide e le sue avversità potranno nuovamente misurarsi contro l'oscurità con una qualità visiva magnifica e godendo di prestazioni incredibili.<br>Nel corso
-                            della sua missione per ottenere il potere, Re Allant, il dodicesimo re di Boletaria, ha incanalato le arti dell'anima, risvegliando un demone dall'alba del tempo,
-                            l'Antico. Con l'evocazione dell'Antico, una nebbia incolore si diffuse sulla terra, liberando creature mostruose affamate di anime degli umani. Chi veniva privato
-                            dell'anima usciva di senno, e non desiderava altro che attaccare le persone sane che rimanevano.<br>Oggi, Boletaria è tagliata fuori dal resto del mondo e i cavalieri
-                            che osano penetrare la fitta nebbia per liberare la terra dalla sua piaga, non fanno mai più ritorno. Nei panni di un guerriero solitario che ha fronteggiato la nebbia
-                            funesta, devi affrontare le sfide più dure per ottenere il titolo di "Uccisore di demoni" e rispedire l'Antico nel suo torpore.
+                            ${prodotto.descrizione}
                         </div>
                     </div>
                 </div>
@@ -53,6 +70,13 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        let span = $('#actualPrice');
+        const prezzo = Number(span.text()); // Seleziona il prezzo e lo converte in numero
+        span.text("€" + prezzo.toFixed(2)); // Imposta due cifre decimali
+    });
+</script>
 <%@include file="../partials/footer.jsp"%>
 </body>
 </html>
