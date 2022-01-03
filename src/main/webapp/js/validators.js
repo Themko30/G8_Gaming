@@ -131,7 +131,7 @@ function validateRegistration() {
 }
 
 function validateBooking() {
-    let name = $('#name').val().trim();
+    let name = $('#nomeProdotto').val().trim();
     let email = $('#email').val().trim();
     let descrizione = $('#descrizione').val().trim();
     let categoria = $('#categoria').val();

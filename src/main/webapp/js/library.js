@@ -14,18 +14,11 @@ function topFunction() {
 }
 
 // Errori validator
-function alertBox(message, type) {
-    let alertPlaceholder = $('#liveAlertPlaceholder');
-    alertPlaceholder.hide();
-    alertPlaceholder.empty();
-    let wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-    alertPlaceholder.append(wrapper);
-    alertPlaceholder.show(300);
-}
-
-function alertError(message, type) {
-    let alertPlaceholder = $('#alertPlaceholder');
+function alertBox(message, type, id) {
+    if(id === undefined) {
+        id = '#liveAlertPlaceholder';
+    }
+    let alertPlaceholder = $(id);
     alertPlaceholder.hide();
     alertPlaceholder.empty();
     let wrapper = document.createElement('div');
