@@ -18,11 +18,7 @@ function validateLogin() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateRegistration() {
@@ -123,11 +119,7 @@ function validateRegistration() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateBooking() {
@@ -180,11 +172,7 @@ function validateBooking() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateAddProduct() {
@@ -249,6 +237,10 @@ function validateAddProduct() {
         valid = false;
     }
 
+    return isValid(valid, message);
+}
+
+function isValid(valid, message) {
     if(!valid) {
         message += "</ul>";
         alertBox(message, "danger");

@@ -123,13 +123,6 @@
         <p>Non trovi un videogioco? <a href="${context}/prenotazione">Effettua una prenotazione</a></p>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('.card').click(function(){
-            window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
-        });
-    });
-</script>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>
 </body>
 </html>
