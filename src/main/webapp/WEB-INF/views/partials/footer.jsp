@@ -5,7 +5,7 @@
     <div class="footer-content">
         <table>
             <tr>
-                <td><img id="footerlogo" src="${context}/icons/favicon.png" onmouseover="hover(this);" onmouseout="unhover(this);"></td>
+                <td><img id="footerlogo" src="${context}/icons/favicon.png"></td>
                 <td><h3>&nbsp;&nbsp;D3Games</h3></td>
             </tr>
         </table>
