@@ -4,7 +4,7 @@
 <html>
 <head>
     <jsp:include page="../partials/head.jsp">
-        <jsp:param name="title" value="Videogioco"/>
+        <jsp:param name="title" value="${prodotto.nome}"/>
         <jsp:param name="styles" value="videogioco"/>
     </jsp:include>
 </head>
