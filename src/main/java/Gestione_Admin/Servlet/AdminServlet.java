@@ -52,6 +52,7 @@ public class AdminServlet extends HttpServlet {
         statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
         synchronized (ctx) {
             ctx.setAttribute("statistics", statistics);
+            ctx.setAttribute("home", new ArrayList<Prodotto>());
         }
 
     }
