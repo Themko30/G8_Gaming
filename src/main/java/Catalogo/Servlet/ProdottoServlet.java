@@ -26,8 +26,9 @@ public class ProdottoServlet extends HttpServlet {
         String categoria = request.getParameter("categoria");
 
         request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
+        request.setAttribute("categoria", request.getParameter("categoria"));
 
-        dispatcher = request.getRequestDispatcher("CATEGORIA DISPLAY PAGE");
+        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/categoria.jsp");
         dispatcher.forward(request, response);
         break;
 
@@ -35,8 +36,9 @@ public class ProdottoServlet extends HttpServlet {
         String piattaforma = request.getParameter("piattaforma");
 
         request.setAttribute("prodotti", prodottoService.prodottiPiattaforma(piattaforma));
+        request.setAttribute("piattaforma", request.getParameter("piattaforma"));
 
-        dispatcher = request.getRequestDispatcher("PRODOTTI DISPLAY PAGE");
+        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/piattaforma.jsp");
         dispatcher.forward(request, response);
         break;
 

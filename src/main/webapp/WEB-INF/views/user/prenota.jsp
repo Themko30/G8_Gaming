@@ -38,15 +38,15 @@
         </div>
         <select class="form-select" name="categoria" id="categoria" required>
             <option selected disabled>Categoria</option>
-            <option value="action">Action/Adventure</option>
-            <option value="casual">Casual</option>
-            <option value="guida">Guida</option>
-            <option value="picchiaduro">Picchiaduro</option>
-            <option value="rpg">RPG</option>
-            <option value="sparatutto">Sparatutto</option>
-            <option value="simulazione">Simulazione</option>
-            <option value="sport">Sport</option>
-            <option value="strategia">Strategia</option>
+            <option value="Action/Adventure">Action/Adventure</option>
+            <option value="Casual">Casual</option>
+            <option value="Guida">Guida</option>
+            <option value="Picchiaduro">Picchiaduro</option>
+            <option value="RPG">RPG</option>
+            <option value="Sparatutto">Sparatutto</option>
+            <option value="Simulazione">Simulazione</option>
+            <option value="Sport">Sport</option>
+            <option value="Strategia">Strategia</option>
         </select>
         <div>
             <label for="copertina">Immagine</label>

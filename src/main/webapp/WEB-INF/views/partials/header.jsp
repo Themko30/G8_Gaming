@@ -20,21 +20,34 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/"><i class="bi bi-house-fill"></i> Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/categorie"><i class="bi bi-tag-fill"></i> Categorie</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tag-fill"></i> Categorie
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown0">
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Action%2FAdventure">Action/Adventure</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Casual">Casual</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Guida">Guida</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Picchiaduro">Picchiaduro</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=RPG">RPG</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Sparatutto">Sparatutto</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Simulazione">Simulazione</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Sport">Sport</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Strategia">Strategia</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-joystick"></i> Piattaforme
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="${context}/piattaforma/ps5"><i class="bi bi-playstation"></i> PlayStation 5</a></li>
-                        <li><a class="dropdown-item" href="${context}/piattaforma/seriesx"><i class="bi bi-xbox"></i> Xbox Series X|S</a></li>
-                        <li><a class="dropdown-item" href="${context}/piattaforma/switch"><i class="bi bi-nintendo-switch"></i> Nintendo Switch</a></li>
-                        <li><a class="dropdown-item" href="${context}/piattaforma/pc"><i class="bi bi-pc-display"></i> PC</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=PlayStation+5"><i class="bi bi-playstation"></i> PlayStation 5</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=Xbox+Series+X%7CS"><i class="bi bi-xbox"></i> Xbox Series X|S</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=Nintendo+Switch"><i class="bi bi-nintendo-switch"></i> Nintendo Switch</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=PC"><i class="bi bi-pc-display"></i> PC</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="${context}/piattaforma/ps4"><i class="bi bi-playstation"></i> PlayStation 4</a></li>
-                        <li><a class="dropdown-item" href="${context}/piattaforma/xboxone"><i class="bi bi-xbox"></i> Xbox One</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=PlayStation+4"><i class="bi bi-playstation"></i> PlayStation 4</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Piattaforma?piattaforma=Xbox+One"><i class="bi bi-xbox"></i> Xbox One</a></li>
                     </ul>
                 </li>
 
@@ -69,3 +82,10 @@
         </div>
     </div>
 </nav>
+<script>
+    $(document).ready(function() {
+        $('.card').click(function(){
+            window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
+        });
+    });
+</script>

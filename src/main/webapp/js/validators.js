@@ -18,11 +18,7 @@ function validateLogin() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateRegistration() {
@@ -123,11 +119,7 @@ function validateRegistration() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateBooking() {
@@ -164,8 +156,8 @@ function validateBooking() {
         message += "<li>Inserisci la categoria.</li>";
         valid = false;
     }
-    else if(categoria !== "strategia" && categoria !== "sport" && categoria !== "rpg" && categoria !== "simulazione" && categoria !== "action"
-        && categoria !== "sparatutto" && categoria !== "picchiaduro" && categoria !== "guida" && categoria !== "casual") {
+    else if(categoria !== "Strategia" && categoria !== "Sport" && categoria !== "RPG" && categoria !== "Simulazione" && categoria !== "Action/Adventure"
+        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Casual") {
         message += "<li>Categoria non valida.</li>";
         valid = false;
     }
@@ -180,11 +172,7 @@ function validateBooking() {
         valid = false;
     }
 
-    if(!valid) {
-        message += "</ul>";
-        alertBox(message, "danger");
-    }
-    return valid;
+    return isValid(valid, message);
 }
 
 function validateAddProduct() {
@@ -223,8 +211,8 @@ function validateAddProduct() {
         message += "<li>Inserisci la categoria.</li>";
         valid = false;
     }
-    else if(categoria !== "strategia" && categoria !== "sport" && categoria !== "rpg" && categoria !== "simulazione" && categoria !== "action"
-        && categoria !== "sparatutto" && categoria !== "picchiaduro" && categoria !== "guida" && categoria !== "casual") {
+    else if(categoria !== "Strategia" && categoria !== "Sport" && categoria !== "RPG" && categoria !== "Simulazione" && categoria !== "Action/Adventure"
+        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Casual") {
         message += "<li>Categoria non valida.</li>";
         valid = false;
     }
@@ -233,8 +221,8 @@ function validateAddProduct() {
         message += "<li>Inserisci la piattaforma.</li>";
         valid = false;
     }
-    else if(piattaforma !== "ps5" && piattaforma !== "seriesx" && piattaforma !== "switch" && piattaforma !== "pc"
-        && piattaforma !== "ps4" && piattaforma !== "xboxone") {
+    else if(piattaforma !== "PlayStation 5" && piattaforma !== "Xbox Series X|S" && piattaforma !== "Nintendo Switch" && piattaforma !== "PC"
+        && piattaforma !== "PlayStation 4" && piattaforma !== "Xbox One") {
         message += "<li>Piattaforma non valida.</li>";
         valid = false;
     }
@@ -249,6 +237,10 @@ function validateAddProduct() {
         valid = false;
     }
 
+    return isValid(valid, message);
+}
+
+function isValid(valid, message) {
     if(!valid) {
         message += "</ul>";
         alertBox(message, "danger");

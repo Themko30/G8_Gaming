@@ -25,24 +25,24 @@
         </div>
         <select class="form-select" name="categoria" id="categoria" required>
             <option selected disabled>Categoria</option>
-            <option value="action">Action/Adventure</option>
-            <option value="casual">Casual</option>
-            <option value="guida">Guida</option>
-            <option value="picchiaduro">Picchiaduro</option>
-            <option value="rpg">RPG</option>
-            <option value="sparatutto">Sparatutto</option>
-            <option value="simulazione">Simulazione</option>
-            <option value="sport">Sport</option>
-            <option value="strategia">Strategia</option>
+            <option value="Action/Adventure">Action/Adventure</option>
+            <option value="Casual">Casual</option>
+            <option value="Guida">Guida</option>
+            <option value="Picchiaduro">Picchiaduro</option>
+            <option value="RPG">RPG</option>
+            <option value="Sparatutto">Sparatutto</option>
+            <option value="Simulazione">Simulazione</option>
+            <option value="Sport">Sport</option>
+            <option value="Strategia">Strategia</option>
         </select>
         <select class="form-select" name="piattaforma" id="piattaforma" required>
             <option selected disabled>Piattaforma</option>
-            <option value="ps5">PlayStation 5</option>
-            <option value="seriesx">Xbox Series X|S</option>
-            <option value="switch">Nintendo Switch</option>
-            <option value="pc">PC</option>
-            <option value="ps4">PlayStation 4</option>
-            <option value="xboxone">Xbox One</option>
+            <option value="PlayStation 5">PlayStation 5</option>
+            <option value="Xbox Series X|S">Xbox Series X|S</option>
+            <option value="Nintendo Switch">Nintendo Switch</option>
+            <option value="PC">PC</option>
+            <option value="PlayStation 4">PlayStation 4</option>
+            <option value="Xbox One">Xbox One</option>
         </select>
         <div class="txt_field">
             <input type="number" step="1" id="quantita" name="quantita" required>
