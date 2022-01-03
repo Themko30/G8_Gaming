@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
 import main.java.Prenotazione.Service.PrenotazioneService;
 import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
 import main.java.Storage.Dao.PrenotazioneDAO;
@@ -69,6 +68,7 @@ public class PrenotazioneServlet extends HttpServlet {
         savePrenotazione.setCopertina(copertina);
 
         savePrenotazione.setDescrizione(req.getParameter("descrizione"));
+        savePrenotazione.setNomeProdotto(req.getParameter("nomeProdotto"));
         prenotazioneService = new PrenotazioneServiceImpl();
 
         try {
@@ -93,6 +93,7 @@ public class PrenotazioneServlet extends HttpServlet {
         updatePrenotazione.setEmailRichiedente(req.getParameter("email"));
         updatePrenotazione.setCategoria(req.getParameter("categoria"));
         updatePrenotazione.setDescrizione(req.getParameter("descrizione"));
+        updatePrenotazione.setNomeProdotto(req.getParameter("nomeProdotto"));
         prenotazioneService = new PrenotazioneServiceImpl();
         if (prenotazioneService.updatePrenotazione(updatePrenotazione)) {
           // SET ALERT

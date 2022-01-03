@@ -3,7 +3,7 @@ package main.java.Storage.Entity;
 public class Prenotazione {
 
   private int numeroPrenotazione, accettata;
-  private String categoria, descrizione, emailRichiedente, copertina;
+  private String categoria, descrizione, emailRichiedente, copertina, nomeProdotto;
 
   public int getNumeroPrenotazione() {
     return numeroPrenotazione;
@@ -51,5 +51,13 @@ public class Prenotazione {
 
   public void setAccettata(int accettata) {
     this.accettata = accettata;
+  }
+
+  public String getNomeProdotto() {
+    return nomeProdotto;
+  }
+
+  public void setNomeProdotto(String nomeProdotto) {
+    this.nomeProdotto = nomeProdotto;
   }
 }

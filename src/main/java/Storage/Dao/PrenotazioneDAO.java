@@ -13,12 +13,13 @@ public class PrenotazioneDAO {
   public boolean doSavePrenotazione(Prenotazione prenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina) VALUES(?,?,?,?)");
+      PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina, nomeProdotto) VALUES(?,?,?,?,?)");
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());
       ps.setString(3, prenotazione.getEmailRichiedente());
       ps.setString(4, prenotazione.getCopertina());
+      ps.setString(5, prenotazione.getNomeProdotto());
 
       int x = ps.executeUpdate();
 
@@ -47,6 +48,7 @@ public class PrenotazioneDAO {
         p.setEmailRichiedente(rs.getString("emailRichiedente"));
         p.setCopertina(rs.getString("copertina"));
         p.setAccettata(rs.getInt("accettata"));
+        p.setNomeProdotto(rs.getString("nomeProdotto"));
         prenotazioni.add(p);
       }
       return prenotazioni;
@@ -74,6 +76,7 @@ public class PrenotazioneDAO {
         p.setEmailRichiedente(rs.getString("emailRichiedente"));
         p.setCopertina(rs.getString("copertina"));
         p.setAccettata(rs.getInt("accettata"));
+        p.setNomeProdotto(rs.getString("nomeProdotto"));
 
       }
       return p;
@@ -86,7 +89,7 @@ public class PrenotazioneDAO {
   public boolean doUpdatePrenotazione(Prenotazione prenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettata=? WHERE numeroPrenotazione=?");
+      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettata=?, nomeProdotto=? WHERE numeroPrenotazione=?");
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());
@@ -94,6 +97,7 @@ public class PrenotazioneDAO {
       ps.setString(4, prenotazione.getCopertina());
       ps.setInt(5, prenotazione.getAccettata());
       ps.setInt(6, prenotazione.getNumeroPrenotazione());
+      ps.setString(7, prenotazione.getNomeProdotto());
 
       int x = ps.executeUpdate();
 
