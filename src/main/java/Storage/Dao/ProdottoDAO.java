@@ -53,7 +53,7 @@ public class ProdottoDAO {
         }
     }
 
-    public int doUpdateMedia(Prodotto prodotto, int valutazione) {
+    public boolean doUpdateMedia(Prodotto prodotto, int valutazione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET numeroVoti=(numeroVoti+1), totaleVoti = (totaleVoti + ?) WHERE codice=?");
             ps.setInt(1, valutazione);
@@ -63,7 +63,7 @@ public class ProdottoDAO {
             ps = con.prepareStatement("UPDATE Prodotto SET media=(totaleVoti/numeroVoti) WHERE codice=?");
             x = ps.executeUpdate();
 
-            return x > 0 ? 1 : 0;
+            return x > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

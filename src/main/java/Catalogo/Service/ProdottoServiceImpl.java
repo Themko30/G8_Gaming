@@ -24,7 +24,7 @@ public class ProdottoServiceImpl implements ProdottoService {
     }
 
     @Override
-    public int updateValutazione(Prodotto prodotto, int valutazione) {
+    public boolean updateValutazione(Prodotto prodotto, int valutazione) {
         return prodottoDAO.doUpdateMedia(prodotto, valutazione);
     }
 

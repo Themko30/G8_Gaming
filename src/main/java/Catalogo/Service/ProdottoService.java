@@ -13,7 +13,7 @@ public interface ProdottoService {
 
     int quantitaProdotto(Prodotto prodotto);
 
-    int updateValutazione(Prodotto prodotto, int valutazione);
+    boolean updateValutazione(Prodotto prodotto, int valutazione);
 
     ArrayList<Prodotto> prodottiNomeLike(String nome);
 
