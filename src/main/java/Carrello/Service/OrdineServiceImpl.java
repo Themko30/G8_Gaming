@@ -2,6 +2,8 @@ package main.java.Carrello.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import main.java.Storage.Dao.OrdineDAO;
 import main.java.Storage.Dao.OrdineDAOImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
@@ -10,7 +12,7 @@ import main.java.Storage.Entity.Utente;
 public class OrdineServiceImpl implements OrdineService {
 
     private OrdineBuilder ordineBuilder = new OrdineBuilderImpl();
-    private final OrdineDAOImpl ordineDAO = new OrdineDAOImpl();
+    private final OrdineDAO ordineDAO = new OrdineDAOImpl();
 
     @Override
     public Ordine createOrdine(Carrello carrello, String indirizzo, Integer CAP, String paese, String metodoPagamento) {

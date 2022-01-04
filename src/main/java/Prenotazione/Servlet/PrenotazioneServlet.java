@@ -22,8 +22,7 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class PrenotazioneServlet extends HttpServlet {
 
-  private final PrenotazioneDAOImpl prenotazioneDAO = new PrenotazioneDAOImpl();
-  private PrenotazioneService prenotazioneService;
+  PrenotazioneService prenotazioneService;
   private Validator validator;
 
   @Override

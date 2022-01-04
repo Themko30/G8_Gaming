@@ -13,7 +13,7 @@ import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
-public class OrdineDAOImpl {
+public class OrdineDAOImpl implements OrdineDAO{
 
     public ArrayList<Ordine> doRetrieveOrdiniByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
@@ -156,7 +156,7 @@ public class OrdineDAOImpl {
                 numeroOrdine = resultSet.getInt("numero");
             }
 
-            ProdottoDAOImpl prodottoDAO = new ProdottoDAOImpl();
+            ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
 
             for (Prodotto p : key) {
                 ps = con.prepareStatement("INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita) VALUES (?,?,?)");

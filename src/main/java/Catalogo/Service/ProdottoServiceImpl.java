@@ -1,12 +1,14 @@
 package main.java.Catalogo.Service;
 
 import java.util.ArrayList;
+
+import main.java.Storage.Dao.ProdottoDAO;
 import main.java.Storage.Dao.ProdottoDAOImpl;
 import main.java.Storage.Entity.Prodotto;
 
 public class ProdottoServiceImpl implements ProdottoService {
 
-    private final ProdottoDAOImpl prodottoDAO = new ProdottoDAOImpl();
+    private final ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
 
     @Override
     public ArrayList<Prodotto> prodottiCategoria(String categoria) {

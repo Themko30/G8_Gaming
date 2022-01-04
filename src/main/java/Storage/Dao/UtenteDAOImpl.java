@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import main.java.Storage.ConPool;
 import main.java.Storage.Entity.Utente;
 
-public class UtenteDAOImpl {
+public class UtenteDAOImpl implements UtenteDAO{
 
   public int doRetrieveCounterUtenti() {
     try (Connection con = ConPool.getConnection()) {

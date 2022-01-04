@@ -11,9 +11,9 @@ import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
-public class CarrelloDAOImpl {
+public class CarrelloDAOImpl  implements CarrelloDAO{
 
-    public Boolean doUpdateCarrello(Carrello carrello) {
+    public boolean doUpdateCarrello(Carrello carrello){
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
@@ -63,7 +63,7 @@ public class CarrelloDAOImpl {
         }
     }
 
-    public int doClearCarrello(Carrello carrello) {
+    public boolean doClearCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
@@ -78,7 +78,7 @@ public class CarrelloDAOImpl {
 
             x += ps.executeUpdate();
 
-            return x > 0 ? 1 : 0;
+            return x > 0;
 
 
         } catch (SQLException e) {

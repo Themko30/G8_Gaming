@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import main.java.Storage.ConPool;
 import main.java.Storage.Entity.Prenotazione;
 
-public class PrenotazioneDAOImpl {
+public class PrenotazioneDAOImpl implements PrenotazioneDAO{
 
   public boolean doSavePrenotazione(Prenotazione prenotazione) {
     try (Connection con = ConPool.getConnection()) {

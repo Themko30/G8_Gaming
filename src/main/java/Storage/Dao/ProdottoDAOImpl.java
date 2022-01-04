@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import main.java.Storage.ConPool;
 import main.java.Storage.Entity.Prodotto;
 
-public class ProdottoDAOImpl {
+public class ProdottoDAOImpl implements ProdottoDAO{
 
-    public String doUpdateProdotto(Prodotto prodotto) {
+    public String doUpdateProdotto(Prodotto prodotto){
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT copertina FROM Prodotto WHERE codice=?");
@@ -41,13 +41,13 @@ public class ProdottoDAOImpl {
         }
     }
 
-    public int doUpdateQuantita(Prodotto prodotto, int quantita) {
+    public boolean doUpdateQuantita(Prodotto prodotto, int quantita) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET quantita=(quantita-?) WHERE codice=?");
             ps.setInt(1, quantita);
             ps.setInt(2, prodotto.getCodice());
             int x = ps.executeUpdate();
-            return x > 0 ? 1 : 0;
+            return x > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
