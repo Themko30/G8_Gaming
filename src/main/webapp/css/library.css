@@ -58,6 +58,12 @@
     background-color: var(--d3light) !important;
     color: var(--d3dark) !important;
 }
+.navbar-light .navbar-nav .nav-link {
+    color: var(--d3light) !important;
+}
+.dropdown-item {
+    color: var(--d3dark) !important;
+}
 
 /*
 NORMALIZE

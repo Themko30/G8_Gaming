@@ -11,7 +11,6 @@ import javax.servlet.http.Part;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Catalogo.Service.ProdottoService;
-import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 import main.java.Validator.Exceptions.InvalidIndirizzoException;
@@ -22,10 +21,13 @@ import main.java.Validator.Exceptions.InvalidUserException;
 public class ValidatorImpl implements Validator {
 
     private UtenteService utenteService;
+    private ProdottoService prodottoService;
 
+    public void setProdottoService(ProdottoService prodottoService) {
+        this.prodottoService = prodottoService;
+    }
 
     public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException {
-        ProdottoService prodottoService = new ProdottoServiceImpl();
         int quantitaProdottoDatabase = prodottoService.quantitaProdotto(prodotto);
         if (quantitaProdottoDatabase < quantita) {
             throw new InvalidProductQuantityException("Quantità eccessiva", prodotto);
@@ -120,7 +122,6 @@ public class ValidatorImpl implements Validator {
             throw new InvalidUserException();
         }
 
-
         pattern = Pattern.compile("[a-zA-Z ]+");
 
         if (!pattern.matcher(utente.getNome()).matches()) {
@@ -151,7 +152,7 @@ public class ValidatorImpl implements Validator {
         }
 
         pattern = Pattern.compile(
-                "(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+          "(?:[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
 
         if (!pattern.matcher(utente.getEmail()).matches()) {
             throw new InvalidUserException();

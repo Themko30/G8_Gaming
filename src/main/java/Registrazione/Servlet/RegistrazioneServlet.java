@@ -94,17 +94,15 @@ public class RegistrazioneServlet extends HttpServlet {
         catch (InvalidUserException ex){
           throw new ServletException("Invalid user...");
         } catch(Exception exe) {
-          HttpSession session2 = req.getSession(false);
-          session2.setAttribute("errore", 1);
-          session2.setAttribute("us", username);
-          session2.setAttribute("pw", password);
-          session2.setAttribute("pa", paese);
-          session2.setAttribute("no", nome);
-          session2.setAttribute("em", email);
-          session2.setAttribute("co", cognome);
-          session2.setAttribute("in", indirizzo);
-          session2.setAttribute("ca", cap);
-          session2.setAttribute("errore", 1);
+          req.setAttribute("errore", 1);
+          req.setAttribute("un", username);
+          req.setAttribute("pa", password);
+          req.setAttribute("pa", paese);
+          req.setAttribute("no", nome);
+          req.setAttribute("em", email);
+          req.setAttribute("co", cognome);
+          req.setAttribute("in", indirizzo);
+          req.setAttribute("ca", cap);
           req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
         }
         break;

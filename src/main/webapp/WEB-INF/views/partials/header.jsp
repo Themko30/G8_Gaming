@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/"><i class="bi bi-house-fill"></i> Home</a>
+                    <a class="nav-link" aria-current="page" href="${context}/"><i class="bi bi-house-fill"></i> Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-tag-fill"></i> Categorie
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown0">
@@ -37,7 +37,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-joystick"></i> Piattaforme
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
@@ -60,23 +60,23 @@
                 <c:choose>
                     <c:when test="${not empty utente}">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" style="color: var(--d3light);" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-fill"></i> Account
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill"></i> ${utente.nome}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <li><a class="dropdown-item" href="${context}/account/profile"><i class="bi bi-person-lines-fill"></i> Profilo</a></li>
+                                <li><a class="dropdown-item" href="${context}/account/profile"><i class="bi bi-person-lines-fill"></i> Account</a></li>
                                 <li><a class="dropdown-item" href="${context}/account/logout"><i class="bi bi-box-arrow-left"></i> Logout</a></li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: var(--d3light);" href="${context}/account/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                            <a class="nav-link" href="${context}/account/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: var(--d3light);" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
+                    <a class="nav-link" href="${context}/${cart}"><i class="bi bi-cart-fill"></i> Carrello</a>
                 </li>
             </ul>
         </div>
