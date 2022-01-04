@@ -4,14 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import main.java.Catalogo.Service.ProdottoService;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
-import main.java.Storage.Dao.CarrelloDAO;
+import main.java.Storage.Dao.CarrelloDAOImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
 public class CarrelloServiceImpl implements CarrelloService {
 
-    private CarrelloDAO carrelloDAO = new CarrelloDAO();
+    private CarrelloDAOImpl carrelloDAO = new CarrelloDAOImpl();
 
     @Override
     public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita) {

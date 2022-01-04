@@ -11,7 +11,7 @@ import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
-public class CarrelloDAO {
+public class CarrelloDAOImpl {
 
     public Boolean doUpdateCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {

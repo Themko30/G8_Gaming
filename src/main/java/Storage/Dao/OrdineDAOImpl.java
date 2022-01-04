@@ -13,7 +13,7 @@ import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
-public class OrdineDAO {
+public class OrdineDAOImpl {
 
     public ArrayList<Ordine> doRetrieveOrdiniByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
