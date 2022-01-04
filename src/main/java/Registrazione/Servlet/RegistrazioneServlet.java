@@ -35,6 +35,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
@@ -50,6 +51,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();

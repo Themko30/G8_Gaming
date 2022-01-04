@@ -156,7 +156,7 @@ public class OrdineDAOImpl {
                 numeroOrdine = resultSet.getInt("numero");
             }
 
-            ProdottoDAO prodottoDAO = new ProdottoDAO();
+            ProdottoDAOImpl prodottoDAO = new ProdottoDAOImpl();
 
             for (Prodotto p : key) {
                 ps = con.prepareStatement("INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita) VALUES (?,?,?)");

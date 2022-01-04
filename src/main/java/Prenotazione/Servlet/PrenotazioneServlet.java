@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import main.java.Prenotazione.Service.PrenotazioneService;
 import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
-import main.java.Storage.Dao.PrenotazioneDAO;
+import main.java.Storage.Dao.PrenotazioneDAOImpl;
 import main.java.Storage.Entity.Prenotazione;
 import main.java.Validator.Exceptions.InvalidProductException;
 import main.java.Validator.Service.Validator;
@@ -22,7 +22,7 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class PrenotazioneServlet extends HttpServlet {
 
-  private final PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
+  private final PrenotazioneDAOImpl prenotazioneDAO = new PrenotazioneDAOImpl();
   private PrenotazioneService prenotazioneService;
   private Validator validator;
 
@@ -33,6 +33,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
@@ -47,6 +48,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();

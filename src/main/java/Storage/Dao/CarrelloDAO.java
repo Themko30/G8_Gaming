@@ -1,4 +1,4 @@
 package main.java.Storage.Dao;
 
-public interface UtenteDAO {
+public interface CarrelloDAO {
 }

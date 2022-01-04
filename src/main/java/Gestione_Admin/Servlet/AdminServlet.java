@@ -66,6 +66,7 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
@@ -178,6 +179,7 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
         if(u.isAdmin()) {
