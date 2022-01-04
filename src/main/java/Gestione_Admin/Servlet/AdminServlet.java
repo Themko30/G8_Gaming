@@ -51,7 +51,15 @@ public class AdminServlet extends HttpServlet {
         statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
         synchronized (ctx) {
             ctx.setAttribute("statistics", statistics);
-            ctx.setAttribute("home", new ArrayList<Prodotto>());
+            ArrayList<Prodotto> home = new ArrayList<>();
+            home.add(prodottoService.prodottoCodice(1));
+            home.add(prodottoService.prodottoCodice(3));
+            home.add(prodottoService.prodottoCodice(4));
+            home.add(prodottoService.prodottoCodice(5));
+            ctx.setAttribute("home", home);
+
+            ctx.setAttribute("mostVoted", prodottoService.mostVoted());
+
         }
 
     }
@@ -133,6 +141,17 @@ public class AdminServlet extends HttpServlet {
                     req.setAttribute("prodotto", prodottoService.prodottoCodice(codiceProdotto));
 
                     dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/modifica_prodotto.jsp");
+                    dispatcher.forward(req, resp);
+                    break;
+                case "/Products/MostVotedUpdate":
+
+                    ServletContext context = getServletContext();
+                    synchronized (context) {
+                        context.removeAttribute("mostVoted");
+                        context.setAttribute("mostVoted", prodottoService.mostVoted());
+                    }
+
+                    dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                     dispatcher.forward(req, resp);
                     break;
                 case "/Orders/ManageOrder":

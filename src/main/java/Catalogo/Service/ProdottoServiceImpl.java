@@ -73,4 +73,11 @@ public class ProdottoServiceImpl implements ProdottoService {
     public int counterProdotti() {
         return prodottoDAO.doRetrieveCounterProdotti();
     }
+
+    @Override
+    public ArrayList<Prodotto> mostVoted() {
+        return prodottoDAO.doRetrieveMostVoted();
+    }
+
+
 }

@@ -92,12 +92,12 @@ public class ProdottoDAO {
         }
     }
 
-    public ArrayList<Prodotto> doRetrieveProdotti(int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdotti(int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto LIMIT ?,?");
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -193,13 +193,13 @@ public class ProdottoDAO {
     }
 
 
-    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE categoria=? LIMIT ?,?");
             ps.setString(1, categoria);
-            ps.setInt(2, limit);
-            ps.setInt(3, offset);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -228,13 +228,13 @@ public class ProdottoDAO {
 
     }
 
-    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE piattaforma=? LIMIT ?,?");
             ps.setString(1, piattaforma);
-            ps.setInt(2, limit);
-            ps.setInt(3, offset);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -294,6 +294,37 @@ public class ProdottoDAO {
                 quantita = rs.getInt(1);
             }
             return quantita;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Prodotto> doRetrieveMostVoted(){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto ORDER BY media LIMIT 6");
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> mostVoted = new ArrayList<>();
+
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setCodice(rs.getInt("codice"));
+                p.setPrezzo(rs.getDouble("prezzo"));
+                p.setScontoAttivo(rs.getDouble("scontoAttivo"));
+                p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
+                p.setCopertina(rs.getString("copertina"));
+                p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
+                p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
+                mostVoted.add(p);
+            }
+            return mostVoted;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
