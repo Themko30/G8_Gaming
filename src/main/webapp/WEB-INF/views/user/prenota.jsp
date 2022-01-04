@@ -3,10 +3,10 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <c:choose>
     <c:when test="${not empty utente}">
-        <c:set var="email" scope="session" value="${utente.email}"/>
+        <c:set var="email" value="${utente.email}"/>
     </c:when>
     <c:otherwise>
-        <c:set var="emai" scope="session" value=""/>
+        <c:set var="emai" value=""/>
     </c:otherwise>
 </c:choose>
 <html>

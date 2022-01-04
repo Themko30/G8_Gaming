@@ -55,7 +55,7 @@ public class CarrelloServlet extends HttpServlet {
 
                 }
 
-                dispatcher = request.getRequestDispatcher("PRODOTTO AGGIUNTO AL CARRELLO PAGE");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp");
                 dispatcher.forward(request, response);
                 break;
 
@@ -87,7 +87,7 @@ public class CarrelloServlet extends HttpServlet {
                     session.setAttribute("carrello", carrello);
                 }
 
-                dispatcher = request.getRequestDispatcher("CART DISPLAY PAGE"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
+                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
                 dispatcher.forward(request, response);
                 break;
 
@@ -145,9 +145,11 @@ public class CarrelloServlet extends HttpServlet {
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
 
+        if (path==null)
+            path="/";
         switch (path) {
             case "/":
-                dispatcher = request.getRequestDispatcher("CART DISPLAY PAGE"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
+                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
                 dispatcher.forward(request, response);
                 break;
         }

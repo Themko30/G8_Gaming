@@ -3,12 +3,12 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <c:choose>
     <c:when test="${not empty pw}">
-        <c:set var="us" scope="session" value="${us}"/>
-        <c:set var="pw" scope="session" value="${pw}"/>
+        <c:set var="us" value="${us}"/>
+        <c:set var="pw" value="${pw}"/>
     </c:when>
     <c:otherwise>
-        <c:set var="us" scope="session" value=""/>
-        <c:set var="pw" scope="session" value=""/>
+        <c:set var="us" value=""/>
+        <c:set var="pw" value=""/>
     </c:otherwise>
 </c:choose>
 <html>

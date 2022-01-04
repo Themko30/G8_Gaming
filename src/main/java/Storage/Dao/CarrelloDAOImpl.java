@@ -116,7 +116,7 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
                     prodotto = new Prodotto();
                     prodotto.setCodice(rs.getInt("p.codice"));
                     prodotto.setNome(rs.getString("p.nome"));
-                    prodotto.setCategoria(rs.getString("p.tipo"));
+                    prodotto.setCategoria(rs.getString("p.categoria"));
                     prodotto.setPrezzo(rs.getDouble("p.prezzo"));
                     prodotto.setQuantita(rs.getInt("p.quantita"));
                     prodotto.setCopertina(rs.getString("p.copertina"));

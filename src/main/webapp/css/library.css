@@ -46,11 +46,11 @@
     font-size: 14px;
     padding-left: 1rem;
 }
-.btn:not(.btn-secondary) {
+.btn:not(.btn-secondary):not(.btn-danger) {
     background-color: var(--primary) !important;
     color: var(--d3light) !important;
 }
-.btn:not(.btn-secondary):hover {
+.btn:not(.btn-secondary):not(.btn-danger):hover {
     background-color: var(--secondary) !important;
     color: var(--d3light) !important;
 }
@@ -63,6 +63,23 @@
 }
 .dropdown-item {
     color: var(--d3dark) !important;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        margin-left: 6rem;
+    }
+    .table {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 576px) {
+    .card {
+        margin-left: 4rem;
+    }
+    .table {
+        font-size: 12px;
+    }
 }
 
 /*

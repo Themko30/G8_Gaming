@@ -2,10 +2,10 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <c:choose>
     <c:when test="${not empty utente}">
-        <c:set var="cart" scope="session" value="account/cart"/>
+        <c:set var="cart" value="cart/"/>
     </c:when>
     <c:otherwise>
-        <c:set var="cart" scope="session" value="account/login"/>
+        <c:set var="cart" value="account/login"/>
     </c:otherwise>
 </c:choose>
 <nav class="navbar navbar-expand-lg navbar-light py-0" id="header" style="background-color: var(--primary);">

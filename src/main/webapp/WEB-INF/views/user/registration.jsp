@@ -12,24 +12,24 @@
 <body>
 <c:choose>
     <c:when test="${not empty un}">
-        <c:set var="us" scope="session" value="${un}"/>
-        <c:set var="pw" scope="session" value="${pa}"/>
-        <c:set var="pa" scope="session" value="${pa}"/>
-        <c:set var="no" scope="session" value="${no}"/>
-        <c:set var="co" scope="session" value="${co}"/>
-        <c:set var="in" scope="session" value="${in}"/>
-        <c:set var="ca" scope="session" value="${ca}"/>
-        <c:set var="em" scope="session" value="${em}"/>
+        <c:set var="us" value="${un}"/>
+        <c:set var="pw" value="${pa}"/>
+        <c:set var="pa" value="${pa}"/>
+        <c:set var="no" value="${no}"/>
+        <c:set var="co" value="${co}"/>
+        <c:set var="in" value="${in}"/>
+        <c:set var="ca" value="${ca}"/>
+        <c:set var="em" value="${em}"/>
     </c:when>
     <c:otherwise>
-        <c:set var="us" scope="session" value=""/>
-        <c:set var="pw" scope="session" value=""/>
-        <c:set var="pa" scope="session" value=""/>
-        <c:set var="no" scope="session" value=""/>
-        <c:set var="co" scope="session" value=""/>
-        <c:set var="in" scope="session" value=""/>
-        <c:set var="em" scope="session" value=""/>
-        <c:set var="ca" scope="session" value=""/>
+        <c:set var="us" value=""/>
+        <c:set var="pw" value=""/>
+        <c:set var="pa" value=""/>
+        <c:set var="no" value=""/>
+        <c:set var="co" value=""/>
+        <c:set var="in" value=""/>
+        <c:set var="em" value=""/>
+        <c:set var="ca" value=""/>
     </c:otherwise>
 </c:choose>
 <div class="center">

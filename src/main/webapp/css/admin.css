@@ -27,20 +27,3 @@
     animation: mymove 0.3s;
     animation-fill-mode: forwards;
 }
-
-@media screen and (max-width: 768px) {
-    .card {
-        margin-left: 6rem;
-    }
-    .table {
-        font-size: 14px;
-    }
-}
-@media screen and (max-width: 576px) {
-    .card {
-        margin-left: 4rem;
-    }
-    .table {
-        font-size: 12px;
-    }
-}

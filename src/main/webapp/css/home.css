@@ -29,14 +29,3 @@
 .col-sm {
     max-width: 14.5rem;
 }
-
-@media screen and (max-width: 768px) {
-    .card {
-        margin-left: 6rem;
-    }
-}
-@media screen and (max-width: 576px) {
-    .card {
-        margin-left: 4rem;
-    }
-}

@@ -10,6 +10,15 @@
 </head>
 <body>
 <%@include file="../partials/header.jsp"%>
+
+<c:choose>
+    <c:when test="${not empty utente}">
+        <c:set var="formAction" value="method=\"post\" onsubmit=\"return checkQuantity()\" action=\"${context}/cart/Add\""/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="formAction" value="method=\"get\" action=\"${context}/account/login\""/>
+    </c:otherwise>
+</c:choose>
 <div class="container my-4">
     <div class="row">
         <div class="col-md-5">
@@ -30,10 +39,10 @@
             <!-- Se c'è lo sconto, calcolo il prezzo e aggiungo il vecchio prezzo e lo sconto applicato -->
             <c:choose>
                 <c:when test="${prodotto.scontoAttivo > 0}">
-                    <c:set var="prezzo" scope="session" value="${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}"/>
+                    <c:set var="prezzo" value="${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}"/>
                 </c:when>
                 <c:otherwise>
-                    <c:set var="prezzo" scope="session" value="${prodotto.prezzo}"/>
+                    <c:set var="prezzo" value="${prodotto.prezzo}"/>
                 </c:otherwise>
             </c:choose>
             <p class="prezzo"><span id="actualPrice">${prezzo}</span>
@@ -41,18 +50,15 @@
                     <span style="text-decoration: line-through; font-size: 18px; margin: 0 4px;">€${prodotto.prezzo}</span> <span class="sconto text-center">-${prodotto.scontoAttivo*100}%</span>
                 </c:if> </p>
 
-            <c:choose>
-                <c:when test="${prodotto.quantita > 0}">
-                    <c:set var="disponibilita" scope="session" value="${prodotto.quantita}"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="disponibilita" scope="session" value="Esaurito"/>
-                </c:otherwise>
-            </c:choose>
-            <p class="disponibilita">Disponibilità: ${disponibilita}</p>
-            <label>Quantità:</label>
-            <input id="quantita" type="number" value="1" min="1" step="1" required>
-            <button class="btn carrello">Aggiungi al carrello</button>
+            <p class="disponibilita">Disponibilità: ${prodotto.quantita}</p>
+            <form ${formAction}>
+                <c:if test="${not empty utente}">
+                    <input type="hidden" name="prodotto" value="${prodotto.codice}" required>
+                </c:if>
+                <label for="quantita">Quantità:</label>
+                <input id="quantita" name="quantita" type="number" value="1" min="1" step="1" required>
+                <button type="submit" class="btn carrello">Aggiungi al carrello</button>
+            </form>
             <div class="accordion my-4" id="accordionDescrizione">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading">
@@ -69,6 +75,17 @@
             </div>
         </div>
     </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Inserisci una quantità valida!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(document).ready(function() {
@@ -76,6 +93,16 @@
         const prezzo = Number(span.text()); // Seleziona il prezzo e lo converte in numero
         span.text("€" + prezzo.toFixed(2)); // Imposta due cifre decimali
     });
+
+    function checkQuantity() {
+        let disponibili = ${prodotto.quantita};
+        let quantita = $('#quantita').val();
+        if(quantita > disponibili) {
+            $('#liveToast').toast("show");
+            return false;
+        }
+        return true;
+    }
 </script>
 <%@include file="../partials/footer.jsp"%>
 </body>
