@@ -155,17 +155,17 @@ public class AdminServlet extends HttpServlet {
                     dispatcher.forward(req, resp);
                     break;
                 case "/Orders/ManageOrder":
-                    int codiceOrdine = Integer.parseInt(req.getParameter("ordine"));
+                    int codiceOrdine = Integer.parseInt(req.getParameter("numero"));
                     req.setAttribute("ordine", ordineService.retrieveOrder(codiceOrdine));
 
-                    dispatcher = req.getRequestDispatcher("DISPLAY UPDATE ORDINE FORM ADMIN PAGE");
+                    dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/ordine.jsp");
                     dispatcher.forward(req, resp);
                     break;
                 case "/Booking/ManageBooking":
-                    int codicePrenotazione = Integer.parseInt(req.getParameter("prenotazione"));
+                    int codicePrenotazione = Integer.parseInt(req.getParameter("numeroPrenotazione"));
                     req.setAttribute("prenotazione", prenotazioneService.retrievePrenotazione(codicePrenotazione));
 
-                    dispatcher = req.getRequestDispatcher("DISPLAY UPDATE PRENOTAZIONE FORM ADMIN PAGE");
+                    dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prenotazione.jsp");
                     dispatcher.forward(req, resp);
                     break;
 
@@ -269,7 +269,7 @@ public class AdminServlet extends HttpServlet {
                                 part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + copertinaM);
                             }
                         }
-                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products/Show?codice=" + req.getParameter("codice"));
+                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products/");
                     } catch (InvalidProductException e) {
                         dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                         dispatcher.forward(req, resp);
@@ -282,7 +282,7 @@ public class AdminServlet extends HttpServlet {
                     resp.sendRedirect("/G8_Gaming_war_exploded/admin/Users");
                     break;
                 case "/Orders/ManageOrder":
-                    int codiceOrdine = Integer.parseInt("ordine");
+                    int codiceOrdine = Integer.parseInt(req.getParameter("numero"));
                     String stato = req.getParameter("stato");
 
                     ordineService.updateStato(codiceOrdine, stato);
@@ -291,7 +291,7 @@ public class AdminServlet extends HttpServlet {
 
                     break;
                 case "/Booking/ManageBooking":
-                    int codicePrenotazione = Integer.parseInt("prenotazione");
+                    int codicePrenotazione = Integer.parseInt(req.getParameter("numeroPrenotazione"));
 
                     prenotazioneService.acceptPrenotazione(codicePrenotazione);
                     dispatcher = req.getRequestDispatcher("BOOKINGS PAGE ADMIN");

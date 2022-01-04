@@ -24,8 +24,8 @@
         <tbody>
         <c:forEach items="${ordini}" var="ordine">
             <tr>
-                <th scope="row"><a href="${context}/admin/Orders/Show?numero=${ordine.numero}">${ordine.numero}</a></th>
-                <td><a href="${context}/admin/Users/Show?username=${ordine.utente.username}">${ordine.utente.username}</a></td>
+                <th scope="row"><a href="${context}/admin/Orders/ManageOrder?numero=${ordine.numero}">${ordine.numero}</a></th>
+                <td>${ordine.utente.username}</td>
                 <td>${ordine.totale}€</td>
                 <td>${ordine.data}</td>
                 <td>${ordine.stato}</td>
