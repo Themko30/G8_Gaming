@@ -131,6 +131,7 @@ public class AdminServlet extends HttpServlet {
                         ctx.setAttribute("home", home);
                     }
 
+                    req.setAttribute("aggiornato", 1);
                     dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                     dispatcher.forward(req, resp);
                     break;
@@ -163,6 +164,7 @@ public class AdminServlet extends HttpServlet {
                         context.setAttribute("mostVoted", prodottoService.mostVoted());
                     }
 
+                    req.setAttribute("aggiornato", 1);
                     dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                     dispatcher.forward(req, resp);
                     break;
@@ -281,7 +283,7 @@ public class AdminServlet extends HttpServlet {
                         File oldCopertinaFile = new File("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + oldCopertina);
                         oldCopertinaFile.delete();
 
-                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products/");
+                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products");
                     } catch (InvalidProductException e) {
                         dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                         dispatcher.forward(req, resp);
