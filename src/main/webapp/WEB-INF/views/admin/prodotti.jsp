@@ -23,14 +23,13 @@
             <th scope="col">Immagine</th>
             <th scope="col">Quantità</th>
             <th scope="col">In evidenza</th>
-            <th scope="col">Modifica</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${prodotti}" var="prodotto">
             <tr>
                 <th scope="row">${prodotto.codice}</th>
-                <td><a href="${context}/admin/Products/show?codice=${prodotto.codice}">${prodotto.nome}</a></td>
+                <td><a href="${context}/admin/Products/ModifyProduct?codice=${prodotto.codice}">${prodotto.nome}</a></td>
                 <td>${prodotto.prezzo}€</td>
                 <td><a href="${context}/images/${prodotto.copertina}">${prodotto.copertina}</a></td>
                 <td>${prodotto.quantita}</td>
