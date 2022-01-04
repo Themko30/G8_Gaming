@@ -116,8 +116,15 @@ public class AdminServlet extends HttpServlet {
                     statistics.put("Ordini", ordineService.counterOrdini());
                     statistics.put("Prodotti", prodottoService.counterProdotti());
                     statistics.put("Prenotazioni", prenotazioneService.counterPrenotazioni());
+
+                    ArrayList<Prodotto> home = new ArrayList<>();
+                    home.add(prodottoService.prodottoCodice(1));
+                    home.add(prodottoService.prodottoCodice(3));
+                    home.add(prodottoService.prodottoCodice(4));
+                    home.add(prodottoService.prodottoCodice(5));
                     synchronized (ctx) {
                         ctx.setAttribute("statistics", statistics);
+                        ctx.setAttribute("home", home);
                     }
 
                     dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
