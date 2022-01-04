@@ -33,6 +33,7 @@ footer { /* Posiziona il footer in basso */
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-right: 16px;
     margin: 12px 0;
 }
 

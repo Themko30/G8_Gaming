@@ -85,7 +85,7 @@
             <option value="Altro">Altro</option>
         </select>
         <div class="txt_field">
-            <input type="text" id="indirizzo" name="indirizzo" value="${in}" required>
+            <input type="text" id="indirizzo" name="indirizzo" value="${in}" data-bs-toggle="tooltip" data-bs-placement="top" title="Es. Via Roma, 15" required>
             <span></span>
             <label for="username">Indirizzo</label>
         </div>

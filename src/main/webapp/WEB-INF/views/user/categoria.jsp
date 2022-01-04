@@ -13,23 +13,29 @@
 <div class="container">
     <p class="h1 text-center my-3">Videogiochi categoria ${categoria}</p>
 
-    <div class="row my-2">
-        <c:forEach items="${prodotti}" var="prodotto">
-            <div class="col-sm m-3">
-                <div class="card text-center" id="${prodotto.codice}" style="width: 12rem;">
-                    <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="${prodotto.copertina}">
-                    <div class="card-body">
-                        <h5 class="card-title">${prodotto.nome}<br>
-                        <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
-                        <h6 class="card-subtitle text-muted">${prodotto.piattaforma}</h6>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row my-2">
+            <c:forEach items="${prodotti}" var="prodotto">
+                <div class="col-sm my-2 mx-3">
+                    <div class="card text-center" id="${prodotto.codice}" style="width: 12rem;">
+                        <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="${prodotto.copertina}">
+                        <div class="card-body">
+                            <h5 class="card-title">${prodotto.nome}<br>
+                                <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
+                            <h6 class="card-subtitle text-muted">${prodotto.piattaforma}</h6>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
     </div>
 </div>
 <script>
     $(document).ready(function() {
+        $('.card').click(function(){
+            window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
+        });
+
         let span = $('.price');
         for(let i = 0; i < span.length; i++) {
             const prezzo = Number(span[i].textContent); // Seleziona il prezzo e lo converte in numero

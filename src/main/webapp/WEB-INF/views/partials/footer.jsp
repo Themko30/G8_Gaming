@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
-<button onclick="topFunction()" id="backtotop" title="Torna sù"><i class="bi bi-arrow-bar-up"></i></button>
+<button onclick="topFunction()" id="backtotop" title="Torna su"><i class="bi bi-arrow-bar-up"></i></button>
 <footer>
     <div class="footer-content">
         <table>

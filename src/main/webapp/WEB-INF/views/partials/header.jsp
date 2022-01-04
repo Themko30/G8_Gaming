@@ -82,10 +82,3 @@
         </div>
     </div>
 </nav>
-<script>
-    $(document).ready(function() {
-        $('.card').click(function(){
-            window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
-        });
-    });
-</script>
