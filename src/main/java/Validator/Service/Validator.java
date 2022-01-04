@@ -20,7 +20,7 @@ public interface Validator {
 
     void validateProdotto(Prodotto prodotto) throws InvalidProductException, IOException;
 
-    void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException;
+    void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException, Exception;
 
     void validateImage(String copertina, Collection<Part> image) throws IOException, InvalidProductException;
 }

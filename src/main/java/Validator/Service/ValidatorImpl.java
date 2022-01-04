@@ -108,7 +108,7 @@ public class ValidatorImpl implements Validator {
     }
 
     @Override
-    public void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException {
+    public void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException, Exception {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
 
         if (!(pattern.matcher(utente.getUsername()).matches())) {
@@ -118,7 +118,7 @@ public class ValidatorImpl implements Validator {
         utenteService = new UtenteServiceImpl();
 
         if (utenteService.checkUtente(utente.getUsername())) {
-            throw new InvalidUserException();
+            throw new Exception();
         }
 
         pattern = Pattern.compile("[a-zA-Z ]+");
