@@ -300,5 +300,36 @@ public class ProdottoDAO {
         }
     }
 
+    public ArrayList<Prodotto> doRetrieveMostVoted(){
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto ORDER BY media LIMIT 6");
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> mostVoted = new ArrayList<>();
+
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setCodice(rs.getInt("codice"));
+                p.setPrezzo(rs.getDouble("prezzo"));
+                p.setScontoAttivo(rs.getDouble("scontoAttivo"));
+                p.setQuantita(rs.getInt("quantita"));
+                p.setDescrizione(rs.getString("descrizione"));
+                p.setCopertina(rs.getString("copertina"));
+                p.setNome(rs.getString("nome"));
+                p.setPiattaforma(rs.getString("piattaforma"));
+                p.setCategoria(rs.getString("categoria"));
+                p.setNumeroVoti(rs.getInt("numeroVoti"));
+                p.setTotaleVoti(rs.getInt("totaleVoti"));
+                p.setMedia(rs.getDouble("media"));
+                mostVoted.add(p);
+            }
+            return mostVoted;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

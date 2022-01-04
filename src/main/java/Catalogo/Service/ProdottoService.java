@@ -26,4 +26,6 @@ public interface ProdottoService {
     String updateProdotto(Prodotto prodotto);
 
     int counterProdotti();
+
+    ArrayList<Prodotto> mostVoted();
 }
