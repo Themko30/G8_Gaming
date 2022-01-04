@@ -92,12 +92,12 @@ public class ProdottoDAO {
         }
     }
 
-    public ArrayList<Prodotto> doRetrieveProdotti(int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdotti(int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto LIMIT ?,?");
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -193,13 +193,13 @@ public class ProdottoDAO {
     }
 
 
-    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdottiByCategoria(String categoria, int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE categoria=? LIMIT ?,?");
             ps.setString(1, categoria);
-            ps.setInt(2, limit);
-            ps.setInt(3, offset);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -228,13 +228,13 @@ public class ProdottoDAO {
 
     }
 
-    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int limit, int offset) {
+    public ArrayList<Prodotto> doRetrieveProdottiByPiattaforma(String piattaforma, int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE piattaforma=? LIMIT ?,?");
             ps.setString(1, piattaforma);
-            ps.setInt(2, limit);
-            ps.setInt(3, offset);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> prodotti = new ArrayList<>();
