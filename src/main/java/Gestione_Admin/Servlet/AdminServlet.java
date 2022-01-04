@@ -70,6 +70,10 @@ public class AdminServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
+        if(u==null) {
+            resp.sendError(401);
+            return;
+        }
         if(u.isAdmin()) {
 
 
@@ -138,7 +142,7 @@ public class AdminServlet extends HttpServlet {
                     dispatcher.forward(req, resp);
                     break;
                 case "/Products/ModifyProduct":
-                    int codiceProdotto = Integer.parseInt(req.getParameter("prodotto"));
+                    int codiceProdotto = Integer.parseInt(req.getParameter("codice"));
                     req.setAttribute("prodotto", prodottoService.prodottoCodice(codiceProdotto));
 
                     dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/modifica_prodotto.jsp");
@@ -182,6 +186,10 @@ public class AdminServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
+        if(u==null) {
+            resp.sendError(401);
+            return;
+        }
         if(u.isAdmin()) {
             String path = req.getPathInfo();
             validator = new ValidatorImpl();
