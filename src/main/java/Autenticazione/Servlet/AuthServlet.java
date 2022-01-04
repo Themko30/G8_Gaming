@@ -130,10 +130,9 @@ public class AuthServlet extends HttpServlet {
         utenteService = new UtenteServiceImpl();
         Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
         if (utente == null) {
-          HttpSession session2 = req.getSession(false);
-          session2.setAttribute("errate", 1);
-          session2.setAttribute("us", req.getParameter("username"));
-          session2.setAttribute("pw", req.getParameter("password"));
+          req.setAttribute("errate", 1);
+          req.setAttribute("us", req.getParameter("username"));
+          req.setAttribute("pw", req.getParameter("password"));
           req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         } else {
           carrelloService = new CarrelloServiceImpl();

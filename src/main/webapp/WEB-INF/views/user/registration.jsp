@@ -11,9 +11,9 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${not empty pw}">
-        <c:set var="us" scope="session" value="${us}"/>
-        <c:set var="pw" scope="session" value="${pw}"/>
+    <c:when test="${not empty un}">
+        <c:set var="us" scope="session" value="${un}"/>
+        <c:set var="pw" scope="session" value="${pa}"/>
         <c:set var="pa" scope="session" value="${pa}"/>
         <c:set var="no" scope="session" value="${no}"/>
         <c:set var="co" scope="session" value="${co}"/>
