@@ -11,6 +11,7 @@ import javax.servlet.http.Part;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 import main.java.Validator.Exceptions.InvalidIndirizzoException;
@@ -20,11 +21,15 @@ import main.java.Validator.Exceptions.InvalidUserException;
 
 public class ValidatorImpl implements Validator {
 
-    private UtenteService utenteService;
-    private ProdottoService prodottoService;
+    private UtenteService utenteService = new UtenteServiceImpl();
+    private ProdottoService prodottoService = new ProdottoServiceImpl();
 
     public void setProdottoService(ProdottoService prodottoService) {
         this.prodottoService = prodottoService;
+    }
+
+    public void setUtenteService(UtenteService utenteService) {
+        this.utenteService = utenteService;
     }
 
     public void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException {
@@ -114,8 +119,6 @@ public class ValidatorImpl implements Validator {
         if (!(pattern.matcher(utente.getUsername()).matches())) {
             throw new InvalidUserException();
         }
-
-        utenteService = new UtenteServiceImpl();
 
         if (utenteService.checkUtente(utente.getUsername())) {
             throw new Exception();
