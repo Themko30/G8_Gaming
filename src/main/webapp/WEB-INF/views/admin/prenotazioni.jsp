@@ -24,7 +24,7 @@
         <tbody>
         <c:forEach items="${prenotazioni}" var="prenotazione">
             <tr>
-                <th scope="row"><a href="${context}/admin/Booking/Show?numeroPrenotazione=${prenotazione.numeroPrenotazione}">${prenotazione.numeroPrenotazione}</a></th>
+                <th scope="row"><a href="${context}/admin/Booking/ManageBooking?numeroPrenotazione=${prenotazione.numeroPrenotazione}">${prenotazione.numeroPrenotazione}</a></th>
                 <td>${prenotazione.emailRichiedente}</td>
                 <td>${prenotazione.nome}</td>
                 <td><a href="${context}/images/${prenotazione.copertina}">${prenotazione.copertina}</a></td>

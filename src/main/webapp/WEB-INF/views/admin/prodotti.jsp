@@ -23,6 +23,7 @@
             <th scope="col">Immagine</th>
             <th scope="col">Quantità</th>
             <th scope="col">In evidenza</th>
+            <th scope="col">Modifica</th>
         </tr>
         </thead>
         <tbody>
