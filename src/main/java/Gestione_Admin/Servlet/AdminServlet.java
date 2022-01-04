@@ -132,7 +132,7 @@ public class AdminServlet extends HttpServlet {
                     int codiceProdotto = Integer.parseInt(req.getParameter("prodotto"));
                     req.setAttribute("prodotto", prodottoService.prodottoCodice(codiceProdotto));
 
-                    dispatcher = req.getRequestDispatcher("DISPLAY UPDATE PRODOTTO FORM ADMIN PAGE");
+                    dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/modifica_prodotto.jsp");
                     dispatcher.forward(req, resp);
                     break;
                 case "/Orders/ManageOrder":
@@ -153,7 +153,7 @@ public class AdminServlet extends HttpServlet {
             }
         }
         else {
-            req.getRequestDispatcher("/WEB-INF/views/errors/forbidden.jsp").forward(req, resp);
+            resp.sendError(403);
         }
     }
 
@@ -214,9 +214,7 @@ public class AdminServlet extends HttpServlet {
                         validator.validateProdotto(prodotto);
                         validator.validateImage(copertina, req.getParts());
                         prodottoService.saveProdotto(prodotto);
-
-                        dispatcher = req.getRequestDispatcher("PRODUCT PAGE");
-                        dispatcher.forward(req, resp);
+                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products/");
                     } catch (InvalidProductException e) {
                         dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                         dispatcher.forward(req, resp);
@@ -252,9 +250,7 @@ public class AdminServlet extends HttpServlet {
                                 part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\images\\" + copertinaM);
                             }
                         }
-                        dispatcher = req.getRequestDispatcher("PRODUCT ADMIN PAGE");
-                        dispatcher.forward(req, resp);
-
+                        resp.sendRedirect("/G8_Gaming_war_exploded/admin/Products/Show?codice=" + req.getParameter("codice"));
                     } catch (InvalidProductException e) {
                         dispatcher = req.getRequestDispatcher("ERROR INSERT PRODUCT ADMIN PAGE");
                         dispatcher.forward(req, resp);
@@ -286,7 +282,7 @@ public class AdminServlet extends HttpServlet {
             }
         }
         else {
-            req.getRequestDispatcher("/WEB-INF/views/errors/forbidden.jsp").forward(req, resp);
+            resp.sendError(403);
         }
     }
 }
