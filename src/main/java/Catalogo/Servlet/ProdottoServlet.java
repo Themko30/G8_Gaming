@@ -19,7 +19,11 @@ import org.json.JSONObject;
 @WebServlet(name = "ProdottoServlet", value = "/Prodotto/*")
 public class ProdottoServlet extends HttpServlet {
 
-  ProdottoService prodottoService = new ProdottoServiceImpl();
+  private ProdottoService prodottoService = new ProdottoServiceImpl();
+
+  public void setProdottoService(ProdottoService prodottoService) {
+    this.prodottoService = prodottoService;
+  }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String path = request.getPathInfo();

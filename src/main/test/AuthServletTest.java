@@ -49,7 +49,8 @@ public class AuthServletTest {
     when(httpServletRequest.getPathInfo()).thenReturn("/ordersPage");
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     AuthServlet authServlet = new AuthServlet();
-    HttpSession session1 = Mockito when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    HttpSession session1 = Mockito.mock(HttpSession.class);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doGet(httpServletRequest, httpServletResponse);
   }
 
