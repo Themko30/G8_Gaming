@@ -14,16 +14,31 @@
     <div class="col-lg-8">
         <div class="card mb-4">
             <div class="card-body">
-                <form method="post" onsubmit="return checkCampi()" action="">
+                <form method="post" onsubmit="return checkCampi()" action="${context}/cart/Checkout">
                     <div class="row">
                         <div class="col-sm-3">
                             <p class="mb-0">Indirizzo di spedizione: </p>
                         </div>
                         <div class="col-sm-9">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="indirizzoSpedizione" id="indirizzoSpedizione" value="${utente.indirizzo}">
-                                <label for="indirizzoSpedizione">Scegli dove ricevere il gioco</label>
-                            </div>
+                                <input type="text" class="form-control" name="indirizzo" id="indirizzoSpedizione" value="${utente.indirizzo}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">CAP: </p>
+                        </div>
+                        <div class="col-sm-9">
+                                <input type="text" class="form-control" name="CAP" id="cap" value="${utente.cap}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Paese: </p>
+                        </div>
+                        <div class="col-sm-9">
+                                <input type="text" class="form-control" name="paese" id="paese" value="${utente.paese}">
                         </div>
                     </div>
                     <hr>
@@ -74,19 +89,32 @@
 <script>
     function checkCampi() {
         let indirizzo = $('#indirizzoSpedizione').val();
+        let cap = $('#cap').val();
+        let paese = $('#paese').val();
         let metodo = $("input[name='metodoPagamento']:checked").val();
-        regex = /[A-Za-z ]+[,][ ]?[0-9A-Za-z]+/;
-        valid = true;
+        let regex = /[A-Za-z ]+[,][ ]?[0-9A-Za-z]+/;
 
-        if(!regex.test(indirizzo)) {
-            valid = false;
-        }
+
+        let valid = regex.test(indirizzo);
         if(indirizzo.length < 4 || indirizzo.length > 64) {
             valid = false;
         }
         if(metodo !== 'PayPal' && metodo !== 'Carta di credito') {
             valid = false;
         }
+        regex = /^[0-9]{5}$/;
+        let c = Number(cap);
+        if(!regex.test(cap) || c < 10 || c > 97100) {
+            valid = false;
+        }
+        regex = /[A-Za-z]+/;
+        if(!regex.test(paese)) {
+            valid = false;
+        }
+        if(paese.length < 3 || paese.length > 32) {
+            valid = false;
+        }
+
         if(!valid) {
             $('#liveToast').toast("show");
         }

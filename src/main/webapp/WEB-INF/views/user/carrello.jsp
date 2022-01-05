@@ -17,7 +17,7 @@
         <c:otherwise>
             <div class="text-center my-2">
                 <span>Totale: €${carrello.totale}</span>
-                <a href="#"><button type="button" class="btn mx-2">Procedi all'ordine</button></a>
+                <a href="${context}/cart/confirmOrder"><button type="button" class="btn mx-2">Procedi all'ordine</button></a>
             </div>
 
             <table class="table table-bordered border-secondary table-striped table-hover">
