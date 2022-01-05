@@ -4,13 +4,10 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
@@ -69,6 +66,24 @@ public class ValidatorImplTest {
   }
 
   @Test
+  public void capErrore2() {
+    String indirizzoPatternGiusto = "via Mario, 54";
+    String paeseGiusto = "Italia";
+    int capCorto = 99999;
+    validator = new ValidatorImpl();
+    assertThrows(InvalidIndirizzoException.class, () -> validator.validateIndirizzo(indirizzoPatternGiusto, capCorto, paeseGiusto));
+  }
+
+  @Test
+  public void capErrore3() {
+    String indirizzoPatternGiusto = "via Mario, 54";
+    String paeseGiusto = "Italia";
+    int capCorto = 999;
+    validator = new ValidatorImpl();
+    assertThrows(InvalidIndirizzoException.class, () -> validator.validateIndirizzo(indirizzoPatternGiusto, capCorto, paeseGiusto));
+  }
+
+  @Test
   public void paeseErrore() {
     String indirizzoPatternGiusto = "via Mario, 54";
     int capGiusto = 80053;
@@ -99,15 +114,9 @@ public class ValidatorImplTest {
     Collection<Part> parts = new ArrayList<>();
     Part part = Mockito.mock(Part.class);
     parts.add(part);
-    when(part.getContentType()).thenReturn("Java");
+    when(part.getContentType()).thenReturn("Java.png");
     doNothing().when(part).write(isA(String.class));
-    BufferedImage image = Mockito.mock(BufferedImage.class);
-    File file = Mockito.mock(File.class);
-    ImageIO io = null;
-    when(io.read(file)).thenReturn(image);
-    when(image.getWidth()).thenReturn(1500);
-    when(image.getHeight()).thenReturn(1900);
-    assertThrows(InvalidProductException.class, () -> validator.validateImage("ciao", parts));
+    assertThrows(InvalidProductException.class, () -> validator.validateImage("Java.png", parts));
   }
 
 
@@ -227,6 +236,18 @@ public class ValidatorImplTest {
     when(utente.getUsername()).thenReturn("marco");
     when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
     when(utente.getNome()).thenReturn("m");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteNomeLengthMaggiore() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("msdhsjdhsjdhsjhdjshdjshdjshdjshdjshdjhsjdhsjdhsjdhsjhdjshnbnxbvnbxnvbhbhdbfjgbmnbskdbfksbdfbsdfbsdbfjsdbf");
     validator.setUtenteService(utenteService);
     assertThrows(Exception.class, () -> validator.validateUtente(utente));
   }
