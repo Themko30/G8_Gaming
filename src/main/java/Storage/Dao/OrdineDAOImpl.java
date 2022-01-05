@@ -143,7 +143,7 @@ public class OrdineDAOImpl implements OrdineDAO{
             ps.setInt(3, o.getNumeroArticoli());
             ps.setString(4, o.getIndirizzoSpedizione());
             ps.setString(5, o.getMetodoPagamento());
-            ps.setObject(6, o.getData());
+            ps.setObject(6, java.sql.Date.valueOf(o.getData()));
             ps.setString(7, "Inviato");
             int rows = ps.executeUpdate();
 
