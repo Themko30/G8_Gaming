@@ -74,17 +74,12 @@ public class PrenotazioneServlet extends HttpServlet {
 
         try {
           validator.validateImage(copertina, req.getParts());
-          for (Part part : req.getParts()) {
-            if (part.getContentType() != null) {
-              part.write("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\prenotazioni\\" + copertina);
-            }
-          }
         } catch (InvalidProductException e) {
           req.getRequestDispatcher("ERRORE PRENOTAZIONE").forward(req, resp);
         }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/user/prenotazione_effettuata.jsp").forward(req, resp);
         } else {
           throw new ServletException("Errore di inserimento...");
         }
