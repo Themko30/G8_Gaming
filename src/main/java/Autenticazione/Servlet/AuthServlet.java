@@ -29,12 +29,31 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class AuthServlet extends HttpServlet {
 
-  private Validator validator;
-  private UtenteService utenteService;
-  private OrdineService ordineService;
-  private ProdottoService prodottoService;
-  private CarrelloService carrelloService;
+  private Validator validator = new ValidatorImpl();
+  private UtenteService utenteService = new UtenteServiceImpl();
+  private OrdineService ordineService = new OrdineServiceImpl();
+  private ProdottoService prodottoService = new ProdottoServiceImpl();
+  private CarrelloService carrelloService = new CarrelloServiceImpl();
 
+  public void setValidator(Validator validator) {
+    this.validator = validator;
+  }
+
+  public void setUtenteService(UtenteService utenteService) {
+    this.utenteService = utenteService;
+  }
+
+  public void setOrdineService(OrdineService ordineService) {
+    this.ordineService = ordineService;
+  }
+
+  public void setProdottoService(ProdottoService prodottoService) {
+    this.prodottoService = prodottoService;
+  }
+
+  public void setCarrelloService(CarrelloService carrelloService) {
+    this.carrelloService = carrelloService;
+  }
 
   /**
    * @throws ServletException
@@ -70,24 +89,21 @@ public class AuthServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp").forward(req, resp);
         break;
       case "/ordersPage":
-        HttpSession session1 = req.getSession(false);
+        HttpSession session1 = req.getSession();
         Utente ordineUtente = (Utente) session1.getAttribute("utente");
-        ordineService = new OrdineServiceImpl();
         ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
         req.setAttribute("ordini", ordini);
         req.getRequestDispatcher("/WEB-INF/views/user/ordini.jsp").forward(req, resp);
         break;
       case "/orderView":
         int codiceOrdine = Integer.parseInt(req.getParameter("codice"));
-        ordineService = new OrdineServiceImpl();
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
         req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp").forward(req, resp);
         break;
       case "/logout":
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
-        carrelloService = new CarrelloServiceImpl();
         carrelloService.updateCarrello(carrello);
         session.removeAttribute("utente");
         session.removeAttribute("carrello");
@@ -162,17 +178,6 @@ public class AuthServlet extends HttpServlet {
           }
         }
 
-        break;
-      case "/delete":
-        username = req.getParameter("username");
-        utenteService = new UtenteServiceImpl();
-        if (utenteService.deleteUtente(req.getParameter("username"))) {
-          // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di eliminazione...");
-        }
         break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));

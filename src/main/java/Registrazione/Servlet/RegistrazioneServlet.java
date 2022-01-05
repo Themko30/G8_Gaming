@@ -62,11 +62,6 @@ public class RegistrazioneServlet extends HttpServlet {
     int cap;
 
     switch (path) {
-      case "/":
-        /*TODO*/
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
-        dispatcher.forward(req, resp);
-        break;
       case "/save":
         username = req.getParameter("username");
         email = req.getParameter("email");
@@ -106,38 +101,6 @@ public class RegistrazioneServlet extends HttpServlet {
           req.setAttribute("in", indirizzo);
           req.setAttribute("ca", cap);
           req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
-        }
-        break;
-      case "/update":
-        username = req.getParameter("username");
-        email = req.getParameter("email");
-        password = req.getParameter("password");
-        nome = req.getParameter("nome");
-        cognome = req.getParameter("cognome");
-        sesso = req.getParameter("sesso");
-        dataDiNascita = LocalDate.parse(req.getParameter("data"));
-        indirizzo = req.getParameter("indirizzo");
-        cap = Integer.parseInt(req.getParameter("cap"));
-        paese = req.getParameter("paese");
-        utenteService = new UtenteServiceImpl();
-        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
-        if (utenteService.updateUtente(updateUtente)) {
-          // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di aggiornamento...");
-        }
-        break;
-      case "/delete":
-        username = req.getParameter("username");
-        utenteService = new UtenteServiceImpl();
-        if (utenteService.deleteUtente(req.getParameter("username"))) {
-          // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di eliminazione...");
         }
         break;
     }
