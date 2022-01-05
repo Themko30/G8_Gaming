@@ -30,8 +30,9 @@ public class OrdineDAOImpl implements OrdineDAO{
                 o.setTotale(rs.getDouble(3));
                 o.setNumeroArticoli(rs.getInt(4));
                 o.setIndirizzoSpedizione(rs.getString(5));
-                o.setData(rs.getObject(6, LocalDate.class));
-                o.setStato(rs.getString(7));
+                o.setMetodoPagamento(rs.getString(6));
+                o.setData(rs.getObject(7, LocalDate.class));
+                o.setStato(rs.getString(8));
                 ordini.add(o);
             }
 
@@ -45,7 +46,7 @@ public class OrdineDAOImpl implements OrdineDAO{
     public Ordine doRetrieveProdottiAcquistati(int codiceOrdine) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine o, ArticoloAcquistato a, Prodotto p  WHERE o.codice=? AND o.codice=a.ordine AND a.prodotto=p.codice");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine o, ArticoloAcquistato a, Prodotto p  WHERE o.numero=? AND o.numero=a.ordine AND a.prodotto=p.codice");
             ps.setInt(1, codiceOrdine);
             ResultSet rs = ps.executeQuery();
             LinkedHashMap<Prodotto, Integer> prodotti = new LinkedHashMap<>();
