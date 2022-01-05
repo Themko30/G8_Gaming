@@ -54,10 +54,6 @@ public class PrenotazioneServlet extends HttpServlet {
     path = validator.validatePath(path);
 
     switch (path) {
-      case "/":
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
-        dispatcher.forward(req, resp);
-        break;
       case "/save":
         Prenotazione savePrenotazione = new Prenotazione();
         savePrenotazione.setEmailRichiedente(req.getParameter("email"));
@@ -82,30 +78,6 @@ public class PrenotazioneServlet extends HttpServlet {
           req.getRequestDispatcher("/WEB-INF/views/user/prenotazione_effettuata.jsp").forward(req, resp);
         } else {
           throw new ServletException("Errore di inserimento...");
-        }
-        break;
-      case "/update":
-        Prenotazione updatePrenotazione = new Prenotazione();
-        updatePrenotazione.setEmailRichiedente(req.getParameter("email"));
-        updatePrenotazione.setCategoria(req.getParameter("categoria"));
-        updatePrenotazione.setDescrizione(req.getParameter("descrizione"));
-        updatePrenotazione.setNomeProdotto(req.getParameter("nomeProdotto"));
-        prenotazioneService = new PrenotazioneServiceImpl();
-        if (prenotazioneService.updatePrenotazione(updatePrenotazione)) {
-          // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di aggiornamento...");
-        }
-        break;
-      case "/delete":
-        prenotazioneService = new PrenotazioneServiceImpl();
-        if (prenotazioneService.deletePrenotazione(Integer.valueOf(req.getParameter("codice")))) {
-          // SET ALERT
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di eliminazione...");
         }
         break;
     }

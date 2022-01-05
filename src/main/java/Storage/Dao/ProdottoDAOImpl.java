@@ -61,6 +61,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 
             int x = ps.executeUpdate();
             ps = con.prepareStatement("UPDATE Prodotto SET media=(totaleVoti/numeroVoti) WHERE codice=?");
+            ps.setInt(1, prodotto.getCodice());
             x = ps.executeUpdate();
 
             return x > 0;
