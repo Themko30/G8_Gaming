@@ -207,7 +207,6 @@ public class AdminServlet extends HttpServlet {
 
             switch (path) {
                 case "/Products/AddProductHomePage":
-                    /*TODO*/
                     ArrayList<Prodotto> homeAdd = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                     codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
 
@@ -219,7 +218,6 @@ public class AdminServlet extends HttpServlet {
                     resp.sendRedirect("/G8_Gaming_war_exploded/admin/ShowHomePage");
                     break;
                 case "/SetHomePage":
-                    /*TODO*/
                     ArrayList<Prodotto> home = (ArrayList<Prodotto>) getServletContext().getAttribute("home");
                     codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
                     synchronized (home) {

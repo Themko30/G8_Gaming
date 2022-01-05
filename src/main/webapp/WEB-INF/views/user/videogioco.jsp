@@ -87,6 +87,8 @@
         </div>
     </div>
 </div>
+
+<!-- TODO: prodotti consigliati -->
 <script>
     $(document).ready(function() {
         let span = $('#actualPrice');
