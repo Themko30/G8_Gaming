@@ -24,7 +24,7 @@ public class Ordine {
 
     public Ordine(OrdineBuilderImpl builder) {
         this.totale = builder.getTotale();
-        this.numero = builder.getNumeroArticoli();
+        this.numeroArticoli = builder.getNumeroArticoli();
         this.indirizzoSpedizione = builder.getIndirizzoSpedizione();
         this.metodoPagamento = builder.getMetodoPagamento();
         this.data = builder.getData();

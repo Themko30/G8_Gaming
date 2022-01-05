@@ -117,7 +117,7 @@ public class CarrelloServlet extends HttpServlet {
                         session.removeAttribute("carrello");
                         session.setAttribute("carrello", carrello);
 
-                        dispatcher = request.getRequestDispatcher("ORDINE SUCCESS PAGE");
+                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/ordine_completato.jsp");
                         dispatcher.forward(request, response);
 
 
@@ -151,6 +151,9 @@ public class CarrelloServlet extends HttpServlet {
             case "/":
                 dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
                 dispatcher.forward(request, response);
+                break;
+            case "/confirmOrder":
+                request.getRequestDispatcher("/WEB-INF/views/user/conferma_ordine.jsp").forward(request, response);
                 break;
         }
 
