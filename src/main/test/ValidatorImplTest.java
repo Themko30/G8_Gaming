@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.imageio.ImageIO;
@@ -201,8 +202,123 @@ public class ValidatorImplTest {
     Utente utente = Mockito.mock(Utente.class);
     UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
     when(utente.getUsername()).thenReturn("marco");
-    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(true);
     validator.setUtenteService(utenteService);
     assertThrows(Exception.class, () -> validator.validateUtente(utente));
   }
+
+  @Test
+  public void utenteNomeInvalid() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("@#");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteNomeLengthMinore() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("m");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteCognomeInvalid() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("@#");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteCognomeLengthMinore() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("d");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteSessoInvalid() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("de marco");
+    when(utente.getSesso()).thenReturn("ciao");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteDDNInvalid() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("de marco");
+    when(utente.getSesso()).thenReturn("Maschio");
+    when(utente.getDataDiNascita()).thenReturn(LocalDate.of(1800, 1, 1));
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteEmailInvalid() {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("de marco");
+    when(utente.getSesso()).thenReturn("Maschio");
+    when(utente.getDataDiNascita()).thenReturn(LocalDate.of(2000, 1, 1));
+    when(utente.getEmail()).thenReturn("ciao");
+    validator.setUtenteService(utenteService);
+    assertThrows(Exception.class, () -> validator.validateUtente(utente));
+  }
+
+  @Test
+  public void utenteOk() throws Exception {
+    validator = new ValidatorImpl();
+    Utente utente = Mockito.mock(Utente.class);
+    UtenteServiceImpl utenteService = Mockito.mock(UtenteServiceImpl.class);
+    when(utente.getUsername()).thenReturn("marco");
+    when(utenteService.checkUtente(utente.getUsername())).thenReturn(false);
+    when(utente.getNome()).thenReturn("marco");
+    when(utente.getCognome()).thenReturn("de marco");
+    when(utente.getSesso()).thenReturn("Maschio");
+    when(utente.getDataDiNascita()).thenReturn(LocalDate.of(2000, 1, 1));
+    when(utente.getEmail()).thenReturn("marco@gmail.com");
+    when(utente.getIndirizzo()).thenReturn("via Mario, 54");
+    when(utente.getCap()).thenReturn(80053);
+    when(utente.getPaese()).thenReturn("Italia");
+    validator.setUtenteService(utenteService);
+    validator.validateUtente(utente);
+  }
+
 }
