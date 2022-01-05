@@ -30,6 +30,17 @@ public class CarrelloServlet extends HttpServlet {
     OrdineService ordineService = new OrdineServiceImpl();
     Validator validator = new ValidatorImpl();
 
+    public void setCarrelloService(CarrelloService carrelloService) {
+        this.carrelloService = carrelloService;
+    }
+
+    public void setOrdineService(OrdineService ordineService) {
+        this.ordineService = ordineService;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getPathInfo();
