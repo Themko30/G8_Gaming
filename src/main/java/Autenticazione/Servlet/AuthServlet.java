@@ -29,12 +29,31 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class AuthServlet extends HttpServlet {
 
-  private Validator validator;
-  private UtenteService utenteService;
-  private OrdineService ordineService;
-  private ProdottoService prodottoService;
-  private CarrelloService carrelloService;
+  private Validator validator = new ValidatorImpl();
+  private UtenteService utenteService = new UtenteServiceImpl();
+  private OrdineService ordineService = new OrdineServiceImpl();
+  private ProdottoService prodottoService = new ProdottoServiceImpl();
+  private CarrelloService carrelloService = new CarrelloServiceImpl();
 
+  public void setValidator(Validator validator) {
+    this.validator = validator;
+  }
+
+  public void setUtenteService(UtenteService utenteService) {
+    this.utenteService = utenteService;
+  }
+
+  public void setOrdineService(OrdineService ordineService) {
+    this.ordineService = ordineService;
+  }
+
+  public void setProdottoService(ProdottoService prodottoService) {
+    this.prodottoService = prodottoService;
+  }
+
+  public void setCarrelloService(CarrelloService carrelloService) {
+    this.carrelloService = carrelloService;
+  }
 
   /**
    * @throws ServletException
@@ -79,7 +98,6 @@ public class AuthServlet extends HttpServlet {
         break;
       case "/orderView":
         int codiceOrdine = Integer.parseInt(req.getParameter("codice"));
-        ordineService = new OrdineServiceImpl();
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
         req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp").forward(req, resp);
