@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -31,6 +32,70 @@ public class ProdottoServletTest {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         doNothing().when(request).setAttribute(anyString(), anyCollection());
         doNothing().when(request).setAttribute(anyString(), anyString());
+
+        prodottoServlet.setProdottoService(prodottoService);
+        prodottoServlet.doGet(request, response);
+
+    }
+
+    @Test
+    public void testDoGetPiattaforma() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/Piattaforma");
+        when(request.getParameter("piattaforma")).thenReturn("PS5");
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        doNothing().when(request).setAttribute(anyString(), anyCollection());
+        doNothing().when(request).setAttribute(anyString(), anyString());
+
+        prodottoServlet.setProdottoService(prodottoService);
+        prodottoServlet.doGet(request, response);
+
+    }
+
+    @Test
+    public void testDoGetRicerca() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/Ricerca");
+        when(request.getParameter("nome")).thenReturn("Gta");
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        doNothing().when(request).setAttribute(anyString(), anyCollection());
+        doNothing().when(request).setAttribute(anyString(), anyString());
+
+        prodottoServlet.setProdottoService(prodottoService);
+        prodottoServlet.doGet(request, response);
+
+    }
+
+    @Test
+    public void testDoGetVisualizza() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/Visualizza");
+        when(request.getParameter("prodotto")).thenReturn("1");
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        doNothing().when(request).setAttribute(anyString(), anyCollection());
+        doNothing().when(request).setAttribute(anyString(), anyString());
+
+        prodottoServlet.setProdottoService(prodottoService);
+        prodottoServlet.doGet(request, response);
+
+    }
+
+    @Test
+    public void testDoGetRicercaApiTrue() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/Ricerca/api");
+        when(request.getHeader("X-Requested-With")).thenReturn("XMLHttpRequest");
+        when(request.getParameter("nome")).thenReturn("Gta");
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        when(response.getWriter()).thenReturn(Mockito.mock(PrintWriter.class));
+        doNothing().when(request).setAttribute(anyString(), anyCollection());
+        doNothing().when(request).setAttribute(anyString(), anyString());
+
+        prodottoServlet.setProdottoService(prodottoService);
+        prodottoServlet.doGet(request, response);
+
+    }
+
+    @Test
+    public void testDoGetRicercaApiFalse() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/Ricerca/api");
+        when(request.getHeader("X-Requested-With")).thenReturn("ciao");
 
         prodottoServlet.setProdottoService(prodottoService);
         prodottoServlet.doGet(request, response);
