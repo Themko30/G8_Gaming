@@ -91,7 +91,6 @@
 <div class="container d-flex justify-content-center align-items-center my-5">
     <a href="${context}/account/update"><button class="btn mx-2">Modifica Profilo</button></a>
     <a href="${context}/account/ordersPage"><button class="btn mx-2">Visualizza ordini</button></a>
-    <button class="btn btn-danger mx-2">Elimina profilo</button>
 </div>
 
 <%@include file="../partials/footer.jsp"%>
