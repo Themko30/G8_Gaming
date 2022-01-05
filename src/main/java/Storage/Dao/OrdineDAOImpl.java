@@ -103,8 +103,9 @@ public class OrdineDAOImpl implements OrdineDAO{
                 o.setTotale(rs.getDouble(3));
                 o.setNumeroArticoli(rs.getInt(4));
                 o.setIndirizzoSpedizione(rs.getString(5));
-                o.setData(rs.getObject(6, LocalDate.class));
-                o.setStato(rs.getString(7));
+                o.setMetodoPagamento(rs.getString(6));
+                o.setData(rs.getObject(7, LocalDate.class));
+                o.setStato(rs.getString(8));
                 ordini.add(o);
             }
 
