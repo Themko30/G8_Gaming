@@ -306,8 +306,7 @@ public class AdminServlet extends HttpServlet {
                     int codicePrenotazione = Integer.parseInt(req.getParameter("numeroPrenotazione"));
 
                     prenotazioneService.acceptPrenotazione(codicePrenotazione);
-                    dispatcher = req.getRequestDispatcher("BOOKINGS PAGE ADMIN");
-                    dispatcher.forward(req, resp);
+                    resp.sendRedirect("/G8_Gaming_war_exploded/admin/Booking");
                     break;
 
             }
