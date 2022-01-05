@@ -24,9 +24,21 @@ import main.java.Validator.Service.ValidatorImpl;
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {
 
-  private Validator validator;
-  private UtenteService utenteService;
-  private CarrelloService carrelloService;
+  private Validator validator = new ValidatorImpl();;
+  private UtenteService utenteService = new UtenteServiceImpl();
+  private CarrelloService carrelloService = new CarrelloServiceImpl();
+
+  public void setValidator(Validator validator) {
+    this.validator = validator;
+  }
+
+  public void setUtenteService(UtenteService utenteService) {
+    this.utenteService = utenteService;
+  }
+
+  public void setCarrelloService(CarrelloService carrelloService) {
+    this.carrelloService = carrelloService;
+  }
 
   @Override
   public void init() throws ServletException {
@@ -34,11 +46,10 @@ public class RegistrazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
-    validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     switch (path) {
@@ -50,11 +61,10 @@ public class RegistrazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
-    validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     String username, email, password, nome, cognome, sesso, indirizzo, paese;
