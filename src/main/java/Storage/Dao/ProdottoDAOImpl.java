@@ -132,7 +132,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto WHERE nome LIKE ? LIMIT ?,?");
-            ps.setString(1, "%" + nome + "%");
+            ps.setString(1, "%" + nome.trim().replace(" ", "%") + "%");
             ps.setInt(2, offset);
             ps.setInt(3, limit);
 

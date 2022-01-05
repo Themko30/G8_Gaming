@@ -1,5 +1,7 @@
 package main.java.Storage.Entity;
 
+import org.json.JSONObject;
+
 public class Prodotto {
 
     private int codice;
@@ -131,5 +133,12 @@ public class Prodotto {
 
     public void setMediaArrotondata(int mediaArrotondata) {
         this.mediaArrotondata = mediaArrotondata;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject object = new JSONObject();
+        object.put("codice", codice);
+        object.put("nome", nome);
+        return object;
     }
 }

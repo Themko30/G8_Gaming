@@ -4,14 +4,14 @@
 <html>
 <head>
     <jsp:include page="../partials/head.jsp">
-        <jsp:param name="title" value="${categoria}"/>
+        <jsp:param name="title" value="${ricerca}"/>
         <jsp:param name="styles" value="home"/>
     </jsp:include>
 </head>
 <body>
 <%@include file="../partials/header.jsp"%>
 <div class="container">
-    <p class="h1 text-center my-3">Videogiochi categoria ${categoria}</p>
+    <p class="h1 text-center my-3">Risultati di ricerca per "${ricerca}"</p>
 
     <div class="container d-flex justify-content-center align-items-center">
         <div class="row my-2">
@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h5 class="card-title">${prodotto.nome}<br>
                                 <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
-                            <h6 class="card-subtitle text-muted">${prodotto.piattaforma}</h6>
+                            <h6 class="card-subtitle text-muted">${prodotto.categoria}<br>${prodotto.piattaforma}</h6>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
 
     <div class="container text-center my-5">
         <h2>Prenotazione</h2>
-        <p>Non trovi un videogioco? <a href="${context}/prenotazione/">Effettua una prenotazione</a></p>
+        <p>Non trovi un videogioco? <a href="${context}/prenotazione">Effettua una prenotazione</a></p>
     </div>
 </div>
 <script>

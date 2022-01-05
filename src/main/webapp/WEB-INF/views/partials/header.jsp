@@ -52,9 +52,12 @@
                 </li>
 
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
-                <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+            <form class="d-flex" action="${context}/Prodotto/Ricerca" onsubmit="return cerca()">
+                <input class="form-control me-2" type="search" id="cercaInput" name="nome" placeholder="Cerca" aria-label="Search">
+                <div id="s-res">
+                    <ul id="results"></ul>
+                </div>
+                <button class="btn btn-outline-light" id="cercaBtn" type="submit"><i class="bi bi-search"></i></button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <c:choose>
@@ -82,3 +85,44 @@
         </div>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+        $('#cercaInput').keyup(function(e) {
+            let query = $(this).val().trim();
+            if(query !== '') { // Se non è vuoto
+                $('#s-res').show();
+                if (e.keyCode === 13) { // Se viene premuto il tasto Invio
+                    $('#cercaBtn').trigger('click'); // Invia la ricerca
+                }
+
+                $.ajax({
+                    url: '${context}/Prodotto/Ricerca/api',
+                    method: 'GET',
+                    data: {nome: query},
+                    success: function(data) {
+                        let results = $('#results');
+                        results.empty();
+                        for(let index in data.products) {
+                            results.append('<li><a href="${context}/Prodotto/Visualizza?prodotto='+data.products[index].codice+'">'+data.products[index].nome+'</a></li>');
+                        }
+                        results.show();
+                    },
+                    error: function(){
+                        let results = $('#results');
+                        results.empty();
+                        results.append("Nessun prodotto trovato");
+                        results.show();
+                    }
+                })
+            } else {
+                $('#s-res').hide();
+            }
+        });
+    })
+
+    function cerca() {
+        let query = $('#cercaInput').val().trim();
+        return query !== undefined && query !== null && query !== '';
+    }
+</script>

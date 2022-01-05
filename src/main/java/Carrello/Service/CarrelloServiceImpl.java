@@ -21,10 +21,10 @@ public class CarrelloServiceImpl implements CarrelloService {
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() - p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));
                 prodottiMap.replace(p, quantita);
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() + prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() + p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));
 
                 break;
             }
@@ -41,7 +41,7 @@ public class CarrelloServiceImpl implements CarrelloService {
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() - p.getPrezzo()*p.getScontoAttivo()*prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() - (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));
                 prodottiMap.remove(p);
 
                 break;
@@ -88,7 +88,7 @@ public class CarrelloServiceImpl implements CarrelloService {
                 if (p.getCodice() == codiceProdotto) {
                     prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
                     carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
-                    carrello.setTotale(carrello.getTotale() + p.getPrezzo() * p.getScontoAttivo() * quantita);
+                    carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*quantita);
                     added = true;
                     break;
                 }
@@ -98,7 +98,7 @@ public class CarrelloServiceImpl implements CarrelloService {
                 Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
                 prodottiCarrelloMap.put(p, quantita);
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
-                carrello.setTotale(carrello.getTotale() + p.getPrezzo() * p.getScontoAttivo() * quantita);
+                carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*quantita);
             }
 
             carrello.setProdotti(prodottiCarrelloMap);

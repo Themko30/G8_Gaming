@@ -69,6 +69,26 @@ public class AuthServlet extends HttpServlet {
       case "/login":
         req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         break;
+      case "/profile":
+        req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
+        break;
+      case "/update":
+        req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp").forward(req, resp);
+        break;
+      case "/ordersPage":
+        HttpSession session1 = req.getSession(false);
+        Utente ordineUtente = (Utente) session1.getAttribute("utente");
+        ordineService = new OrdineServiceImpl();
+        ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
+        req.setAttribute("ordini", ordini);
+        req.getRequestDispatcher("/WEB-INF/views/user/ordini.jsp").forward(req, resp);
+        break;
+      case "/orderView":
+        int codiceOrdine = Integer.parseInt(req.getParameter("codice"));
+        ordineService = new OrdineServiceImpl();
+        Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
+        req.setAttribute("ordine", ordine);
+        break;
       case "/logout":
         HttpSession session = req.getSession(false);
         Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -117,8 +137,8 @@ public class AuthServlet extends HttpServlet {
         Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
+          /*TODO inserire il nuovo utente in sessione*/
+          req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -158,20 +178,6 @@ public class AuthServlet extends HttpServlet {
         } else {
           throw new ServletException("Errore di eliminazione...");
         }
-        break;
-      case "/ordersPage":
-        HttpSession session = req.getSession(false);
-        Utente ordineUtente = (Utente) session.getAttribute("utente");
-        ordineService = new OrdineServiceImpl();
-        ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
-        req.setAttribute("ordini", ordini);
-        req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        break;
-      case "/orderView":
-        codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
-        ordineService = new OrdineServiceImpl();
-        Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
-        req.setAttribute("ordine", ordine);
         break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));

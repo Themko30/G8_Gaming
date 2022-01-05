@@ -54,7 +54,7 @@
     background-color: var(--secondary) !important;
     color: var(--d3light) !important;
 }
-.btn-outline-light:hover {
+#cercaBtn:hover {
     background-color: var(--d3light) !important;
     color: var(--d3dark) !important;
 }
@@ -64,7 +64,42 @@
 .dropdown-item {
     color: var(--d3dark) !important;
 }
+#s-res {
+    position: absolute;
+    top: 58px;
+    pointer-events: all;
+    border-radius: 3px;
+    z-index: 2;
+    width: 240px;
+    transform: translateX(-32px);
+}
+#s-res ul {
+    list-style: none;
+    width: 100%;
+}
+#s-res li {
+    font-size: 16px;
+    cursor: default;
+    padding: 8px;
+    border: 1px solid gray;
+    background: var(--d3light);
+}
+#s-res li a {
+    color: var(--d3dark);
+    text-decoration: none;
+}
+#s-res li a:hover {
+    color: var(--primary);
+}
+#cercaInput {
+    width: 208px;
+}
 
+@media screen and (max-width: 991px) {
+    #s-res {
+        top: 258px;
+    }
+}
 @media screen and (max-width: 768px) {
     .card {
         margin-left: 6rem;
