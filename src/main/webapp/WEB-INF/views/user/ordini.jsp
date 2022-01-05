@@ -11,28 +11,35 @@
 <body>
 <%@include file="../partials/header.jsp"%>
 <div class="container-xxl my-5">
-    <table class="table table-bordered border-secondary table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Totale</th>
-            <th scope="col">Data</th>
-            <th scope="col">Indirizzo</th>
-            <th scope="col">Stato</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${ordini}" var="ordine">
-            <tr>
-                <th scope="row"><a href="${context}/account/orderView?codice=${ordine.numero}">${ordine.numero}</a></th>
-                <td>${ordine.totale}€</td>
-                <td>${ordine.data}</td>
-                <td>${ordine.indirizzoSpedizione}</td>
-                <td>${ordine.stato}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <c:choose>
+        <c:when test="${ordini.isEmpty()}">
+            <p class="h2 text-center my-5">Non ci sono ordini</p>
+        </c:when>
+        <c:otherwise>
+            <table class="table table-bordered border-secondary table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Totale</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Indirizzo</th>
+                    <th scope="col">Stato</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${ordini}" var="ordine">
+                    <tr>
+                        <th scope="row"><a href="${context}/account/orderView?codice=${ordine.numero}">${ordine.numero}</a></th>
+                        <td>${ordine.totale}€</td>
+                        <td>${ordine.data}</td>
+                        <td>${ordine.indirizzoSpedizione}</td>
+                        <td>${ordine.stato}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </div>
 <%@include file="../partials/footer.jsp"%>
 </body>

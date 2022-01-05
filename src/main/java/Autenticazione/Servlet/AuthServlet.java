@@ -82,6 +82,7 @@ public class AuthServlet extends HttpServlet {
         ordineService = new OrdineServiceImpl();
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
+        req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp").forward(req, resp);
         break;
       case "/logout":
         HttpSession session = req.getSession(false);
