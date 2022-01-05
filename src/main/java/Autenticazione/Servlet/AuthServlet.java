@@ -163,17 +163,6 @@ public class AuthServlet extends HttpServlet {
         }
 
         break;
-      case "/delete":
-        username = req.getParameter("username");
-        utenteService = new UtenteServiceImpl();
-        if (utenteService.deleteUtente(req.getParameter("username"))) {
-          // SET ALERT
-          /*TODO*/
-          req.getRequestDispatcher("VIEW PAGE DA FARE").forward(req, resp);
-        } else {
-          throw new ServletException("Errore di eliminazione...");
-        }
-        break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
         int valutazione = Integer.parseInt(req.getParameter("valutazione"));
