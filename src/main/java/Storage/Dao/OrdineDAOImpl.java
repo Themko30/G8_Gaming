@@ -63,6 +63,9 @@ public class OrdineDAOImpl implements OrdineDAO{
                     o.setData(rs.getObject("o.dataOrdine", LocalDate.class));
                     o.setStato(rs.getString("o.stato"));
                     o.setMetodoPagamento(rs.getString("o.metodoPagamento"));
+                    Utente utente = new Utente();
+                    utente.setUsername(rs.getString("o.utente"));
+                    o.setUtente(utente);
 
                     firstElement = false;
                 }

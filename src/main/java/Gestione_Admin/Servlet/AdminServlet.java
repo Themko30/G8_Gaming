@@ -300,9 +300,7 @@ public class AdminServlet extends HttpServlet {
                     String stato = req.getParameter("stato");
 
                     ordineService.updateStato(codiceOrdine, stato);
-                    dispatcher = req.getRequestDispatcher("ORDERS PAGE ADMIN");
-                    dispatcher.forward(req, resp);
-
+                    resp.sendRedirect("/G8_Gaming_war_exploded/admin/Orders");
                     break;
                 case "/Booking/ManageBooking":
                     int codicePrenotazione = Integer.parseInt(req.getParameter("numeroPrenotazione"));
