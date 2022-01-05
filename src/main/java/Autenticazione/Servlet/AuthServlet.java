@@ -4,7 +4,6 @@ package main.java.Autenticazione.Servlet;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,18 +53,13 @@ public class AuthServlet extends HttpServlet {
    */
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     switch (path) {
-      case "/":
-        /*TODO*/
-        RequestDispatcher dispatcher = req.getRequestDispatcher("DISPLAY PAGE");
-        dispatcher.forward(req, resp);
-        break;
       case "/login":
         req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         break;
@@ -112,7 +106,7 @@ public class AuthServlet extends HttpServlet {
    */
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
