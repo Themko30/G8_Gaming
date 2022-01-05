@@ -89,9 +89,8 @@ public class AuthServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp").forward(req, resp);
         break;
       case "/ordersPage":
-        HttpSession session1 = req.getSession(false);
+        HttpSession session1 = req.getSession();
         Utente ordineUtente = (Utente) session1.getAttribute("utente");
-        ordineService = new OrdineServiceImpl();
         ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
         req.setAttribute("ordini", ordini);
         req.getRequestDispatcher("/WEB-INF/views/user/ordini.jsp").forward(req, resp);
@@ -103,9 +102,8 @@ public class AuthServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp").forward(req, resp);
         break;
       case "/logout":
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
-        carrelloService = new CarrelloServiceImpl();
         carrelloService.updateCarrello(carrello);
         session.removeAttribute("utente");
         session.removeAttribute("carrello");
