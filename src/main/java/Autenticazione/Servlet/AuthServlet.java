@@ -187,7 +187,7 @@ public class AuthServlet extends HttpServlet {
         prodottoService = new ProdottoServiceImpl();
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
-        req.getRequestDispatcher("DA FARE").forward(req, resp);
+        resp.sendRedirect("/G8_Gaming_war_exploded/Prodotto/Visualizza?prodotto="+codiceProdotto);
         break;
     }
   }
