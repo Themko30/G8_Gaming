@@ -58,9 +58,9 @@ public class OrdineDAOImpl implements OrdineDAO{
                 if (firstElement) {
                     o.setNumero(rs.getInt("o.numero"));
                     o.setTotale(rs.getDouble("o.totale"));
-                    o.setNumeroArticoli(rs.getInt("o.numeroElementi"));
+                    o.setNumeroArticoli(rs.getInt("o.numeroArticoli"));
                     o.setIndirizzoSpedizione(rs.getString("o.indirizzoSpedizione"));
-                    o.setData(rs.getObject("o.data", LocalDate.class));
+                    o.setData(rs.getObject("o.dataOrdine", LocalDate.class));
                     o.setStato(rs.getString("o.stato"));
 
                     firstElement = false;
@@ -74,7 +74,7 @@ public class OrdineDAOImpl implements OrdineDAO{
 
                 p.setValutato(rs.getInt("a.valutato"));
 
-                prodotti.put(p, rs.getInt("a.quantitaAcquistata"));
+                prodotti.put(p, rs.getInt("a.quantita"));
             }
 
             o.setProdotti(prodotti);
