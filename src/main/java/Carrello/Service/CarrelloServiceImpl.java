@@ -21,7 +21,7 @@ public class CarrelloServiceImpl implements CarrelloService {
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale() - (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));
                 prodottiMap.replace(p, quantita);
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() + prodottiMap.get(p));
                 carrello.setTotale(carrello.getTotale() + (p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*prodottiMap.get(p));

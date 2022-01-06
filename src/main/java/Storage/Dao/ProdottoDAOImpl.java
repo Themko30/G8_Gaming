@@ -304,7 +304,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
     public ArrayList<Prodotto> doRetrieveMostVoted(){
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto ORDER BY media DESC LIMIT 6");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto ORDER BY media DESC LIMIT 5");
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> mostVoted = new ArrayList<>();

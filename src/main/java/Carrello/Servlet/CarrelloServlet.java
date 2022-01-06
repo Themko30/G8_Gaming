@@ -81,8 +81,7 @@ public class CarrelloServlet extends HttpServlet {
                     session.setAttribute("carrello", carrello);
                 }
 
-                dispatcher = request.getRequestDispatcher("CART DISPLAY PAGE"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
-                dispatcher.forward(request, response);
+                response.sendRedirect("/G8_Gaming_war_exploded/cart/");
                 break;
 
             case "/Rimuovi":
@@ -134,13 +133,13 @@ public class CarrelloServlet extends HttpServlet {
 
                     } catch (InvalidIndirizzoException e) {
                         e.printStackTrace();
-                        dispatcher = request.getRequestDispatcher("Ordine Failed Page");
+                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/errors/ordine.jsp");
                         dispatcher.forward(request, response);
 
                     } catch (InvalidProductQuantityException ex) {
                         ex.printStackTrace();
                         request.setAttribute("prodotto", ex.getProdotto());
-                        dispatcher = request.getRequestDispatcher("Ordine Prodotto Failed Page");
+                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/errors/quantita.jsp");
                         dispatcher.forward(request, response);
                     }
 

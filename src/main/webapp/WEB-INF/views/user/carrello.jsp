@@ -35,7 +35,18 @@
                         <c:set var="quantita" value="${carrello.prodotti.get(prodotto)}"/>
 
                         <th scope="row"><a href="${context}/Prodotto/Visualizza?prodotto=${prodotto.codice}">${prodotto.nome}</a></th>
-                        <td>${quantita}</td>
+                        <td><form method="post" action="${context}/cart/Modifica" >
+                            <input type="hidden" value="${prodotto.codice}" name="prodotto" required>
+                            <input type="hidden" value="${quantita-1}" name="quantita" required>
+                            <button type="submit" class="btn meno" style="width: 24px; height: 24px; padding: 1px">-</button>
+                        </form>
+                            <span> ${quantita}</span>
+                            <form method="post" action="${context}/cart/Modifica" >
+                                <input type="hidden" value="${prodotto.codice}" name="prodotto" required>
+                                <input type="hidden" value="${quantita+1}" name="quantita" required>
+                                <button type="submit" class="btn piu" style="width: 24px; height: 24px; padding: 1px">+</button>
+                            </form>
+                        </td>
                         <td><span class="total">${(prodotto.prezzo - prodotto.prezzo * prodotto.scontoAttivo) * quantita}</span></td>
                         <td><form method="post" action="${context}/cart/Rimuovi">
                             <input type="hidden" name="prodotto" value="${prodotto.codice}" required>
@@ -61,6 +72,10 @@
             span[i].innerText = "€" + prezzo.toFixed(2); // Imposta due cifre decimali
         }
     });
+
+    function modificaQuantita() {
+        return false;
+    }
 </script>
 </body>
 </html>
