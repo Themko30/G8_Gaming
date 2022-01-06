@@ -35,8 +35,12 @@ function validateRegistration() {
     let dataDiNascita = $('#data').val().split('-');
     let message = "<ul>";
     let valid = true;
-    let regex = /^[a-zA-Z ]+$/
+    let regex = /^[a-zA-Z]+$/
 
+    if(!regex.test(username)) {
+        message += "<li>L'username non rispetta il formato adatto.</li>";
+        valid = false;
+    }
     if(!regex.test(name)) {
         message += "<li>Il nome non rispetta il formato adatto.</li>";
         valid = false;
