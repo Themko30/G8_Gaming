@@ -15,7 +15,7 @@ public interface ProdottoService {
 
     boolean updateValutazione(Prodotto prodotto, int valutazione);
 
-    ArrayList<Prodotto> prodottiNomeLike(String nome);
+    ArrayList<Prodotto> prodottiNomeLike(String nome, int limit);
 
     ArrayList<Prodotto> allProdotti();
 

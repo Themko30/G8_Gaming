@@ -3,6 +3,8 @@ package main.java.Storage.Entity;
 import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 
+import static java.lang.Math.floor;
+
 public class Carrello {
 
     private double totale;

@@ -83,15 +83,13 @@ public class RegistrazioneServlet extends HttpServlet {
         indirizzo = req.getParameter("indirizzo");
         cap = Integer.parseInt(req.getParameter("cap"));
         paese = req.getParameter("paese");
-        utenteService = new UtenteServiceImpl();
         Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         try {
           validator.validateUtente(saveUtente);
           utenteService.saveUtente(saveUtente);
           resp.setStatus(HttpServletResponse.SC_CREATED);
-          HttpSession session = req.getSession(false);
+          HttpSession session = req.getSession();
           session.setAttribute("utente", saveUtente);
-          carrelloService = new CarrelloServiceImpl();
           Carrello carrello = carrelloService.recuperaCarrello(saveUtente);
           session.setAttribute("carrello", carrello);
           resp.sendRedirect("/G8_Gaming_war_exploded/");

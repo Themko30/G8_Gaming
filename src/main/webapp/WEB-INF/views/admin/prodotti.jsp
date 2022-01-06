@@ -30,7 +30,7 @@
             <tr>
                 <th scope="row">${prodotto.codice}</th>
                 <td><a href="${context}/admin/Products/ModifyProduct?codice=${prodotto.codice}">${prodotto.nome}</a></td>
-                <td>${prodotto.prezzo}€</td>
+                <td>€${prodotto.prezzo}</td>
                 <td><a href="${context}/images/${prodotto.copertina}">${prodotto.copertina}</a></td>
                 <td>${prodotto.quantita}</td>
                 <td><form method="post" action="${context}/admin/Products/AddProductHomePage">

@@ -31,8 +31,8 @@ public class ProdottoServiceImpl implements ProdottoService {
     }
 
     @Override
-    public ArrayList<Prodotto> prodottiNomeLike(String nome) {
-        return prodottoDAO.doRetrieveProdottiByNomeLike(nome, 0, 100);
+    public ArrayList<Prodotto> prodottiNomeLike(String nome, int limit) {
+        return prodottoDAO.doRetrieveProdottiByNomeLike(nome, 0, limit);
     }
 
     @Override
