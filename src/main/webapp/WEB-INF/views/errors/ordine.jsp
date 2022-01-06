@@ -12,7 +12,7 @@
 <div class="container text-center my-5">
   <p class="h1" style="color: red;">Purtroppo il tuo ordine non è andato a buon fine.</p>
   <p class="h2">Controlla i dati inseriti e riprova.</p>
-  <p class="h3"><a href="${context}/">Torna alla home</a></p>
+  <p class="h3"><a href="${context}/cart/">Torna al carrello</a></p>
 </div>
 </body>
 </html>

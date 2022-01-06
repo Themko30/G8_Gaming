@@ -75,8 +75,8 @@ public class PrenotazioneServlet extends HttpServlet {
         try {
           validator.validateImage(copertina, req.getParts());
         } catch (InvalidProductException e) {
-          /*TODO*/
-          req.getRequestDispatcher("ERRORE PRENOTAZIONE").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/errors/prenotazione.jsp").forward(req, resp);
+          break;
         }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
