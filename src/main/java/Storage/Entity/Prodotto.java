@@ -141,4 +141,8 @@ public class Prodotto {
         object.put("nome", nome);
         return object;
     }
+
+    public double getTotaleScontato(){
+        return Math.floor((prezzo - prezzo*scontoAttivo)*100)/100;
+    }
 }
