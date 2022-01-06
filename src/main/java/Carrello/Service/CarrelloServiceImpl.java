@@ -13,6 +13,15 @@ import main.java.Storage.Entity.Utente;
 public class CarrelloServiceImpl implements CarrelloService {
 
     private CarrelloDAO carrelloDAO = new CarrelloDAOImpl();
+    ProdottoService prodottoService = new ProdottoServiceImpl();
+
+    public void setProdottoService(ProdottoService prodottoService) {
+        this.prodottoService = prodottoService;
+    }
+
+    public void setCarrelloDAO(CarrelloDAO carrelloDAO) {
+        this.carrelloDAO = carrelloDAO;
+    }
 
     @Override
     public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita) {
@@ -97,8 +106,6 @@ public class CarrelloServiceImpl implements CarrelloService {
                 }
             }
             if (!added) {
-
-                ProdottoService prodottoService = new ProdottoServiceImpl();
                 Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
                 double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                 prodottiCarrelloMap.put(p, quantita);
