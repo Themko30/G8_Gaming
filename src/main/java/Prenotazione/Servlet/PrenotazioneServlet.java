@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import main.java.Prenotazione.Service.PrenotazioneService;
 import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
-import main.java.Storage.Dao.PrenotazioneDAOImpl;
 import main.java.Storage.Entity.Prenotazione;
 import main.java.Validator.Exceptions.InvalidProductException;
 import main.java.Validator.Service.Validator;
@@ -22,8 +21,16 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class PrenotazioneServlet extends HttpServlet {
 
-  PrenotazioneService prenotazioneService;
-  private Validator validator;
+  PrenotazioneService prenotazioneService = new PrenotazioneServiceImpl();
+  private Validator validator = new ValidatorImpl();
+
+  public void setPrenotazioneService(PrenotazioneService prenotazioneService) {
+    this.prenotazioneService = prenotazioneService;
+  }
+
+  public void setValidator(Validator validator) {
+    this.validator = validator;
+  }
 
   @Override
   public void init() throws ServletException {
@@ -31,10 +38,9 @@ public class PrenotazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
     String path = req.getPathInfo();
-    validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     switch (path) {
@@ -46,11 +52,10 @@ public class PrenotazioneServlet extends HttpServlet {
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
-    validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     switch (path) {
@@ -66,12 +71,12 @@ public class PrenotazioneServlet extends HttpServlet {
 
         savePrenotazione.setDescrizione(req.getParameter("descrizione"));
         savePrenotazione.setNomeProdotto(req.getParameter("nomeProdotto"));
-        prenotazioneService = new PrenotazioneServiceImpl();
 
         try {
           validator.validateImage(copertina, req.getParts());
         } catch (InvalidProductException e) {
-          req.getRequestDispatcher("ERRORE PRENOTAZIONE").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/errors/prenotazione.jsp").forward(req, resp);
+          break;
         }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);

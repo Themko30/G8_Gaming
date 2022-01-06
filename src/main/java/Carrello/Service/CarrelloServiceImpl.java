@@ -25,10 +25,15 @@ public class CarrelloServiceImpl implements CarrelloService {
 
     @Override
     public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita) {
+        if(quantita < 1)
+            return rimuoviProdottoCarrelloSession(carrello, codiceProdotto);
+
         LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
+                if(quantita > p.getQuantita())
+                    return carrello;
                 double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
                 carrello.setTotale(carrello.getTotale() - (prezzoScontato)*prodottiMap.get(p));
