@@ -16,7 +16,7 @@ public class Carrello {
     }
 
     public double getTotale() {
-        return Math.floor(totale*100)/100;
+        return totale;
     }
 
     public void setTotale(double totale) {
