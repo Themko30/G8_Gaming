@@ -213,7 +213,6 @@ public class AdminServlet extends HttpServlet {
         }
 
         String path = req.getPathInfo();
-        validator = new ValidatorImpl();
         path = validator.validatePath(path);
         int codiceProdotto;
 
