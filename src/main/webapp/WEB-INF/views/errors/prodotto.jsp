@@ -10,7 +10,7 @@
 <body>
 <%@include file="../partials/header.jsp"%>
 <div class="container text-center my-5">
-    <p class="h1">Il prodotto non è stato inserito con successo.</p>
+    <p class="h1" style="color: red;">Il prodotto non è stato inserito con successo.</p>
     <p class="h2">Controlla i campi inseriti e riprova.</p>
     <p class="h3"><a href="${context}/admin/">Torna alla home</a></p>
 </div>

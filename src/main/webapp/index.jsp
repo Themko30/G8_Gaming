@@ -80,10 +80,10 @@
             </div>
 
             <div class="col-sm my-2 mx-3">
-                <div class="card text-center categoria" id="Sport" style="width: 12rem;">
-                    <img src="${context}/images/sport.jpg" class="card-img-top p-2" alt="">
+                <div class="card text-center categoria" id="Platform" style="width: 12rem;">
+                    <img src="${context}/images/platform.jpg" class="card-img-top p-2" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">Sport<br></h5>
+                        <h5 class="card-title">Platform<br></h5>
                     </div>
                 </div>
             </div>
