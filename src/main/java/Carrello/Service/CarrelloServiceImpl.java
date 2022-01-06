@@ -20,7 +20,7 @@ public class CarrelloServiceImpl implements CarrelloService {
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
-                double prezzoScontato = Math.floor(p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo()*100)/100;
+                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
                 carrello.setTotale(carrello.getTotale() - (prezzoScontato)*prodottiMap.get(p));
                 prodottiMap.replace(p, quantita);
@@ -41,7 +41,7 @@ public class CarrelloServiceImpl implements CarrelloService {
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
-                double prezzoScontato = Math.floor(p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo()*100)/100;
+                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
                 carrello.setTotale(carrello.getTotale() - (prezzoScontato)*prodottiMap.get(p));
                 prodottiMap.remove(p);
@@ -88,7 +88,7 @@ public class CarrelloServiceImpl implements CarrelloService {
             boolean added = false;
             for (Prodotto p : prodottiCarrello) {
                 if (p.getCodice() == codiceProdotto) {
-                    double prezzoScontato = Math.floor(p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo()*100)/100;
+                    double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                     prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
                     carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
                     carrello.setTotale(carrello.getTotale() + (prezzoScontato)*quantita);
@@ -100,7 +100,7 @@ public class CarrelloServiceImpl implements CarrelloService {
 
                 ProdottoService prodottoService = new ProdottoServiceImpl();
                 Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
-                double prezzoScontato = Math.floor(p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo()*100)/100;
+                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
                 prodottiCarrelloMap.put(p, quantita);
                 carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
                 carrello.setTotale(carrello.getTotale() + (prezzoScontato)*quantita);
