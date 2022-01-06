@@ -37,16 +37,7 @@
             </c:forEach>
             <span>(${prodotto.numeroVoti})</span>
 
-            <!-- Se c'è lo sconto, calcolo il prezzo e aggiungo il vecchio prezzo e lo sconto applicato -->
-            <c:choose>
-                <c:when test="${prodotto.scontoAttivo > 0}">
-                    <c:set var="prezzo" value="${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="prezzo" value="${prodotto.prezzo}"/>
-                </c:otherwise>
-            </c:choose>
-            <p class="prezzo"><span id="actualPrice">${prezzo}</span>
+            <p class="prezzo">€${prodotto.prezzoScontato}
                 <c:if test="${prodotto.scontoAttivo > 0}">
                     <span style="text-decoration: line-through; font-size: 18px; margin: 0 4px;">€${prodotto.prezzo}</span> <span class="sconto text-center">-${prodotto.scontoAttivo*100}%</span>
                 </c:if> </p>
@@ -91,12 +82,6 @@
 
 <!-- TODO: prodotti consigliati -->
 <script>
-    $(document).ready(function() {
-        let span = $('#actualPrice');
-        const prezzo = Number(span.text()); // Seleziona il prezzo e lo converte in numero
-        span.text("€" + prezzo.toFixed(2)); // Imposta due cifre decimali
-    });
-
     function checkQuantity() {
         let disponibili = ${prodotto.quantita};
         let quantita = $('#quantita').val();

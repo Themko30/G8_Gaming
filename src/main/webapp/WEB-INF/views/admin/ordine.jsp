@@ -95,7 +95,7 @@
           <div class="col-sm-9">
             <c:forEach items="${ordine.prodotti.keySet()}" var="prodotto">
               <p class="text-muted mb-0"><a href="${context}/Prodotto/Visualizza?prodotto=${prodotto.codice}">${prodotto.nome}</a>
-                x ${ordine.prodotti.get(prodotto)} = <span class="price">${(prodotto.prezzo - prodotto.prezzo * prodotto.scontoAttivo) * ordine.prodotti.get(prodotto)}</span></p>
+                x ${ordine.prodotti.get(prodotto)} = <span class="price">€${prodotto.getPrezzoScontato() * ordine.prodotti.get(prodotto)}</span></p>
             </c:forEach>
           </div>
         </div>
@@ -103,14 +103,5 @@
     </div>
   </div>
 </div>
-<script>
-  $(document).ready(function() {
-    let span = $('.price');
-    for(let i = 0; i < span.length; i++) {
-      const prezzo = Number(span[i].textContent); // Seleziona il prezzo e lo converte in numero
-      span[i].innerText = "€" + prezzo.toFixed(2); // Imposta due cifre decimali
-    }
-  });
-</script>
 </body>
 </html>
