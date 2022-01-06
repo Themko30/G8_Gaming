@@ -142,7 +142,7 @@ public class Prodotto {
         return object;
     }
 
-    public double getTotaleScontato(){
+    public double getPrezzoScontato(){
         return Math.floor((prezzo - prezzo*scontoAttivo)*100)/100;
     }
 }
