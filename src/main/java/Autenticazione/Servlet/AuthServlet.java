@@ -144,7 +144,6 @@ public class AuthServlet extends HttpServlet {
         indirizzo = req.getParameter("indirizzo");
         cap = Integer.parseInt(req.getParameter("cap"));
         paese = req.getParameter("paese");
-        utenteService = new UtenteServiceImpl();
         Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
           // SET ALERT
@@ -158,7 +157,6 @@ public class AuthServlet extends HttpServlet {
         Utente tmpUtente = new Utente();
         tmpUtente.setUsername(req.getParameter("username"));
         tmpUtente.setPassword(req.getParameter("password"));
-        utenteService = new UtenteServiceImpl();
         Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
         if (utente == null) {
           req.setAttribute("errate", 1);
@@ -166,9 +164,8 @@ public class AuthServlet extends HttpServlet {
           req.setAttribute("pw", req.getParameter("password"));
           req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         } else {
-          carrelloService = new CarrelloServiceImpl();
           Carrello carrello = carrelloService.recuperaCarrello(utente);
-          HttpSession session2 = req.getSession(false);
+          HttpSession session2 = req.getSession();
           session2.setAttribute("utente", utente);
           session2.setAttribute("carrello", carrello);
           if (utente.isAdmin()) {
@@ -187,7 +184,7 @@ public class AuthServlet extends HttpServlet {
         prodottoService = new ProdottoServiceImpl();
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
-        resp.sendRedirect("/G8_Gaming_war_exploded/Prodotto/Visualizza?prodotto="+codiceProdotto);
+        resp.sendRedirect("/G8_Gaming_war_exploded/Prodotto/Visualizza?prodotto=" + codiceProdotto);
         break;
     }
   }

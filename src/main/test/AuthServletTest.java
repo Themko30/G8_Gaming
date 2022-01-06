@@ -1,19 +1,25 @@
+import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Autenticazione.Servlet.AuthServlet;
 import main.java.Carrello.Service.CarrelloService;
 import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Carrello.Service.OrdineService;
 import main.java.Carrello.Service.OrdineServiceImpl;
 import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Utente;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -22,8 +28,6 @@ public class AuthServletTest {
 
   HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
   HttpServletResponse httpServletResponse = Mockito.mock(HttpServletResponse.class);
-
-  RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
 
   @Test
   public void testDoGetLogin() throws ServletException, IOException {
@@ -92,6 +96,96 @@ public class AuthServletTest {
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doGet(httpServletRequest, httpServletResponse);
   }
+
+  @Test
+  public void testDoPostUpdateGiusto() throws ServletException, IOException {
+    when(httpServletRequest.getPathInfo()).thenReturn("/update");
+    AuthServlet authServlet = new AuthServlet();
+    RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
+    when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("email")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("password")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("nome")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("cognome")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("sesso")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("data")).thenReturn("2021-04-01");
+    LocalDate data = LocalDate.now();
+    when(httpServletRequest.getParameter("indirizzo")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("cap")).thenReturn("80053");
+    when(httpServletRequest.getParameter("paese")).thenReturn("Xiopani");
+    UtenteService utenteService = Mockito.mock(UtenteServiceImpl.class);
+    authServlet.setUtenteService(utenteService);
+    Utente utente = Mockito.mock(Utente.class);
+    when(utenteService.createUtente("xiopani", "xiopani", "xiopani", "xiopani", "xiopani", "xiopani", data, "xiopani", 80053, "xiopani")).thenReturn(utente);
+    when(utenteService.updateUtente(any())).thenReturn(true);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    authServlet.doPost(httpServletRequest, httpServletResponse);
+  }
+
+  @Test
+  public void testDoPostUpdateSbagliato() throws ServletException, IOException {
+    when(httpServletRequest.getPathInfo()).thenReturn("/update");
+    AuthServlet authServlet = new AuthServlet();
+    RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
+    when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("email")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("password")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("nome")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("cognome")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("sesso")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("data")).thenReturn("2021-04-01");
+    LocalDate data = LocalDate.now();
+    when(httpServletRequest.getParameter("indirizzo")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("cap")).thenReturn("80053");
+    when(httpServletRequest.getParameter("paese")).thenReturn("Xiopani");
+    UtenteService utenteService = Mockito.mock(UtenteServiceImpl.class);
+    authServlet.setUtenteService(utenteService);
+    Utente utente = Mockito.mock(Utente.class);
+    when(utenteService.createUtente("xiopani", "xiopani", "xiopani", "xiopani", "xiopani", "xiopani", data, "xiopani", 80053, "xiopani")).thenReturn(utente);
+    when(utenteService.updateUtente(any())).thenReturn(false);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    assertThrows(ServletException.class, () -> authServlet.doPost(httpServletRequest, httpServletResponse));
+  }
+
+  @Test
+  public void testDoPostLogin() throws ServletException, IOException {
+    when(httpServletRequest.getPathInfo()).thenReturn("/login");
+    AuthServlet authServlet = new AuthServlet();
+    RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
+    UtenteService utenteService = Mockito.mock(UtenteServiceImpl.class);
+    Utente utente = Mockito.mock(Utente.class);
+    authServlet.setUtenteService(utenteService);
+    when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("password")).thenReturn("Xiopani");
+    when(utenteService.login(any(), any())).thenReturn(utente);
+    CarrelloServiceImpl carrelloService = Mockito.mock(CarrelloServiceImpl.class);
+    authServlet.setCarrelloService(carrelloService);
+    HttpSession session = Mockito.mock(HttpSession.class);
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(utente.isAdmin()).thenReturn(true);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    authServlet.doPost(httpServletRequest, httpServletResponse);
+  }
+
+  @Test
+  public void testDoPostLoginUtenteNullo() throws ServletException, IOException {
+    when(httpServletRequest.getPathInfo()).thenReturn("/login");
+    AuthServlet authServlet = new AuthServlet();
+    RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
+    UtenteService utenteService = Mockito.mock(UtenteServiceImpl.class);
+    authServlet.setUtenteService(utenteService);
+    Utente utente = null;
+    when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
+    when(httpServletRequest.getParameter("password")).thenReturn("Xiopani");
+    /*when(utenteService.login(any(),any())).thenReturn(utente);*/
+    CarrelloServiceImpl carrelloService = Mockito.mock(CarrelloServiceImpl.class);
+    authServlet.setCarrelloService(carrelloService);
+    HttpSession session = Mockito.mock(HttpSession.class);
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    authServlet.doPost(httpServletRequest, httpServletResponse);
+  }
+
 }
 
 
