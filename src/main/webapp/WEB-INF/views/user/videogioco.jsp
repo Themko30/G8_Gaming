@@ -35,6 +35,7 @@
             <c:forEach begin="1" end="${5 - prodotto.mediaArrotondata}">
                 <span class="bi bi-star"></span>
             </c:forEach>
+            <span>(${prodotto.numeroVoti})</span>
 
             <!-- Se c'è lo sconto, calcolo il prezzo e aggiungo il vecchio prezzo e lo sconto applicato -->
             <c:choose>

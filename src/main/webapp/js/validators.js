@@ -152,7 +152,7 @@ function validateBooking() {
         valid = false;
     }
     else if(categoria !== "Strategia" && categoria !== "Sport" && categoria !== "RPG" && categoria !== "Simulazione" && categoria !== "Action/Adventure"
-        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Casual") {
+        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Platform") {
         message += "<li>Categoria non valida.</li>";
         valid = false;
     }
@@ -207,7 +207,7 @@ function validateAddProduct() {
         valid = false;
     }
     else if(categoria !== "Strategia" && categoria !== "Sport" && categoria !== "RPG" && categoria !== "Simulazione" && categoria !== "Action/Adventure"
-        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Casual") {
+        && categoria !== "Sparatutto" && categoria !== "Picchiaduro" && categoria !== "Guida" && categoria !== "Platform") {
         message += "<li>Categoria non valida.</li>";
         valid = false;
     }

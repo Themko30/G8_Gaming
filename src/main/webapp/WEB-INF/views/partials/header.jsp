@@ -26,7 +26,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown0">
                         <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Action%2FAdventure">Action/Adventure</a></li>
-                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Casual">Casual</a></li>
+                        <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Platform">Platform</a></li>
                         <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Guida">Guida</a></li>
                         <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=Picchiaduro">Picchiaduro</a></li>
                         <li><a class="dropdown-item" href="${context}/Prodotto/Categoria?categoria=RPG">RPG</a></li>

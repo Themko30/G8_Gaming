@@ -27,7 +27,7 @@
         <select class="form-select" name="categoria" id="categoria" required>
             <option selected disabled>Categoria</option>
             <option value="Action/Adventure">Action/Adventure</option>
-            <option value="Casual">Casual</option>
+            <option value="Platform">Platform</option>
             <option value="Guida">Guida</option>
             <option value="Picchiaduro">Picchiaduro</option>
             <option value="RPG">RPG</option>
