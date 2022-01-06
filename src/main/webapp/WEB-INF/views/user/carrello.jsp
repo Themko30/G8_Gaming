@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn" style="width: 24px; height: 24px; padding: 1px">-</button>
                             </form>
                         </td>
-                        <td><span class="total">${(prodotto.prezzo - prodotto.prezzo * prodotto.scontoAttivo) * quantita}</span></td>
+                        <td><span class="total">€${prodotto.prezzoScontato}</span></td>
                         <td><form method="post" action="${context}/cart/Rimuovi">
                             <input type="hidden" name="prodotto" value="${prodotto.codice}" required>
                             <button type="submit" class="btn btn-secondary">Rimuovi</button>
@@ -64,18 +64,5 @@
         </c:otherwise>
     </c:choose>
 </div>
-<script>
-    $(document).ready(function() {
-        let span = $('.total');
-        for(let i = 0; i < span.length; i++) {
-            const prezzo = Number(span[i].textContent); // Seleziona il prezzo e lo converte in numero
-            span[i].innerText = "€" + prezzo.toFixed(2); // Imposta due cifre decimali
-        }
-    });
-
-    function modificaQuantita() {
-        return false;
-    }
-</script>
 </body>
 </html>

@@ -21,7 +21,7 @@
             <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="${prodotto.copertina}">
             <div class="card-body">
               <h5 class="card-title">${prodotto.nome}<br>
-                <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
+                <span class="price">€${prodotto.prezzoScontato}</span></h5>
               <h6 class="card-subtitle text-muted">${prodotto.categoria}</h6>
             </div>
           </div>
@@ -40,12 +40,6 @@
     $('.card').click(function(){
       window.location.href = '${context}/Prodotto/Visualizza?prodotto=' + $(this).attr("id");
     });
-
-    let span = $('.price');
-    for(let i = 0; i < span.length; i++) {
-      const prezzo = Number(span[i].textContent); // Seleziona il prezzo e lo converte in numero
-      span[i].innerText = "€" + prezzo.toFixed(2); // Imposta due cifre decimali
-    }
   });
 </script>
 <%@include file="../partials/footer.jsp"%>

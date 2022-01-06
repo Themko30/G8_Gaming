@@ -53,7 +53,7 @@ public class ProdottoServlet extends HttpServlet {
       case "/Ricerca":
         String nomeProdotto = request.getParameter("nome");
 
-        request.setAttribute("prodotti", prodottoService.prodottiNomeLike(nomeProdotto));
+        request.setAttribute("prodotti", prodottoService.prodottiNomeLike(nomeProdotto, 100));
         request.setAttribute("ricerca", request.getParameter("nome"));
         dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/ricerca.jsp");
         dispatcher.forward(request, response);
@@ -62,7 +62,7 @@ public class ProdottoServlet extends HttpServlet {
       case "/Ricerca/api":
         if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // Se è ajax
           String nome = request.getParameter("nome");
-          ArrayList<Prodotto> prodotti = prodottoService.prodottiNomeLike(nome);
+          ArrayList<Prodotto> prodotti = prodottoService.prodottiNomeLike(nome, 5);
           JSONObject obj = new JSONObject();
           JSONArray arr = new JSONArray();
           prodotti.forEach(prodotto -> arr.put(prodotto.toJSON()));

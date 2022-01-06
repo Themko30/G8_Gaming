@@ -28,7 +28,7 @@
             <tr>
                 <th scope="row">${prodotto.codice}</th>
                 <td><a href="${context}/admin/Products/show?codice=${prodotto.codice}">${prodotto.nome}</a></td>
-                <td>${prodotto.prezzo}€</td>
+                <td>€${prodotto.prezzo}</td>
                 <td><a href="${context}/images/${prodotto.copertina}">${prodotto.copertina}</a></td>
                 <td><form method="post" action="${context}/admin/SetHomePage">
                     <input type="hidden" value="${prodotto.codice}" name="codiceProdotto" required>

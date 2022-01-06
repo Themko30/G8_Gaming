@@ -22,7 +22,7 @@
                         <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="">
                         <div class="card-body">
                             <h5 class="card-title">${prodotto.nome}<br>
-                                <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
+                                <span class="price">€${prodotto.prezzoScontato}</span></h5>
                             <h6 class="card-subtitle text-muted">${prodotto.categoria}<br>${prodotto.piattaforma}</h6>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <img src="${context}/images/${prodotto.copertina}" class="card-img-top p-2" alt="">
                         <div class="card-body">
                             <h5 class="card-title">${prodotto.nome}<br>
-                                <span class="price">${prodotto.prezzo - (prodotto.prezzo*prodotto.scontoAttivo)}</span></h5>
+                                <span class="price">€${prodotto.prezzoScontato}</span></h5>
                             <h6 class="card-subtitle text-muted">${prodotto.categoria}<br>${prodotto.piattaforma}</h6>
                         </div>
                     </div>
@@ -147,12 +147,6 @@
         $('.categoria').click(function(){
             window.location.href = '${context}/Prodotto/Categoria?categoria=' + $(this).attr("id");
         });
-
-        let span = $('.price');
-        for(let i = 0; i < span.length; i++) {
-            const prezzo = Number(span[i].textContent); // Seleziona il prezzo e lo converte in numero
-            span[i].innerText = "€" + prezzo.toFixed(2); // Imposta due cifre decimali
-        }
     });
 </script>
 <%@include file="WEB-INF/views/partials/footer.jsp"%>

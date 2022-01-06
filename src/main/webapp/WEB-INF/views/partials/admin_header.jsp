@@ -25,9 +25,12 @@
           <a class="nav-link" aria-current="page" style="color: var(--d3light);" href="${context}/admin/Booking"><i class="bi bi-bookmark-fill"></i> Prenotazioni</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+      <form class="d-flex" action="${context}/Prodotto/Ricerca" onsubmit="return cerca()">
+        <input class="form-control me-2" type="search" id="cercaInput" name="nome" placeholder="Cerca" aria-label="Search">
+        <div id="s-res">
+          <ul id="results"></ul>
+        </div>
+        <button class="btn btn-outline-light" id="cercaBtn" type="submit"><i class="bi bi-search"></i></button>
       </form>
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
