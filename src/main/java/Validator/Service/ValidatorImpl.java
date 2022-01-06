@@ -37,6 +37,10 @@ public class ValidatorImpl implements Validator {
         if (quantitaProdottoDatabase < quantita) {
             throw new InvalidProductQuantityException("Quantità eccessiva", prodotto);
         }
+        if(quantita < 1){
+            throw new InvalidProductQuantityException("Quantità negativa", prodotto);
+        }
+
     }
 
     public void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException {
