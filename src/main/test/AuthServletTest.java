@@ -18,6 +18,8 @@ import main.java.Carrello.Service.CarrelloService;
 import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Carrello.Service.OrdineService;
 import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Utente;
 import org.junit.Test;
@@ -177,11 +179,26 @@ public class AuthServletTest {
     Utente utente = null;
     when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
     when(httpServletRequest.getParameter("password")).thenReturn("Xiopani");
-    /*when(utenteService.login(any(),any())).thenReturn(utente);*/
     CarrelloServiceImpl carrelloService = Mockito.mock(CarrelloServiceImpl.class);
     authServlet.setCarrelloService(carrelloService);
     HttpSession session = Mockito.mock(HttpSession.class);
     when(httpServletRequest.getSession()).thenReturn(session);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    authServlet.doPost(httpServletRequest, httpServletResponse);
+  }
+
+  @Test
+  public void testDoPostUpdateValutazione() throws ServletException, IOException {
+    when(httpServletRequest.getPathInfo()).thenReturn("/updateValutazione");
+    AuthServlet authServlet = new AuthServlet();
+    RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
+    ProdottoService prodotti = Mockito.mock(ProdottoServiceImpl.class);
+    OrdineService ordineService = Mockito.mock(OrdineServiceImpl.class);
+    authServlet.setOrdineService(ordineService);
+    authServlet.setProdottoService(prodotti);
+    when(httpServletRequest.getParameter("codiceProdotto")).thenReturn("1");
+    when(httpServletRequest.getParameter("valutazione")).thenReturn("5");
+    when(httpServletRequest.getParameter("codiceOrdine")).thenReturn("1");
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doPost(httpServletRequest, httpServletResponse);
   }

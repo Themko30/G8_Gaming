@@ -4,14 +4,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import main.java.Carrello.Service.CarrelloService;
 import main.java.Carrello.Service.CarrelloServiceImpl;
-import main.java.Storage.Dao.UtenteDAOImpl;
 import main.java.Storage.Dao.UtenteDAO;
+import main.java.Storage.Dao.UtenteDAOImpl;
 import main.java.Storage.Entity.Utente;
 
 public class UtenteServiceImpl implements UtenteService {
 
-  private final UtenteDAO utenteDao = new UtenteDAOImpl();
-  private final CarrelloService carrelloService = new CarrelloServiceImpl();
+  private UtenteDAO utenteDao = new UtenteDAOImpl();
+  private CarrelloService carrelloService = new CarrelloServiceImpl();
+
+  public void setUtenteDao(UtenteDAO utenteDao) {
+    this.utenteDao = utenteDao;
+  }
+
+  public void setCarrelloService(CarrelloService carrelloService) {
+    this.carrelloService = carrelloService;
+  }
 
   @Override
   public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese) {

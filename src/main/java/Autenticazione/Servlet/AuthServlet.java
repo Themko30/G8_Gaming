@@ -181,7 +181,6 @@ public class AuthServlet extends HttpServlet {
         int valutazione = Integer.parseInt(req.getParameter("valutazione"));
         codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
         req.setAttribute("codiceOrdine", codiceOrdine);
-        prodottoService = new ProdottoServiceImpl();
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
         resp.sendRedirect("/G8_Gaming_war_exploded/Prodotto/Visualizza?prodotto=" + codiceProdotto);

@@ -1,15 +1,17 @@
 package main.java.Prenotazione.Service;
 
 import java.util.ArrayList;
-
 import main.java.Storage.Dao.PrenotazioneDAO;
 import main.java.Storage.Dao.PrenotazioneDAOImpl;
 import main.java.Storage.Entity.Prenotazione;
 
 public class PrenotazioneServiceImpl implements PrenotazioneService {
 
-    private final PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAOImpl();
+    private PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAOImpl();
 
+    public void setPrenotazioneDAO(PrenotazioneDAO prenotazioneDAO) {
+        this.prenotazioneDAO = prenotazioneDAO;
+    }
 
     @Override
     public ArrayList<Prenotazione> allPrenotazioni() {

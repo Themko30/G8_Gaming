@@ -9,8 +9,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import main.java.Autenticazione.Service.UtenteService;
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Carrello.Service.OrdineService;
@@ -29,20 +32,40 @@ import main.java.Validator.Service.ValidatorImpl;
 @WebServlet(name = "Admin", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
 
-    private Validator validator;
-    private UtenteService utenteService;
-    private OrdineService ordineService;
-    private ProdottoService prodottoService;
-    private PrenotazioneService prenotazioneService;
+    private Validator validator = new ValidatorImpl();
+    private UtenteService utenteService = new UtenteServiceImpl();
+    private OrdineService ordineService = new OrdineServiceImpl();
+    private ProdottoService prodottoService = new ProdottoServiceImpl();
+    private PrenotazioneService prenotazioneService = new PrenotazioneServiceImpl();
     private RequestDispatcher dispatcher;
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    public void setUtenteService(UtenteService utenteService) {
+        this.utenteService = utenteService;
+    }
+
+    public void setOrdineService(OrdineService ordineService) {
+        this.ordineService = ordineService;
+    }
+
+    public void setProdottoService(ProdottoService prodottoService) {
+        this.prodottoService = prodottoService;
+    }
+
+    public void setPrenotazioneService(PrenotazioneService prenotazioneService) {
+        this.prenotazioneService = prenotazioneService;
+    }
 
     @Override
     public void init() throws ServletException {
         super.init();
-        utenteService = new UtenteServiceImpl();
+       /* utenteService = new UtenteServiceImpl();
         ordineService = new OrdineServiceImpl();
         prodottoService = new ProdottoServiceImpl();
-        prenotazioneService = new PrenotazioneServiceImpl();
+        prenotazioneService = new PrenotazioneServiceImpl();*/
         ServletContext ctx = getServletContext();
         HashMap<String, Integer> statistics = new HashMap<>();
         statistics.put("Utenti", utenteService.counterUtente());
@@ -74,11 +97,11 @@ public class AdminServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
-        if(u==null) {
+        if (u == null) {
             resp.sendError(401);
             return;
         }
-        if(!u.isAdmin()) {
+        if (!u.isAdmin()) {
             resp.sendError(403);
             return;
         }
@@ -87,34 +110,30 @@ public class AdminServlet extends HttpServlet {
         validator = new ValidatorImpl();
         path = validator.validatePath(path);
         switch (path) {
-            case "/":
             case "/Statistics":
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Products":
-                prodottoService = new ProdottoServiceImpl();
                 req.setAttribute("prodotti", prodottoService.allProdotti());
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prodotti.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Orders":
-                ordineService = new OrdineServiceImpl();
                 req.setAttribute("ordini", ordineService.allOrders());
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/ordini.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Users":
-                utenteService = new UtenteServiceImpl();
                 req.setAttribute("utenti", utenteService.allUtenti());
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/utenti.jsp");
                 dispatcher.forward(req, resp);
                 break;
             case "/Statistics/Update":
-                utenteService = new UtenteServiceImpl();
+                /*utenteService = new UtenteServiceImpl();
                 ordineService = new OrdineServiceImpl();
                 prodottoService = new ProdottoServiceImpl();
-                prenotazioneService = new PrenotazioneServiceImpl();
+                prenotazioneService = new PrenotazioneServiceImpl();*/
                 ServletContext ctx = getServletContext();
                 HashMap<String, Integer> statistics = new HashMap<>();
                 statistics.put("Utenti", utenteService.counterUtente());
@@ -136,7 +155,6 @@ public class AdminServlet extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/Booking":
-                prenotazioneService = new PrenotazioneServiceImpl();
                 req.setAttribute("prenotazioni", prenotazioneService.allPrenotazioni());
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/prenotazioni.jsp");
                 dispatcher.forward(req, resp);
@@ -185,11 +203,11 @@ public class AdminServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Utente u = (Utente) session.getAttribute("utente");
-        if(u==null) {
+        if (u == null) {
             resp.sendError(401);
             return;
         }
-        if(!u.isAdmin()) {
+        if (!u.isAdmin()) {
             resp.sendError(403);
             return;
         }
