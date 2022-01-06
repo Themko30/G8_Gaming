@@ -110,6 +110,7 @@ public class AdminServlet extends HttpServlet {
         validator = new ValidatorImpl();
         path = validator.validatePath(path);
         switch (path) {
+            case "/":
             case "/Statistics":
                 dispatcher = req.getRequestDispatcher("/WEB-INF/views/admin/index.jsp");
                 dispatcher.forward(req, resp);

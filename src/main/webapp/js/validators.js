@@ -113,7 +113,7 @@ function validateRegistration() {
         valid = false;
     }
 
-    regex = /[A-Za-z]+/
+    regex = /^[a-zA-Z]+$/
     if(!regex.test(paese)) {
         message += "<li>Paese non valido.</li>";
         valid = false;
