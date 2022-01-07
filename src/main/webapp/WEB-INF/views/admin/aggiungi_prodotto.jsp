@@ -24,8 +24,7 @@
             <label for="nome">Descrizione</label>
         </div>
         <select class="form-select" name="categoria" id="categoria" required>
-            <option selected disabled>Categoria</option>
-            <option value="Action/Adventure">Action/Adventure</option>
+            <option value="Action/Adventure" selected>Action/Adventure</option>
             <option value="Platform">Platform</option>
             <option value="Guida">Guida</option>
             <option value="Picchiaduro">Picchiaduro</option>
@@ -36,8 +35,7 @@
             <option value="Strategia">Strategia</option>
         </select>
         <select class="form-select" name="piattaforma" id="piattaforma" required>
-            <option selected disabled>Piattaforma</option>
-            <option value="PlayStation 5">PlayStation 5</option>
+            <option value="PlayStation 5" selected>PlayStation 5</option>
             <option value="Xbox Series X|S">Xbox Series X|S</option>
             <option value="Nintendo Switch">Nintendo Switch</option>
             <option value="PC">PC</option>

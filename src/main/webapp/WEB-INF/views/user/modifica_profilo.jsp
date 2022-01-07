@@ -54,8 +54,7 @@
             <label for="data">Data di nascita</label>
         </div>
         <select class="form-select" name="sesso" id="sesso" required>
-            <option selected disabled>Sesso</option>
-            <option value="Maschio">Maschio</option>
+            <option value="Maschio" selected>Maschio</option>
             <option value="Femmina">Femmina</option>
             <option value="Altro">Altro</option>
         </select>
