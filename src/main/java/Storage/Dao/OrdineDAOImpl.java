@@ -1,5 +1,10 @@
 package main.java.Storage.Dao;
 
+import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,17 +13,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
-import main.java.Storage.ConPool;
-import main.java.Storage.Entity.Ordine;
-import main.java.Storage.Entity.Prodotto;
-import main.java.Storage.Entity.Utente;
 
-public class OrdineDAOImpl implements OrdineDAO{
+public class OrdineDAOImpl implements OrdineDAO {
 
     public ArrayList<Ordine> doRetrieveOrdiniByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine WHERE utente=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Ordine WHERE utente=?");
             ps.setString(1, u.getUsername());
             ResultSet rs = ps.executeQuery();
             ArrayList<Ordine> ordini = new ArrayList<>();
@@ -46,7 +48,10 @@ public class OrdineDAOImpl implements OrdineDAO{
     public Ordine doRetrieveProdottiAcquistati(int codiceOrdine) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine o, ArticoloAcquistato a, Prodotto p  WHERE o.numero=? AND o.numero=a.ordine AND a.prodotto=p.codice");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Ordine o, ArticoloAcquistato a,"
+                            + "Prodotto p  WHERE o.numero=?"
+                            + "AND o.numero=a.ordine AND a.prodotto=p.codice");
             ps.setInt(1, codiceOrdine);
             ResultSet rs = ps.executeQuery();
             LinkedHashMap<Prodotto, Integer> prodotti = new LinkedHashMap<>();
@@ -59,7 +64,8 @@ public class OrdineDAOImpl implements OrdineDAO{
                     o.setNumero(rs.getInt("o.numero"));
                     o.setTotale(rs.getDouble("o.totale"));
                     o.setNumeroArticoli(rs.getInt("o.numeroArticoli"));
-                    o.setIndirizzoSpedizione(rs.getString("o.indirizzoSpedizione"));
+                    o.setIndirizzoSpedizione(rs.getString(
+                            "o.indirizzoSpedizione"));
                     o.setData(rs.getObject("o.dataOrdine", LocalDate.class));
                     o.setStato(rs.getString("o.stato"));
                     o.setMetodoPagamento(rs.getString("o.metodoPagamento"));
@@ -96,7 +102,8 @@ public class OrdineDAOImpl implements OrdineDAO{
     public ArrayList<Ordine> doRetrieveAllOrdini(int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine LIMIT ?,?");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Ordine LIMIT ?,?");
             ps.setInt(1, offset);
             ps.setInt(2, limit);
             ResultSet rs = ps.executeQuery();
@@ -127,12 +134,13 @@ public class OrdineDAOImpl implements OrdineDAO{
     public boolean doUpdateStatoOrdine(int numero, String stato) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("UPDATE Ordine SET stato=? WHERE numero=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE Ordine SET stato=? WHERE numero=?");
             ps.setString(1, stato);
             ps.setInt(2, numero);
             int rows = ps.executeUpdate();
 
-            return rows >0;
+            return rows > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -145,7 +153,10 @@ public class OrdineDAOImpl implements OrdineDAO{
             LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
             Set<Prodotto> key = prodotti.keySet();
 
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Ordine(utente, totale, numeroArticoli, indirizzoSpedizione, metodoPagamento, dataOrdine, stato) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO Ordine(utente, totale, numeroArticoli,"
+                            + "indirizzoSpedizione, metodoPagamento, dataOrdine,"
+                            + " stato) VALUES(?,?,?,?,?,?,?)");
             ps.setString(1, o.getUtente().getUsername());
             ps.setDouble(2, o.getTotale());
             ps.setInt(3, o.getNumeroArticoli());
@@ -155,7 +166,9 @@ public class OrdineDAOImpl implements OrdineDAO{
             ps.setString(7, "Inviato");
             int rows = ps.executeUpdate();
 
-            ps = con.prepareStatement("SELECT numero FROM Ordine WHERE utente=? ORDER BY numero DESC LIMIT 1");
+            ps = con.prepareStatement(
+                    "SELECT numero FROM Ordine WHERE utente=?"
+                            + "ORDER BY numero DESC LIMIT 1");
             ps.setString(1, o.getUtente().getUsername());
 
             ResultSet resultSet = ps.executeQuery();
@@ -168,7 +181,9 @@ public class OrdineDAOImpl implements OrdineDAO{
             ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
 
             for (Prodotto p : key) {
-                ps = con.prepareStatement("INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita) VALUES (?,?,?)");
+                ps = con.prepareStatement(
+                        "INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita)"
+                                + "VALUES (?,?,?)");
                 ps.setInt(1, p.getCodice());
                 ps.setInt(2, numeroOrdine);
                 ps.setInt(3, prodotti.get(p));
@@ -187,11 +202,13 @@ public class OrdineDAOImpl implements OrdineDAO{
     public boolean doSetProdottoValutato(int codiceOrdine, int codiceProdotto) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("UPDATE ArticoloAcquistato SET valutato=1 WHERE ordine=? AND prodotto=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE ArticoloAcquistato SET valutato=1"
+                            + "WHERE ordine=? AND prodotto=?");
             ps.setInt(1, codiceOrdine);
             ps.setInt(2, codiceProdotto);
             int x = ps.executeUpdate();
-            return x>0;
+            return x > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -201,7 +218,8 @@ public class OrdineDAOImpl implements OrdineDAO{
     public int doRetrieveCounterOrdini() {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Ordine");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT COUNT(*) FROM Ordine");
 
             ResultSet rs = ps.executeQuery();
             int quantita = 0;

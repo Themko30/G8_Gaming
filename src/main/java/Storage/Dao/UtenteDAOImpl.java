@@ -1,20 +1,22 @@
 package main.java.Storage.Dao;
 
+import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Utente;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import main.java.Storage.ConPool;
-import main.java.Storage.Entity.Utente;
 
-public class UtenteDAOImpl implements UtenteDAO{
+public class UtenteDAOImpl implements UtenteDAO {
 
   public int doRetrieveCounterUtenti() {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Utente");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT COUNT(*) FROM Utente");
 
       ResultSet rs = ps.executeQuery();
       int quantita = 0;
@@ -35,7 +37,10 @@ public class UtenteDAOImpl implements UtenteDAO{
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement(
-        "INSERT INTO Utente(username, email, passwordhash, nome, cognome, sesso, dataDiNascita, adminFlag, indirizzo, cap, paese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        "INSERT INTO Utente(username, email, passwordhash, nome,"
+                + " cognome, sesso, dataDiNascita, "
+                + " adminFlag, indirizzo, cap, paese) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
       ps.setString(1, utente.getUsername());
       ps.setString(2, utente.getEmail());
@@ -62,7 +67,8 @@ public class UtenteDAOImpl implements UtenteDAO{
   public ArrayList<Utente> doRetrieveAllUtente(int limit, int offset) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente LIMIT ?,?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Utente LIMIT ?,?");
       ps.setInt(1, limit);
       ps.setInt(2, offset);
 
@@ -97,7 +103,8 @@ public class UtenteDAOImpl implements UtenteDAO{
   public Utente doRetrieveUtenteByUsername(String username) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Utente WHERE username=?");
       ps.setString(1, username);
 
       ResultSet rs = ps.executeQuery();
@@ -124,10 +131,12 @@ public class UtenteDAOImpl implements UtenteDAO{
     }
   }
 
-  public Utente doRetrieveUtenteByUsernameAndPassword(String username, String password) {
+  public Utente doRetrieveUtenteByUsernameAndPassword(
+          String username, String password) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=? AND passwordhash=?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Utente WHERE username=? AND passwordhash=?");
       ps.setString(1, username);
       ps.setString(2, password);
 
@@ -159,7 +168,8 @@ public class UtenteDAOImpl implements UtenteDAO{
   public boolean doCheckUsername(String username) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE username=?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Utente WHERE username=?");
       ps.setString(1, username);
 
       ResultSet rs = ps.executeQuery();
@@ -179,7 +189,11 @@ public class UtenteDAOImpl implements UtenteDAO{
   public boolean doUpdateUtente(Utente utente) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET email=?, passwordhash=?, nome=?, cognome=?, sesso=?, dataDiNascita=?, adminFlag=?, indirizzo=?, cap=?, paese=?  WHERE username=?");
+      PreparedStatement ps = con.prepareStatement(
+              "UPDATE Utente SET email=?, passwordhash=?, nome=?,"
+                      + " cognome=?, sesso=?, dataDiNascita=?,"
+                      + " adminFlag=?, indirizzo=?, cap=?, "
+                      + "paese=?  WHERE username=?");
 
       ps.setString(1, utente.getEmail());
       ps.setString(2, utente.getPassword());
@@ -205,7 +219,8 @@ public class UtenteDAOImpl implements UtenteDAO{
   public boolean doDeleteUtente(String username) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("DELETE FROM Utente WHERE username=?");
+      PreparedStatement ps = con.prepareStatement(
+              "DELETE FROM Utente WHERE username=?");
       ps.setString(1, username);
 
       int x = ps.executeUpdate();
@@ -219,7 +234,8 @@ public class UtenteDAOImpl implements UtenteDAO{
   public boolean doSetAdmin(String username) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("UPDATE Utente SET adminFlag=1 WHERE username=?");
+      PreparedStatement ps = con.prepareStatement(
+              "UPDATE Utente SET adminFlag=1 WHERE username=?");
       ps.setString(1, username);
 
       int x = ps.executeUpdate();

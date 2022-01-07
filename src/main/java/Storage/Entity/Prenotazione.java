@@ -2,8 +2,13 @@ package main.java.Storage.Entity;
 
 public class Prenotazione {
 
-  private int numeroPrenotazione, accettata;
-  private String categoria, descrizione, emailRichiedente, copertina, nomeProdotto;
+  private int numeroPrenotazione;
+  private int accettata;
+  private String categoria;
+  private String descrizione;
+  private String emailRichiedente;
+  private String copertina;
+  private String nomeProdotto;
 
   public int getNumeroPrenotazione() {
     return numeroPrenotazione;

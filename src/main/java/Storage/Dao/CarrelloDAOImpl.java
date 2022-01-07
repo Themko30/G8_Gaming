@@ -1,29 +1,33 @@
 package main.java.Storage.Dao;
 
+import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Set;
-import main.java.Storage.ConPool;
-import main.java.Storage.Entity.Carrello;
-import main.java.Storage.Entity.Prodotto;
-import main.java.Storage.Entity.Utente;
 
-public class CarrelloDAOImpl  implements CarrelloDAO{
+public class CarrelloDAOImpl  implements CarrelloDAO {
 
-    public boolean doUpdateCarrello(Carrello carrello){
+    public boolean doUpdateCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE Carrello SET totale=?,"
+                            + "numeroArticoli=? WHERE utente=?");
 
             ps.setDouble(1, carrello.getTotale());
             ps.setInt(2, carrello.getNumeroArticoli());
             ps.setString(3, carrello.getUtente().getUsername());
             int x = ps.executeUpdate();
 
-            ps = con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
+            ps = con.prepareStatement(
+                    "DELETE FROM ArticoloSelezionato WHERE utente=?");
             ps.setString(1, carrello.getUtente().getUsername());
 
             x += ps.executeUpdate();
@@ -32,7 +36,9 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
             Set<Prodotto> keys = articoli.keySet();
 
             for (Prodotto key : keys) {
-                ps = con.prepareStatement("INSERT INTO ArticoloSelezionato(utente, prodotto, quantita) VALUES(?,?,?)");
+                ps = con.prepareStatement(
+                        "INSERT INTO ArticoloSelezionato"
+                                + "(utente, prodotto, quantita) VALUES(?,?,?)");
                 ps.setString(1, carrello.getUtente().getUsername());
                 ps.setInt(2, key.getCodice());
                 ps.setInt(3, articoli.get(key));
@@ -50,13 +56,15 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
     public boolean doCreateCarrello(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Carrello(utente, totale, numeroArticoli) VALUES(?,?,?)");
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO Carrello(utente, totale, numeroArticoli)"
+                            + "VALUES(?,?,?)");
             ps.setString(1, u.getUsername());
             ps.setDouble(2, 0);
             ps.setInt(3, 0);
 
             int x = ps.executeUpdate();
-            return x>0;
+            return x > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -66,14 +74,17 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
     public boolean doClearCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE Carrello SET totale=?,"
+                            + "numeroArticoli=? WHERE utente=?");
 
             ps.setDouble(1, 0);
             ps.setInt(2, 0);
             ps.setString(3, carrello.getUtente().getUsername());
             int x = ps.executeUpdate();
 
-            ps = con.prepareStatement("DELETE FROM ArticoloSelezionato WHERE utente=?");
+            ps = con.prepareStatement(
+                    "DELETE FROM ArticoloSelezionato WHERE utente=?");
             ps.setString(1, carrello.getUtente().getUsername());
 
             x += ps.executeUpdate();
@@ -89,7 +100,12 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
     public Carrello doRetrieveCarrelloByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Carrello c, ArticoloSelezionato a, Prodotto p WHERE c.utente=a.utente AND a.prodotto=p.codice AND c.utente=?");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Carrello c, ArticoloSelezionato a,"
+                            + "Prodotto p"
+                            + "WHERE c.utente=a.utente"
+                            + "AND a.prodotto=p.codice"
+                            + "AND c.utente=?");
 
             ps.setString(1, u.getUsername());
             ResultSet rs = ps.executeQuery();
@@ -110,7 +126,8 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
                     if (firstElement) {
                         carrello.setUtente(u);
                         carrello.setTotale(rs.getDouble("c.totale"));
-                        carrello.setNumeroArticoli(rs.getInt("c.numeroArticoli"));
+                        carrello.setNumeroArticoli(
+                                rs.getInt("c.numeroArticoli"));
                         firstElement = false;
                     }
                     prodotto = new Prodotto();
