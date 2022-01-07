@@ -58,5 +58,15 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:9.1" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:9.1" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:9.1" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
