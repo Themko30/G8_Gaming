@@ -29,47 +29,76 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class AuthServlet extends HttpServlet {
 
+  /**
+   * Creazione di Validator.
+   */
   private Validator validator = new ValidatorImpl();
+  /**
+   * Creazione di UtenteService.
+   */
   private UtenteService utenteService = new UtenteServiceImpl();
+  /**
+   * Creazione di OrdineService.
+   */
   private OrdineService ordineService = new OrdineServiceImpl();
+  /**
+   * Creazione di ProdottoService.
+   */
   private ProdottoService prodottoService = new ProdottoServiceImpl();
+  /**
+   * Creazione di CarrelloService.
+   */
   private CarrelloService carrelloService = new CarrelloServiceImpl();
 
+  /**
+   * Set di Validator ai fini di testing.
+   *
+   * @param validator
+   */
   public void setValidator(Validator validator) {
     this.validator = validator;
   }
 
+  /**
+   * Set di UtenteService ai fini di testing.
+   *
+   * @param utenteService
+   */
   public void setUtenteService(UtenteService utenteService) {
     this.utenteService = utenteService;
   }
 
+  /**
+   * Set di OrdineService ai fini di testing.
+   *
+   * @param ordineService
+   */
   public void setOrdineService(OrdineService ordineService) {
     this.ordineService = ordineService;
   }
 
+  /**
+   * Set di ProdottoService ai fini di testing.
+   *
+   * @param prodottoService
+   */
   public void setProdottoService(ProdottoService prodottoService) {
     this.prodottoService = prodottoService;
   }
 
+  /**
+   * Set di CarrelloService ai fini di testing.
+   *
+   * @param carrelloService
+   */
   public void setCarrelloService(CarrelloService carrelloService) {
     this.carrelloService = carrelloService;
   }
-
-  /**
-   * @throws ServletException
-   */
 
   @Override
   public void init() throws ServletException {
     super.init();
   }
-
-  /**
-   * @param req
-   * @param resp
-   * @throws ServletException
-   * @throws IOException
-   */
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -128,10 +157,18 @@ public class AuthServlet extends HttpServlet {
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
-    String username, email, password, nome, cognome, sesso, indirizzo, paese;
+    String username;
+    String email;
+    String password;
+    String nome;
+    String cognome;
+    String sesso;
+    String indirizzo;
+    String paese;
     LocalDate dataDiNascita;
-    int codiceOrdine, codiceProdotto, cap;
-
+    int codiceOrdine;
+    int codiceProdotto;
+    int cap;
     switch (path) {
       case "/update":
         username = req.getParameter("username");
@@ -183,7 +220,7 @@ public class AuthServlet extends HttpServlet {
         req.setAttribute("codiceOrdine", codiceOrdine);
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
-        resp.sendRedirect("/G8_Gaming_war_exploded/Prodotto/Visualizza?prodotto=" + codiceProdotto);
+        resp.sendRedirect("/G8_Gaming_war_exploded/" + "Prodotto/Visualizza?prodotto=" + codiceProdotto);
         break;
     }
   }
