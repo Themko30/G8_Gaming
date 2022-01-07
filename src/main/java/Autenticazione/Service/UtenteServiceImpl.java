@@ -10,24 +10,26 @@ import main.java.Storage.Entity.Utente;
 
 public class UtenteServiceImpl implements UtenteService {
 
+  /**
+   * Crea UtenteDao.
+   */
   private UtenteDAO utenteDao = new UtenteDAOImpl();
+  /**
+   * Crea CarrelloService.
+   */
   private CarrelloService carrelloService = new CarrelloServiceImpl();
 
-  public void setUtenteDao(UtenteDAO utenteDao) {
-    this.utenteDao = utenteDao;
-  }
-
+  /**
+   * Setta carrelloService per fini di testing.
+   *
+   * @param carrelloService
+   */
   public void setCarrelloService(CarrelloService carrelloService) {
     this.carrelloService = carrelloService;
   }
 
   @Override
-  public Utente createUtente(String username, String email,
-                             String password, String nome,
-                             String cognome, String sesso,
-                             LocalDate dataDiNascita,
-                             String indirizzo,
-                             int cap, String paese) {
+  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese) {
     Utente utente = new Utente();
     utente.setUsername(username);
     utente.setEmail(email);
@@ -77,9 +79,7 @@ public class UtenteServiceImpl implements UtenteService {
 
   @Override
   public Utente login(String username, String password) {
-    return utenteDao
-            .doRetrieveUtenteByUsernameAndPassword(username,
-                    password);
+    return utenteDao.doRetrieveUtenteByUsernameAndPassword(username, password);
   }
 
 
