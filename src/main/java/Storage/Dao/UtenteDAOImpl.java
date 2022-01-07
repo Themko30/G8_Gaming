@@ -89,43 +89,8 @@ public class UtenteDAOImpl implements UtenteDAO {
         utente.setCap(rs.getInt("cap"));
         utente.setPaese(rs.getString("paese"));
         utenti.add(utente);
-
       }
       return utenti;
-
-
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-
-  }
-
-  public Utente doRetrieveUtenteByUsername(String username) {
-    try (Connection con = ConPool.getConnection()) {
-
-      PreparedStatement ps = con.prepareStatement(
-              "SELECT * FROM Utente WHERE username=?");
-      ps.setString(1, username);
-
-      ResultSet rs = ps.executeQuery();
-      Utente utente = new Utente();
-
-      if (rs.next()) {
-        utente.setUsername(rs.getString("username"));
-        utente.setEmail(rs.getString("email"));
-        utente.setPassword(rs.getString("passwordhash"));
-        utente.setNome(rs.getString("nome"));
-        utente.setCognome(rs.getString("cognome"));
-        utente.setSesso(rs.getString("sesso"));
-        utente.setDataDiNascita(rs.getObject("dataDiNascita", LocalDate.class));
-        utente.setAdmin(rs.getBoolean("adminFlag"));
-        utente.setIndirizzo(rs.getString("indirizzo"));
-        utente.setCap(rs.getInt("cap"));
-        utente.setPaese(rs.getString("paese"));
-
-      }
-      return utente;
-
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
