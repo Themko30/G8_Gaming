@@ -15,7 +15,9 @@ public class OrdineServiceImpl implements OrdineService {
     private final OrdineDAO ordineDAO = new OrdineDAOImpl();
 
     @Override
-    public Ordine createOrdine(Carrello carrello, String indirizzo, Integer CAP, String paese, String metodoPagamento) {
+    public Ordine createOrdine(Carrello carrello,
+                               String indirizzo, Integer CAP,
+                               String paese, String metodoPagamento) {
 
         String indirizzoSpedizione = indirizzo + ", " + CAP + ", " + paese;
 

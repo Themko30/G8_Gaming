@@ -7,7 +7,9 @@ import main.java.Storage.Entity.Utente;
 
 public interface OrdineService {
 
-    Ordine createOrdine(Carrello carrello, String indirizzo, Integer CAP, String paese, String metodoPagamento);
+    Ordine createOrdine(Carrello carrello,
+                        String indirizzo, Integer CAP,
+                        String paese, String metodoPagamento);
 
     boolean saveOrdine(Ordine ordine);
 

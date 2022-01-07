@@ -6,13 +6,15 @@ import main.java.Storage.Entity.Utente;
 
 public interface UtenteService {
 
-  Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese);
+  Utente createUtente(String username, String email,
+                      String password, String nome,
+                      String cognome, String sesso,
+                      LocalDate dataDiNascita, String indirizzo,
+                      int cap, String paese);
 
   boolean saveUtente(Utente utente) throws Exception;
 
   boolean updateUtente(Utente utente);
-
-  boolean deleteUtente(String username);
 
   boolean checkUtente(String username);
 

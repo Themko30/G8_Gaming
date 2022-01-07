@@ -46,7 +46,8 @@ public class RegistrazioneServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
@@ -54,20 +55,30 @@ public class RegistrazioneServlet extends HttpServlet {
 
     switch (path) {
       case "/":
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp");
+        RequestDispatcher dispatcher =
+                req.getRequestDispatcher("/WEB-INF/"
+                        + "views/user/registration.jsp");
         dispatcher.forward(req, resp);
         break;
     }
   }
 
   @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
     path = validator.validatePath(path);
 
-    String username, email, password, nome, cognome, sesso, indirizzo, paese;
+    String username;
+    String email;
+    String password;
+    String nome;
+    String cognome;
+    String sesso;
+    String indirizzo;
+    String paese;
     LocalDate dataDiNascita;
     int cap;
 
@@ -83,22 +94,26 @@ public class RegistrazioneServlet extends HttpServlet {
         indirizzo = req.getParameter("indirizzo");
         cap = Integer.parseInt(req.getParameter("cap"));
         paese = req.getParameter("paese");
-        Utente saveUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
+        Utente saveUtente =
+                utenteService.createUtente(username,
+                        email, password, nome, cognome,
+                        sesso, dataDiNascita, indirizzo,
+                        cap, paese);
         try {
           validator.validateUtente(saveUtente);
           utenteService.saveUtente(saveUtente);
           resp.setStatus(HttpServletResponse.SC_CREATED);
           HttpSession session = req.getSession();
           session.setAttribute("utente", saveUtente);
-          Carrello carrello = carrelloService.recuperaCarrello(saveUtente);
+          Carrello carrello =
+                  carrelloService.recuperaCarrello(saveUtente);
           session.setAttribute("carrello", carrello);
           resp.sendRedirect("/G8_Gaming_war_exploded/");
         } catch (InvalidIndirizzoException e) {
           throw new ServletException("Invalid indirizzo...");
-        }
-        catch (InvalidUserException ex){
+        } catch (InvalidUserException ex) {
           throw new ServletException("Invalid user...");
-        } catch(Exception exe) {
+        } catch (Exception exe) {
           req.setAttribute("errore", 1);
           req.setAttribute("un", username);
           req.setAttribute("pa", password);
@@ -108,7 +123,8 @@ public class RegistrazioneServlet extends HttpServlet {
           req.setAttribute("co", cognome);
           req.setAttribute("in", indirizzo);
           req.setAttribute("ca", cap);
-          req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp")
+                  .forward(req, resp);
         }
         break;
     }

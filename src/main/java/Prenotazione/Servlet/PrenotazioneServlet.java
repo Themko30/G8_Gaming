@@ -45,14 +45,16 @@ public class PrenotazioneServlet extends HttpServlet {
 
     switch (path) {
       case "/":
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user/prenota.jsp");
+        RequestDispatcher dispatcher =
+                req.getRequestDispatcher("/WEB-INF/views/user/prenota.jsp");
         dispatcher.forward(req, resp);
         break;
     }
   }
 
   @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
 
     String path = req.getPathInfo();
@@ -75,12 +77,16 @@ public class PrenotazioneServlet extends HttpServlet {
         try {
           validator.validateImage(copertina, req.getParts());
         } catch (InvalidProductException e) {
-          req.getRequestDispatcher("/WEB-INF/views/errors/prenotazione.jsp").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/"
+                  + "views/errors/prenotazione.jsp")
+                  .forward(req, resp);
           break;
         }
         if (prenotazioneService.savePrenotazione(savePrenotazione)) {
           resp.setStatus(HttpServletResponse.SC_CREATED);
-          req.getRequestDispatcher("/WEB-INF/views/user/prenotazione_effettuata.jsp").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/"
+                  + "views/user/prenotazione_effettuata.jsp")
+                  .forward(req, resp);
         } else {
           throw new ServletException("Errore di inserimento...");
         }

@@ -19,7 +19,9 @@ public class OrdineBuilderImpl implements OrdineBuilder {
 
     private Ordine ordine;
 
-    public OrdineBuilderImpl() {}
+    public OrdineBuilderImpl() {
+
+    }
 
     public OrdineBuilderImpl totale(double totale) {
         this.totale = totale;
@@ -51,7 +53,8 @@ public class OrdineBuilderImpl implements OrdineBuilder {
         return this;
     }
 
-    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto, Integer> prodotti) {
+    public OrdineBuilderImpl prodotti(LinkedHashMap<Prodotto,
+            Integer> prodotti) {
         this.prodotti = prodotti;
         return this;
     }

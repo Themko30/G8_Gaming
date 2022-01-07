@@ -22,27 +22,32 @@ public class ProdottoServiceImpl implements ProdottoService {
 
     @Override
     public int quantitaProdotto(Prodotto prodotto) {
-        return prodottoDAO.doRetrieveQuantitaProdottoByCodice(prodotto.getCodice());
+        return prodottoDAO
+                .doRetrieveQuantitaProdottoByCodice(prodotto.getCodice());
     }
 
     @Override
     public boolean updateValutazione(Prodotto prodotto, int valutazione) {
-        return prodottoDAO.doUpdateMedia(prodotto, valutazione);
+        return prodottoDAO
+                .doUpdateMedia(prodotto, valutazione);
     }
 
     @Override
     public ArrayList<Prodotto> prodottiNomeLike(String nome, int limit) {
-        return prodottoDAO.doRetrieveProdottiByNomeLike(nome, 0, limit);
+        return prodottoDAO
+                .doRetrieveProdottiByNomeLike(nome, 0, limit);
     }
 
     @Override
     public ArrayList<Prodotto> allProdotti() {
+
         return prodottoDAO.doRetrieveProdotti(0, 100);
     }
 
     @Override
     public ArrayList<Prodotto> prodottiPiattaforma(String piattaforma) {
-        return prodottoDAO.doRetrieveProdottiByPiattaforma(piattaforma, 0, 100);
+        return prodottoDAO
+                .doRetrieveProdottiByPiattaforma(piattaforma, 0, 100);
     }
 
     @Override
@@ -56,7 +61,10 @@ public class ProdottoServiceImpl implements ProdottoService {
     }
 
     @Override
-    public Prodotto creaProdotto(String categoria, String nome, String piattaforma, double prezzo, double scontoAttivo, int quantita, String descrizione, String copertina) {
+    public Prodotto creaProdotto(String categoria, String nome,
+                                 String piattaforma, double prezzo,
+                                 double scontoAttivo, int quantita,
+                                 String descrizione, String copertina) {
 
         Prodotto prodotto = new Prodotto();
         prodotto.setCategoria(categoria);
@@ -80,6 +88,4 @@ public class ProdottoServiceImpl implements ProdottoService {
     public ArrayList<Prodotto> mostVoted() {
         return prodottoDAO.doRetrieveMostVoted();
     }
-
-
 }

@@ -12,16 +12,23 @@ import main.java.Validator.Exceptions.InvalidUserException;
 
 public interface Validator {
 
-    void validateQuantitaProdotto(Prodotto prodotto, int quantita) throws InvalidProductQuantityException;
+    void validateQuantitaProdotto(Prodotto prodotto, int quantita)
+            throws InvalidProductQuantityException;
 
-    void validateIndirizzo(String indirizzo, Integer cap, String paese) throws InvalidIndirizzoException;
+    void validateIndirizzo(String indirizzo, Integer cap, String paese)
+            throws InvalidIndirizzoException;
 
     String validatePath(String path);
 
-    void validateProdotto(Prodotto prodotto) throws InvalidProductException, IOException;
+    void validateProdotto(Prodotto prodotto)
+            throws InvalidProductException, IOException;
 
-    void validateUtente(Utente utente) throws InvalidUserException, InvalidIndirizzoException, Exception;
+    void validateUtente(Utente utente)
+            throws InvalidUserException,
+            InvalidIndirizzoException,
+            Exception;
 
-    void validateImage(String copertina, Collection<Part> image) throws IOException, InvalidProductException;
+    void validateImage(String copertina, Collection<Part> image)
+            throws IOException, InvalidProductException;
 }
 

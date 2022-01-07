@@ -1,9 +1,7 @@
 package main.java.Storage.Entity;
 
-import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 
-import static java.lang.Math.floor;
 
 public class Carrello {
 
@@ -18,7 +16,7 @@ public class Carrello {
     }
 
     public double getTotale() {
-        return Math.floor(totale*100)/100;
+        return Math.floor(totale * 100) / 100;
     }
 
     public void setTotale(double totale) {

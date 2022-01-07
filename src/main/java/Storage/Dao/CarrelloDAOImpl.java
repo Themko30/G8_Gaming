@@ -11,12 +11,13 @@ import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 
-public class CarrelloDAOImpl  implements CarrelloDAO{
+public class CarrelloDAOImpl  implements CarrelloDAO {
 
-    public boolean doUpdateCarrello(Carrello carrello){
+    public boolean doUpdateCarrello(Carrello carrello) {
         try (Connection con = ConPool.getConnection()) {
 
-            PreparedStatement ps = con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
+            PreparedStatement ps =
+                    con.prepareStatement("UPDATE Carrello SET totale=?, numeroArticoli=? WHERE utente=?");
 
             ps.setDouble(1, carrello.getTotale());
             ps.setInt(2, carrello.getNumeroArticoli());

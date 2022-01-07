@@ -5,7 +5,10 @@ import main.java.Storage.Entity.Prodotto;
 
 public interface ProdottoService {
 
-    Prodotto creaProdotto(String categoria, String nome, String piattaforma, double prezzo, double scontoAttivo, int quantita, String descrizione, String copertina);
+    Prodotto creaProdotto(String categoria, String nome,
+                          String piattaforma, double prezzo,
+                          double scontoAttivo, int quantita,
+                          String descrizione, String copertina);
 
     ArrayList<Prodotto> prodottiCategoria(String categoria);
 

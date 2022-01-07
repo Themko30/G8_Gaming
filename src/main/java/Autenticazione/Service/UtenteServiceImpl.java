@@ -22,7 +22,12 @@ public class UtenteServiceImpl implements UtenteService {
   }
 
   @Override
-  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese) {
+  public Utente createUtente(String username, String email,
+                             String password, String nome,
+                             String cognome, String sesso,
+                             LocalDate dataDiNascita,
+                             String indirizzo,
+                             int cap, String paese) {
     Utente utente = new Utente();
     utente.setUsername(username);
     utente.setEmail(email);
@@ -51,11 +56,6 @@ public class UtenteServiceImpl implements UtenteService {
   }
 
   @Override
-  public boolean deleteUtente(String username) {
-    return utenteDao.doDeleteUtente(username);
-  }
-
-  @Override
   public boolean checkUtente(String username) {
     return utenteDao.doCheckUsername(username);
   }
@@ -77,7 +77,9 @@ public class UtenteServiceImpl implements UtenteService {
 
   @Override
   public Utente login(String username, String password) {
-    return utenteDao.doRetrieveUtenteByUsernameAndPassword(username, password);
+    return utenteDao
+            .doRetrieveUtenteByUsernameAndPassword(username,
+                    password);
   }
 
 

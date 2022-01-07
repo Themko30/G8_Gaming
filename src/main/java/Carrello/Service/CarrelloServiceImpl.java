@@ -13,7 +13,7 @@ import main.java.Storage.Entity.Utente;
 public class CarrelloServiceImpl implements CarrelloService {
 
     private CarrelloDAO carrelloDAO = new CarrelloDAOImpl();
-    ProdottoService prodottoService = new ProdottoServiceImpl();
+    private ProdottoService prodottoService = new ProdottoServiceImpl();
 
     public void setProdottoService(ProdottoService prodottoService) {
         this.prodottoService = prodottoService;
@@ -24,22 +24,32 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public Carrello updateQuantitaCarrelloSession(Carrello carrello, int codiceProdotto, int quantita) {
-        if(quantita < 1)
+    public Carrello updateQuantitaCarrelloSession(Carrello carrello,
+                                                  int codiceProdotto,
+                                                  int quantita) {
+        if (quantita < 1) {
             return rimuoviProdottoCarrelloSession(carrello, codiceProdotto);
-
+        }
         LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
-                if(quantita > p.getQuantita())
+                if (quantita > p.getQuantita()) {
                     return carrello;
-                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
-                carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() - (prezzoScontato)*prodottiMap.get(p));
+                }
+                double prezzoScontato =
+                        Math.floor((p.getPrezzo()
+                                - p.getPrezzo()
+                                * p.getScontoAttivo()) * 100) / 100;
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli()
+                        - prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale()
+                        - (prezzoScontato) * prodottiMap.get(p));
                 prodottiMap.replace(p, quantita);
-                carrello.setNumeroArticoli(carrello.getNumeroArticoli() + prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() + (prezzoScontato)*prodottiMap.get(p));
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli()
+                        + prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale()
+                        + (prezzoScontato) * prodottiMap.get(p));
 
                 break;
             }
@@ -49,15 +59,20 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public Carrello rimuoviProdottoCarrelloSession(Carrello carrello, int codiceProdotto) {
+    public Carrello rimuoviProdottoCarrelloSession(Carrello carrello,
+                                                   int codiceProdotto) {
 
         LinkedHashMap<Prodotto, Integer> prodottiMap = carrello.getProdotti();
         Set<Prodotto> prodotti = prodottiMap.keySet();
         for (Prodotto p : prodotti) {
             if (p.getCodice() == codiceProdotto) {
-                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
-                carrello.setNumeroArticoli(carrello.getNumeroArticoli() - prodottiMap.get(p));
-                carrello.setTotale(carrello.getTotale() - (prezzoScontato)*prodottiMap.get(p));
+                double prezzoScontato =
+                        Math.floor((p.getPrezzo() - p.getPrezzo()
+                                * p.getScontoAttivo()) * 100) / 100;
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli()
+                        - prodottiMap.get(p));
+                carrello.setTotale(carrello.getTotale()
+                        - (prezzoScontato) * prodottiMap.get(p));
                 prodottiMap.remove(p);
 
                 break;
@@ -95,27 +110,41 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public Carrello aggiungiProdotto(Carrello carrello, int codiceProdotto, int quantita) {
-        if(quantita>0){
-            LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap = carrello.getProdotti();
-            Set<Prodotto> prodottiCarrello = prodottiCarrelloMap.keySet();
+    public Carrello aggiungiProdotto(Carrello carrello,
+                                     int codiceProdotto,
+                                     int quantita) {
+        if (quantita > 0) {
+            LinkedHashMap<Prodotto, Integer> prodottiCarrelloMap =
+                    carrello.getProdotti();
+            Set<Prodotto> prodottiCarrello =
+                    prodottiCarrelloMap.keySet();
             boolean added = false;
             for (Prodotto p : prodottiCarrello) {
                 if (p.getCodice() == codiceProdotto) {
-                    double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
-                    prodottiCarrelloMap.replace(p, prodottiCarrelloMap.get(p) + quantita);
-                    carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
-                    carrello.setTotale(carrello.getTotale() + (prezzoScontato)*quantita);
+                    double prezzoScontato =
+                            Math.floor((p.getPrezzo() - p.getPrezzo()
+                                    * p.getScontoAttivo()) * 100) / 100;
+                    prodottiCarrelloMap.replace(p,
+                            prodottiCarrelloMap.get(p) + quantita);
+                    carrello.setNumeroArticoli(carrello.getNumeroArticoli()
+                            + quantita);
+                    carrello.setTotale(carrello.getTotale()
+                            + (prezzoScontato) * quantita);
                     added = true;
                     break;
                 }
             }
             if (!added) {
-                Prodotto p = prodottoService.prodottoCodice(codiceProdotto);
-                double prezzoScontato = Math.floor((p.getPrezzo() - p.getPrezzo()*p.getScontoAttivo())*100)/100;
+                Prodotto p =
+                        prodottoService.prodottoCodice(codiceProdotto);
+                double prezzoScontato =
+                        Math.floor((p.getPrezzo() - p.getPrezzo()
+                                * p.getScontoAttivo()) * 100) / 100;
                 prodottiCarrelloMap.put(p, quantita);
-                carrello.setNumeroArticoli(carrello.getNumeroArticoli() + quantita);
-                carrello.setTotale(carrello.getTotale() + (prezzoScontato)*quantita);
+                carrello.setNumeroArticoli(carrello.getNumeroArticoli()
+                        + quantita);
+                carrello.setTotale(carrello.getTotale()
+                        + (prezzoScontato) * quantita);
             }
 
             carrello.setProdotti(prodottiCarrelloMap);

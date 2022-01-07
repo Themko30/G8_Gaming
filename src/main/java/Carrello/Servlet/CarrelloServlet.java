@@ -42,7 +42,8 @@ public class CarrelloServlet extends HttpServlet {
         this.validator = validator;
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
@@ -51,32 +52,44 @@ public class CarrelloServlet extends HttpServlet {
 
         switch (path) {
             case "/Add":
+                codiceProdotto =
+                        Integer.parseInt(request.getParameter("prodotto"));
+                int quantitaProdotto =
+                        Integer.parseInt(request.getParameter("quantita"));
 
-                codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
-                int quantitaProdotto = Integer.parseInt(request.getParameter("quantita"));
-
-                carrello = (Carrello) session.getAttribute("carrello");
+                carrello =
+                        (Carrello) session.getAttribute("carrello");
 
                 synchronized (session) {
 
-                    carrello = carrelloService.aggiungiProdotto(carrello, codiceProdotto, quantitaProdotto);
+                    carrello =
+                            carrelloService.aggiungiProdotto(carrello,
+                                    codiceProdotto, quantitaProdotto);
 
                     session.removeAttribute("carrello");
                     session.setAttribute("carrello", carrello);
 
                 }
 
-                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp");
+                dispatcher =
+                        request.getRequestDispatcher("/WEB-INF/"
+                                + "views/user/carrello.jsp");
                 dispatcher.forward(request, response);
                 break;
 
             case "/Modifica":
-                codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
-                int quantita = Integer.parseInt(request.getParameter("quantita"));
+                codiceProdotto =
+                        Integer.parseInt(request.getParameter("prodotto"));
+                int quantita =
+                        Integer.parseInt(request.getParameter("quantita"));
 
                 synchronized (session) {
-                    carrello = (Carrello) session.getAttribute("carrello");
-                    carrello = carrelloService.updateQuantitaCarrelloSession(carrello, codiceProdotto, quantita);
+                    carrello =
+                            (Carrello) session.getAttribute("carrello");
+                    carrello =
+                            carrelloService
+                                    .updateQuantitaCarrelloSession(carrello,
+                                    codiceProdotto, quantita);
                     session.removeAttribute("carrello");
                     session.setAttribute("carrello", carrello);
                 }
@@ -86,18 +99,25 @@ public class CarrelloServlet extends HttpServlet {
 
             case "/Rimuovi":
                 session = request.getSession();
-                codiceProdotto = Integer.parseInt(request.getParameter("prodotto"));
+                codiceProdotto =
+                        Integer.parseInt(request.getParameter("prodotto"));
 
                 synchronized (session) {
 
-                    carrello = (Carrello) session.getAttribute("carrello");
-                    carrello = carrelloService.rimuoviProdottoCarrelloSession(carrello, codiceProdotto);
+                    carrello =
+                            (Carrello) session.getAttribute("carrello");
+                    carrello =
+                            carrelloService
+                                    .rimuoviProdottoCarrelloSession(
+                                            carrello, codiceProdotto);
 
                     session.removeAttribute("carrello");
                     session.setAttribute("carrello", carrello);
                 }
 
-                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
+                dispatcher =
+                        request.getRequestDispatcher("/WEB-INF/"
+                                + "views/user/carrello.jsp");
                 dispatcher.forward(request, response);
                 break;
 
@@ -106,66 +126,86 @@ public class CarrelloServlet extends HttpServlet {
                 synchronized (session) {
                     carrello = (Carrello) session.getAttribute("carrello");
 
-                    String indirizzo = request.getParameter("indirizzo");
-                    Integer CAP = Integer.parseInt(request.getParameter("CAP"));
-                    String paese = request.getParameter("paese");
-                    String metodoPagamento = request.getParameter("metodoPagamento");
+                    String indirizzo =
+                            request.getParameter("indirizzo");
+                    Integer CAP =
+                            Integer.parseInt(request.getParameter("CAP"));
+                    String paese =
+                            request.getParameter("paese");
+                    String metodoPagamento =
+                            request.getParameter("metodoPagamento");
 
                     try {
-                        validator.validateIndirizzo(indirizzo, CAP, paese);
-                        Ordine ordine = ordineService.createOrdine(carrello, indirizzo, CAP, paese, metodoPagamento);
-                        LinkedHashMap<Prodotto, Integer> prodotti = ordine.getProdotti();
+                        validator.validateIndirizzo(indirizzo,
+                                CAP, paese);
+                        Ordine ordine =
+                                ordineService.createOrdine(carrello,
+                                        indirizzo, CAP, paese, metodoPagamento);
+                        LinkedHashMap<Prodotto, Integer> prodotti =
+                                ordine.getProdotti();
                         Set<Prodotto> key = prodotti.keySet();
                         for (Prodotto p : key) {
-                            validator.validateQuantitaProdotto(p, prodotti.get(p));
+                            validator.validateQuantitaProdotto(p,
+                                    prodotti.get(p));
                         }
 
                         ordineService.saveOrdine(ordine);
 
-                        carrello = carrelloService.clearCarrello(carrello);
+                        carrello =
+                                carrelloService.clearCarrello(carrello);
 
                         session.removeAttribute("carrello");
                         session.setAttribute("carrello", carrello);
 
-                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/ordine_completato.jsp");
+                        dispatcher =
+                                request.getRequestDispatcher("/WEB-INF/"
+                                        + "views/user/ordine_completato.jsp");
                         dispatcher.forward(request, response);
 
 
                     } catch (InvalidIndirizzoException e) {
                         e.printStackTrace();
-                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/errors/ordine.jsp");
+                        dispatcher =
+                                request.getRequestDispatcher("/WEB-INF/"
+                                        + "views/errors/ordine.jsp");
                         dispatcher.forward(request, response);
 
                     } catch (InvalidProductQuantityException ex) {
                         ex.printStackTrace();
                         request.setAttribute("prodotto", ex.getProdotto());
-                        dispatcher = request.getRequestDispatcher("/WEB-INF/views/errors/quantita.jsp");
+                        dispatcher =
+                                request.getRequestDispatcher(
+                                        "/WEB-INF/views/errors/quantita.jsp");
                         dispatcher.forward(request, response);
                     }
-
-
                 }
-
                 break;
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
 
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
 
-        if (path==null)
+        if (path == null) {
             path="/";
+        }
+
         switch (path) {
             case "/":
-                dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/carrello.jsp"); //Il carrello è presente nella sessione utente ed è accessibile solo se il cliente è loggato!
+                dispatcher =
+                        request.getRequestDispatcher("/WEB-INF/"
+                                + "views/user/carrello.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "/confirmOrder":
-                request.getRequestDispatcher("/WEB-INF/views/user/conferma_ordine.jsp").forward(request, response);
+                request
+                        .getRequestDispatcher("/WEB-INF/"
+                                + "views/user/conferma_ordine.jsp")
+                        .forward(request, response);
                 break;
         }
-
     }
 }

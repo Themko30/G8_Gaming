@@ -25,7 +25,8 @@ public class ProdottoServlet extends HttpServlet {
     this.prodottoService = prodottoService;
   }
 
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
     String path = request.getPathInfo();
     RequestDispatcher dispatcher;
 
@@ -36,31 +37,38 @@ public class ProdottoServlet extends HttpServlet {
         request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
         request.setAttribute("categoria", request.getParameter("categoria"));
 
-        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/categoria.jsp");
+        dispatcher = request.getRequestDispatcher("/WEB-INF/"
+                + "views/user/categoria.jsp");
         dispatcher.forward(request, response);
         break;
 
       case "/Piattaforma":
-        String piattaforma = request.getParameter("piattaforma");
+        String piattaforma =
+                request.getParameter("piattaforma");
 
-        request.setAttribute("prodotti", prodottoService.prodottiPiattaforma(piattaforma));
-        request.setAttribute("piattaforma", request.getParameter("piattaforma"));
+        request.setAttribute("prodotti",
+                prodottoService.prodottiPiattaforma(piattaforma));
+        request.setAttribute("piattaforma",
+                request.getParameter("piattaforma"));
 
-        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/piattaforma.jsp");
+        dispatcher = request.getRequestDispatcher("/WEB-INF/"
+                + "views/user/piattaforma.jsp");
         dispatcher.forward(request, response);
         break;
 
       case "/Ricerca":
         String nomeProdotto = request.getParameter("nome");
 
-        request.setAttribute("prodotti", prodottoService.prodottiNomeLike(nomeProdotto, 100));
+        request.setAttribute("prodotti",
+                prodottoService.prodottiNomeLike(nomeProdotto, 100));
         request.setAttribute("ricerca", request.getParameter("nome"));
-        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/ricerca.jsp");
+        dispatcher =
+                request.getRequestDispatcher("/WEB-INF/views/user/ricerca.jsp");
         dispatcher.forward(request, response);
         break;
 
       case "/Ricerca/api":
-        if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // Se è ajax
+        if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
           String nome = request.getParameter("nome");
           ArrayList<Prodotto> prodotti = prodottoService.prodottiNomeLike(nome, 5);
           JSONObject obj = new JSONObject();
