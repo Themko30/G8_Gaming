@@ -37,10 +37,10 @@ public class UtenteDAOImpl implements UtenteDAO {
     try (Connection con = ConPool.getConnection()) {
 
       PreparedStatement ps = con.prepareStatement(
-        "INSERT INTO Utente(username, email, passwordhash, nome,"
-                + " cognome, sesso, dataDiNascita, "
-                + " adminFlag, indirizzo, cap, paese) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+              "INSERT INTO Utente(username, email, passwordhash, nome,"
+                      + " cognome, sesso, dataDiNascita, "
+                      + " adminFlag, indirizzo, cap, paese) "
+                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
       ps.setString(1, utente.getUsername());
       ps.setString(2, utente.getEmail());
@@ -175,11 +175,7 @@ public class UtenteDAOImpl implements UtenteDAO {
       ResultSet rs = ps.executeQuery();
       Utente utente = new Utente();
 
-      if (rs.next()) {
-        return true;
-
-      }
-      return false;
+      return rs.next();
 
     } catch (SQLException e) {
       throw new RuntimeException(e);
