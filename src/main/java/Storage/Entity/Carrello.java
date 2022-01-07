@@ -2,7 +2,6 @@ package main.java.Storage.Entity;
 
 import java.util.LinkedHashMap;
 
-
 public class Carrello {
 
     private double totale;

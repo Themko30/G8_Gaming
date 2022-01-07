@@ -21,7 +21,7 @@ public class Prodotto {
 
     private int valutato;
 
-    public Prodotto() {}
+    public Prodotto() { }
 
     public int getCodice() {
         return codice;
@@ -142,7 +142,7 @@ public class Prodotto {
         return object;
     }
 
-    public double getPrezzoScontato(){
-        return Math.floor((prezzo - prezzo*scontoAttivo)*100)/100;
+    public double getPrezzoScontato() {
+        return Math.floor((prezzo - prezzo * scontoAttivo) * 100) / 100;
     }
 }

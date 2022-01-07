@@ -1,19 +1,23 @@
 package main.java.Storage.Dao;
 
+import main.java.Storage.ConPool;
+import main.java.Storage.Entity.Prenotazione;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import main.java.Storage.ConPool;
-import main.java.Storage.Entity.Prenotazione;
 
-public class PrenotazioneDAOImpl implements PrenotazioneDAO{
+public class PrenotazioneDAOImpl implements PrenotazioneDAO {
 
   public boolean doSavePrenotazione(Prenotazione prenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("INSERT INTO Prenotazione(categoria, descrizione, emailRichiedente, copertina, nomeProdotto) VALUES(?,?,?,?,?)");
+      PreparedStatement ps = con.prepareStatement(
+              "INSERT INTO Prenotazione(categoria, descrizione,"
+                      + " emailRichiedente, copertina, nomeProdotto)"
+                      + "VALUES(?,?,?,?,?)");
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());
@@ -33,7 +37,8 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public ArrayList<Prenotazione> doRetrievePrenotazione(int limit, int offset) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione LIMIT ?,?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Prenotazione LIMIT ?,?");
       ps.setInt(1, limit);
       ps.setInt(2, offset);
 
@@ -63,7 +68,8 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public Prenotazione doRetrievePrenotazioneByCodice(int numeroPrenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT * FROM Prenotazione WHERE numeroPrenotazione=?");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT * FROM Prenotazione WHERE numeroPrenotazione=?");
       ps.setInt(1, numeroPrenotazione);
 
       ResultSet rs = ps.executeQuery();
@@ -89,7 +95,10 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public boolean doUpdatePrenotazione(Prenotazione prenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET categoria=?, descrizione=?, emailRichiedente=?, copertina=?, accettata=?, nomeProdotto=? WHERE numeroPrenotazione=?");
+      PreparedStatement ps = con.prepareStatement(
+              "UPDATE Prenotazione SET categoria=?, descrizione=?, "
+                      + "emailRichiedente=?, copertina=?, accettata=?,"
+                      + " nomeProdotto=? WHERE numeroPrenotazione=?");
 
       ps.setString(1, prenotazione.getCategoria());
       ps.setString(2, prenotazione.getDescrizione());
@@ -111,7 +120,8 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public boolean doAcceptPrenotazione(int numeroPrenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement("UPDATE Prenotazione SET accettata=1 WHERE numeroPrenotazione=?");
+      PreparedStatement ps = con.prepareStatement(
+              "UPDATE Prenotazione SET accettata=1 WHERE numeroPrenotazione=?");
 
       ps.setInt(1, numeroPrenotazione);
 
@@ -127,7 +137,8 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public boolean doDeletePrenotazione(int numeroPrenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("DELETE FROM Prenotazione WHERE numeroPrenotazione=?");
+      PreparedStatement ps = con.prepareStatement(
+              "DELETE FROM Prenotazione WHERE numeroPrenotazione=?");
       ps.setInt(1, numeroPrenotazione);
 
       int x = ps.executeUpdate();
@@ -141,7 +152,8 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO{
   public int doRetrieveCounterPrenotazioni() {
     try (Connection con = ConPool.getConnection()) {
 
-      PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Prenotazione");
+      PreparedStatement ps = con.prepareStatement(
+              "SELECT COUNT(*) FROM Prenotazione");
 
       ResultSet rs = ps.executeQuery();
       int quantita = 0;

@@ -9,7 +9,14 @@ import java.util.List;
 
 public class Utente {
 
-    private String username, email, password, nome, cognome, sesso, indirizzo, paese;
+    private String username;
+    private String email;
+    private String password;
+    private String nome;
+    private String cognome;
+    private String sesso;
+    private String indirizzo;
+    private String paese;
     private int cap;
     private LocalDate dataDiNascita;
     private boolean admin;
