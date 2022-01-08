@@ -39,7 +39,7 @@ public class CarrelloDAOImpl  implements CarrelloDAO{
                 x += ps.executeUpdate();
             }
 
-            return x == 1;
+            return x > 0;
 
 
         } catch (SQLException e) {

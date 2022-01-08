@@ -151,47 +151,54 @@ public class OrdineDAOImpl implements OrdineDAO {
         try (Connection con = ConPool.getConnection()) {
 
             LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
-            Set<Prodotto> key = prodotti.keySet();
+            if(prodotti.size() > 0) {
 
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Ordine(utente, totale, numeroArticoli,"
-                            + "indirizzoSpedizione, metodoPagamento, dataOrdine,"
-                            + " stato) VALUES(?,?,?,?,?,?,?)");
-            ps.setString(1, o.getUtente().getUsername());
-            ps.setDouble(2, o.getTotale());
-            ps.setInt(3, o.getNumeroArticoli());
-            ps.setString(4, o.getIndirizzoSpedizione());
-            ps.setString(5, o.getMetodoPagamento());
-            ps.setObject(6, java.sql.Date.valueOf(o.getData()));
-            ps.setString(7, "Inviato");
-            int rows = ps.executeUpdate();
 
-            ps = con.prepareStatement(
-                    "SELECT numero FROM Ordine WHERE utente=?"
-                            + "ORDER BY numero DESC LIMIT 1");
-            ps.setString(1, o.getUtente().getUsername());
+                Set<Prodotto> key = prodotti.keySet();
 
-            ResultSet resultSet = ps.executeQuery();
-            int numeroOrdine = 0;
+                PreparedStatement ps = con.prepareStatement(
+                        "INSERT INTO Ordine(utente, totale, numeroArticoli,"
+                                + "indirizzoSpedizione, metodoPagamento, dataOrdine,"
+                                + " stato) VALUES(?,?,?,?,?,?,?)");
+                ps.setString(1, o.getUtente().getUsername());
+                ps.setDouble(2, o.getTotale());
+                ps.setInt(3, o.getNumeroArticoli());
+                ps.setString(4, o.getIndirizzoSpedizione());
+                ps.setString(5, o.getMetodoPagamento());
+                ps.setObject(6, java.sql.Date.valueOf(o.getData()));
+                ps.setString(7, "Inviato");
+                int rows = ps.executeUpdate();
 
-            if (resultSet.next()) {
-                numeroOrdine = resultSet.getInt("numero");
-            }
-
-            ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
-
-            for (Prodotto p : key) {
                 ps = con.prepareStatement(
-                        "INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita)"
-                                + "VALUES (?,?,?)");
-                ps.setInt(1, p.getCodice());
-                ps.setInt(2, numeroOrdine);
-                ps.setInt(3, prodotti.get(p));
-                ps.executeUpdate();
-                prodottoDAO.doUpdateQuantita(p, prodotti.get(p));
-            }
+                        "SELECT numero FROM Ordine WHERE utente=?"
+                                + "ORDER BY numero DESC LIMIT 1");
+                ps.setString(1, o.getUtente().getUsername());
 
-            return rows > 0;
+                ResultSet resultSet = ps.executeQuery();
+                int numeroOrdine = 0;
+
+                if (resultSet.next()) {
+                    numeroOrdine = resultSet.getInt("numero");
+                }
+
+                ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
+
+                for (Prodotto p : key) {
+                    ps = con.prepareStatement(
+                            "INSERT INTO ArticoloAcquistato(prodotto, ordine, quantita)"
+                                    + "VALUES (?,?,?)");
+                    ps.setInt(1, p.getCodice());
+                    ps.setInt(2, numeroOrdine);
+                    ps.setInt(3, prodotti.get(p));
+                    ps.executeUpdate();
+                    prodottoDAO.doUpdateQuantita(p, prodotti.get(p));
+                }
+
+                return rows > 0;
+            }
+            else {
+                return false;
+            }
 
 
         } catch (SQLException e) {
