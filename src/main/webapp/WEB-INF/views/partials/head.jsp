@@ -4,13 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <title>${param.title} - D3Games</title>
 <meta name="description" content="E-Commerce di videogiochi">
+<meta name="theme-color" content="#6e00ee">
 <link rel="icon" type="image/png" href="${context}/icons/favicon.png"/>
 <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<meta name="theme-color" content="#6e00ee">
+<script src="${context}/js/library.js" defer></script>
+<link rel="stylesheet" href="${context}/css/footer.css">
+<link rel="stylesheet" href="${context}/css/library.css">
 <c:if test="${not empty param.styles}">
     <c:forTokens items="${param.styles}" delims="," var="style">
 <link rel="stylesheet" href="${context}/css/${style}.css">
@@ -21,6 +24,3 @@
 <script src="${context}/js/${script}.js" defer></script>
     </c:forTokens>
 </c:if>
-<script src="${context}/js/library.js" defer></script>
-<link rel="stylesheet" href="${context}/css/footer.css">
-<link rel="stylesheet" href="${context}/css/library.css">

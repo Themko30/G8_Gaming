@@ -107,7 +107,7 @@
         if(!regex.test(cap) || c < 10 || c > 97100) {
             valid = false;
         }
-        regex = /[A-Za-z]+/;
+        regex = /^[A-Za-z]+$/;
         if(!regex.test(paese)) {
             valid = false;
         }
