@@ -101,37 +101,45 @@ public class AuthServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
     path = validator.validatePath(path);
+    HttpSession session = req.getSession();
+    Utente utente = (Utente) session.getAttribute("utente");
+    if (utente == null) {
+      req.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+              .forward(req, resp);
+      return;
+    }
 
+    // Entra solo se un utente è già loggato
     switch (path) {
-      case "/login":
-        req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
-        break;
+      case "/login": // porta alla pagina del profilo
       case "/profile":
-        req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp")
+                .forward(req, resp);
         break;
       case "/update":
-        req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp")
+                .forward(req, resp);
         break;
       case "/ordersPage":
-        HttpSession session1 = req.getSession();
-        Utente ordineUtente = (Utente) session1.getAttribute("utente");
-        ArrayList<Ordine> ordini = ordineService.retrieveOrders(ordineUtente);
+        ArrayList<Ordine> ordini = ordineService.retrieveOrders(utente);
         req.setAttribute("ordini", ordini);
-        req.getRequestDispatcher("/WEB-INF/views/user/ordini.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/ordini.jsp")
+                .forward(req, resp);
         break;
       case "/orderView":
         int codiceOrdine = Integer.parseInt(req.getParameter("codice"));
         Ordine ordine = ordineService.retrieveOrder(codiceOrdine);
         req.setAttribute("ordine", ordine);
-        req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user/ordine.jsp")
+                .forward(req, resp);
         break;
       case "/logout":
-        HttpSession session = req.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
         carrelloService.updateCarrello(carrello);
         session.removeAttribute("utente");
@@ -139,8 +147,10 @@ public class AuthServlet extends HttpServlet {
         session.invalidate();
         resp.sendRedirect("http://localhost:8080/G8_Gaming_war_exploded/");
         break;
+      default:
+        resp.sendError(404);
+        break;
     }
-
   }
 
   /**
@@ -151,7 +161,8 @@ public class AuthServlet extends HttpServlet {
    */
 
   @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
 
     String path = req.getPathInfo();
     validator = new ValidatorImpl();
@@ -169,6 +180,7 @@ public class AuthServlet extends HttpServlet {
     int codiceOrdine;
     int codiceProdotto;
     int cap;
+
     switch (path) {
       case "/update":
         username = req.getParameter("username");
@@ -211,7 +223,6 @@ public class AuthServlet extends HttpServlet {
             resp.sendRedirect("/G8_Gaming_war_exploded/");
           }
         }
-
         break;
       case "/updateValutazione":
         codiceProdotto = Integer.parseInt(req.getParameter("codiceProdotto"));
@@ -221,6 +232,9 @@ public class AuthServlet extends HttpServlet {
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
         resp.sendRedirect("/G8_Gaming_war_exploded/" + "Prodotto/Visualizza?prodotto=" + codiceProdotto);
+        break;
+      default:
+        resp.sendError(404);
         break;
     }
   }

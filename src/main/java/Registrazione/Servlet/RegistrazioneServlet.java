@@ -53,12 +53,23 @@ public class RegistrazioneServlet extends HttpServlet {
     String path = req.getPathInfo();
     path = validator.validatePath(path);
 
+    HttpSession session = req.getSession();
+    Utente utente = (Utente) session.getAttribute("utente");
+    if (utente != null) {
+      resp.sendRedirect(
+              "http://localhost:8080/G8_Gaming_war_exploded/account/profile");
+      return;
+    }
+
     switch (path) {
       case "/":
         RequestDispatcher dispatcher =
                 req.getRequestDispatcher("/WEB-INF/"
                         + "views/user/registration.jsp");
         dispatcher.forward(req, resp);
+        break;
+      default:
+        resp.sendError(404);
         break;
     }
   }
@@ -126,6 +137,9 @@ public class RegistrazioneServlet extends HttpServlet {
           req.getRequestDispatcher("/WEB-INF/views/user/registration.jsp")
                   .forward(req, resp);
         }
+        break;
+      default:
+        resp.sendError(404);
         break;
     }
   }

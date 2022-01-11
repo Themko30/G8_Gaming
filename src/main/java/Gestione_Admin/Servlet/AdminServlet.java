@@ -310,7 +310,7 @@ public class AdminServlet extends HttpServlet {
                     validator.validateImage(copertina, req.getParts());
                     prodottoService.saveProdotto(prodotto);
                     resp.sendRedirect(
-                            "/G8_Gaming_war_exploded/admin/Products/");
+                            "/G8_Gaming_war_exploded/admin/Products");
                 } catch (InvalidProductException e) {
                     dispatcher = req.getRequestDispatcher(
                             "/WEB-INF/views/errors/prodotto.jsp");

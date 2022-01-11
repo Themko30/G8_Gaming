@@ -49,6 +49,9 @@ public class PrenotazioneServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/views/user/prenota.jsp");
         dispatcher.forward(req, resp);
         break;
+      default:
+        resp.sendError(404);
+        break;
     }
   }
 
@@ -91,7 +94,9 @@ public class PrenotazioneServlet extends HttpServlet {
           throw new ServletException("Errore di inserimento...");
         }
         break;
+      default:
+        resp.sendError(404);
+        break;
     }
-
   }
 }
