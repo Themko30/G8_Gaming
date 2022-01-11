@@ -183,8 +183,6 @@ public class AuthServlet extends HttpServlet {
         paese = req.getParameter("paese");
         Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
-          // SET ALERT
-          /*TODO inserire il nuovo utente in sessione*/
           req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
