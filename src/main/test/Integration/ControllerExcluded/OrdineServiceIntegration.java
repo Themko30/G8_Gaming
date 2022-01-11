@@ -1,8 +1,9 @@
 package Integration.ControllerExcluded;
 
-import main.java.Carrello.Service.OrdineBuilderImpl;
 import main.java.Carrello.Service.OrdineService;
 import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Dao.CarrelloDAOImpl;
 import main.java.Storage.Dao.OrdineDAO;
 import main.java.Storage.Dao.OrdineDAOImpl;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -52,17 +54,21 @@ public class OrdineServiceIntegration {
         Utente u = new Utente();
         u.setUsername("acaro");
         Carrello carrello = new CarrelloDAOImpl().doRetrieveCarrelloByUtente(u);
+
         Ordine o = ordineService.createOrdine(carrello, "via Donna, 16", 80053, "Xiopanation", "Visa");
 
         assertTrue(ordineService.saveOrdine(o));
 
         OrdineDAO ordineDAO = new OrdineDAOImpl();
         ArrayList<Ordine> ordiniAfterTest = ordineDAO.doRetrieveOrdiniByUtente(u);
-        assertTrue(ordiniAfterTest.size() == 10);
+        assertTrue(ordiniAfterTest.size() == 13);
+        ProdottoService prodottoService = new ProdottoServiceImpl();
+        assertTrue(prodottoService.quantitaProdotto(prodottoService.prodottoCodice(1)) == 4);
+
     }
 
     @Test
-    public void testRetrieveOrdersNoUser(){
+    public void testRetrieveOrdersNoUser() {
         Utente u = new Utente();
         u.setUsername("tizio");
 
@@ -71,7 +77,7 @@ public class OrdineServiceIntegration {
     }
 
     @Test
-    public void testRetrieveOrdersOK(){
+    public void testRetrieveOrdersOK() {
         Utente u = new Utente();
         u.setUsername("acaro");
 
@@ -80,17 +86,69 @@ public class OrdineServiceIntegration {
     }
 
     @Test
-    public void testRetrieveOrderFail(){
+    public void testRetrieveOrderFail() {
         assertThrows(RuntimeException.class, ()->ordineService.retrieveOrder(40));
     }
 
     @Test
-    public void testRetrieveOrderOK(){
+    public void testRetrieveOrderOK() {
         Ordine ordine = ordineService.retrieveOrder(9);
         assertTrue(ordine.getNumero() == 9);
         assertTrue(ordine.getNumeroArticoli() == 1);
-        assertTrue(ordine.getTotale() == 19.97);
+        assertTrue(ordine.getTotale() == 17.97);
     }
+
+    @Test
+    public void testSetProdottoValutatoFailNoProductInOrder() {
+        assertThrows(RuntimeException.class, ()->ordineService.setProdottoValutato(9, 1));
+    }
+
+    @Test
+    public void testSetProdottoValutatoFailNoOrder() {
+        assertThrows(RuntimeException.class, ()->ordineService.setProdottoValutato(40, 1));
+    }
+
+    @Test
+    public void testSetProdottoValutatoOK() {
+        assertTrue(ordineService.setProdottoValutato(9, 14));
+
+        Ordine o = ordineService.retrieveOrder(9);
+        Set<Prodotto> prodotti = o.getProdotti().keySet();
+        int valutato = 0;
+        for(Prodotto p: prodotti) {
+            if(p.getCodice() == 14) {
+                valutato = p.getValutato();
+            }
+        }
+        assertTrue(valutato == 1);
+    }
+
+    @Test
+    public void testAllOrdersOK() {
+        assertTrue(ordineService.allOrders().size() == 10);
+    }
+
+    @Test
+    public void testUpdateStatoFailNoOrder() {
+        assertTrue(ordineService.updateStato(40, "sbagliato!") == false);
+
+    }
+
+    @Test
+    public void testUpdateStatoOK() {
+        assertTrue(ordineService.updateStato(9, "Consegnato") == true);
+        Ordine o = ordineService.retrieveOrder(9);
+        assertTrue(o.getStato().equals("Consegnato"));
+
+    }
+
+    @Test
+    public void testCounterOrdiniOK() {
+        assertTrue(ordineService.counterOrdini() == 10);
+    }
+
+
+
 
 
 

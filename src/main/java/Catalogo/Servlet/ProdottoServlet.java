@@ -96,6 +96,9 @@ public class ProdottoServlet extends HttpServlet {
         dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/videogioco.jsp");
         dispatcher.forward(request, response);
         break;
+      default:
+        response.sendError(404);
+        break;
     }
   }
 }

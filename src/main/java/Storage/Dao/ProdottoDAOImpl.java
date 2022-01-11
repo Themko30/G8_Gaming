@@ -62,20 +62,26 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 
     public boolean doUpdateMedia(Prodotto prodotto, int valutazione) {
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "UPDATE Prodotto SET numeroVoti=(numeroVoti+1), "
-                            + "totaleVoti = (totaleVoti + ?) WHERE codice=?");
-            ps.setInt(1, valutazione);
-            ps.setInt(2, prodotto.getCodice());
+            if(valutazione > 0 && valutazione < 6) {
 
-            int x = ps.executeUpdate();
-            ps = con.prepareStatement(
-                    "UPDATE Prodotto SET media=(totaleVoti/numeroVoti)"
-                            + "WHERE codice=?");
-            ps.setInt(1, prodotto.getCodice());
-            x = ps.executeUpdate();
+                PreparedStatement ps = con.prepareStatement(
+                        "UPDATE Prodotto SET numeroVoti=(numeroVoti+1), "
+                                + "totaleVoti = (totaleVoti + ?) WHERE codice=?");
+                ps.setInt(1, valutazione);
+                ps.setInt(2, prodotto.getCodice());
 
-            return x > 0;
+                int x = ps.executeUpdate();
+                ps = con.prepareStatement(
+                        "UPDATE Prodotto SET media=(totaleVoti/numeroVoti)"
+                                + "WHERE codice=?");
+                ps.setInt(1, prodotto.getCodice());
+                x = ps.executeUpdate();
+
+                return x > 0;
+            }
+            else {
+                return false;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -189,9 +195,10 @@ public class ProdottoDAOImpl implements ProdottoDAO {
             ps.setInt(1, codice);
 
             ResultSet rs = ps.executeQuery();
-            Prodotto p = new Prodotto();
+            Prodotto p = null;
 
             if (rs.next()) {
+                p = new Prodotto();
                 p.setCodice(rs.getInt("codice"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setScontoAttivo(rs.getDouble("scontoAttivo"));
@@ -296,6 +303,9 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 
             if (rs.next()) {
                 quantita = rs.getInt("quantita");
+            }
+            else {
+                return -1;
             }
             return quantita;
 

@@ -50,8 +50,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 
             PreparedStatement ps = con.prepareStatement(
                     "SELECT * FROM Ordine o, ArticoloAcquistato a,"
-                            + "Prodotto p  WHERE o.numero=?"
-                            + "AND o.numero=a.ordine AND a.prodotto=p.codice");
+                            + " Prodotto p  WHERE o.numero=?"
+                            + " AND o.numero=a.ordine AND a.prodotto=p.codice");
             ps.setInt(1, codiceOrdine);
             ResultSet rs = ps.executeQuery();
             LinkedHashMap<Prodotto, Integer> prodotti = new LinkedHashMap<>();
@@ -211,7 +211,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE ArticoloAcquistato SET valutato=1"
-                            + "WHERE ordine=? AND prodotto=?");
+                            + " WHERE ordine=? AND prodotto=?");
             ps.setInt(1, codiceOrdine);
             ps.setInt(2, codiceProdotto);
             int x = ps.executeUpdate();

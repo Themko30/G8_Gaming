@@ -18,6 +18,7 @@ import main.java.Carrello.Service.OrdineServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
 import main.java.Validator.Exceptions.InvalidIndirizzoException;
 import main.java.Validator.Exceptions.InvalidProductQuantityException;
 import main.java.Validator.Service.Validator;
@@ -44,11 +45,18 @@ public class CarrelloServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+
         String path = request.getPathInfo();
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         Carrello carrello;
         int codiceProdotto;
+
+        Utente u = (Utente) session.getAttribute("utente");
+        if (u == null) {
+            response.sendError(401);
+            return;
+        }
 
         switch (path) {
             case "/Add":
@@ -89,7 +97,7 @@ public class CarrelloServlet extends HttpServlet {
                     carrello =
                             carrelloService
                                     .updateQuantitaCarrelloSession(carrello,
-                                    codiceProdotto, quantita);
+                                            codiceProdotto, quantita);
                     session.removeAttribute("carrello");
                     session.setAttribute("carrello", carrello);
                 }
@@ -180,6 +188,9 @@ public class CarrelloServlet extends HttpServlet {
                     }
                 }
                 break;
+            default:
+                response.sendError(404);
+                break;
         }
     }
 
@@ -187,24 +198,29 @@ public class CarrelloServlet extends HttpServlet {
             throws IOException, ServletException {
 
         String path = request.getPathInfo();
-        RequestDispatcher dispatcher;
+        path = validator.validatePath(path);
 
-        if (path == null) {
-            path="/";
+        HttpSession session = request.getSession();
+        Utente utente = (Utente) session.getAttribute("utente");
+        if (utente == null) {
+            response.sendRedirect(
+                    "http://localhost:8080/G8_Gaming_war_exploded/account/login");
+            return;
         }
 
         switch (path) {
             case "/":
-                dispatcher =
-                        request.getRequestDispatcher("/WEB-INF/"
-                                + "views/user/carrello.jsp");
-                dispatcher.forward(request, response);
+                request.getRequestDispatcher(
+                                "/WEB-INF/views/user/carrello.jsp")
+                        .forward(request, response);
                 break;
             case "/confirmOrder":
-                request
-                        .getRequestDispatcher("/WEB-INF/"
-                                + "views/user/conferma_ordine.jsp")
+                request.getRequestDispatcher(
+                                "/WEB-INF/views/user/conferma_ordine.jsp")
                         .forward(request, response);
+                break;
+            default:
+                response.sendError(404);
                 break;
         }
     }
