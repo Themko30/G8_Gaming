@@ -192,7 +192,7 @@ function validateAddProduct() {
     let valid = true;
     let regex = /^[\w:'".,;()!?+&\- ]+$/;
 
-    if(!regex.test(name)) {
+    if(!regex.test(nome)) {
         message += "<li>Formato nome non valido.</li>";
         valid = false;
     }
