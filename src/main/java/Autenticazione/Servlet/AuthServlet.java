@@ -1,6 +1,7 @@
 package main.java.Autenticazione.Servlet;
 
 
+import com.mysql.cj.Session;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -195,6 +196,8 @@ public class AuthServlet extends HttpServlet {
         paese = req.getParameter("paese");
         Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
         if (utenteService.updateUtente(updateUtente)) {
+          HttpSession session = req.getSession();
+          session.setAttribute("utente", updateUtente);
           req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
