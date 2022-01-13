@@ -232,7 +232,8 @@ public class AuthServlet extends HttpServlet {
         req.setAttribute("codiceOrdine", codiceOrdine);
         prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
-        resp.sendRedirect("/G8_Gaming_war_exploded/" + "Prodotto/Visualizza?prodotto=" + codiceProdotto);
+        resp.sendRedirect("/G8_Gaming_war_exploded/" +
+          "Prodotto/Visualizza?prodotto=" + codiceProdotto);
         break;
       default:
         resp.sendError(404);
