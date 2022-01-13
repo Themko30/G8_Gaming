@@ -170,11 +170,15 @@ public class UtenteDAOImpl implements UtenteDAO {
       ps.setString(1, username);
 
       ResultSet rs = ps.executeQuery();
-      Utente utente = new Utente();
+      /*Utente utente = new Utente();*/
 
-      return rs.next();
+      if (rs.next()) {
+        return true;
+      }
+      return false;
 
     } catch (SQLException e) {
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }

@@ -152,11 +152,11 @@ public class ValidatorImpl implements Validator {
         if (!(pattern.matcher(utente.getUsername()).matches())) {
             throw new InvalidUserException();
         }
-
-        if (utenteService.checkUtente(utente.getUsername())) {
+//TODO
+        /*if (utenteService.checkUtente(utente.getUsername())) {
             throw new Exception();
         }
-
+*/
         pattern = Pattern.compile("[a-zA-Z ]+");
 
         if (!pattern.matcher(utente.getNome()).matches()) {

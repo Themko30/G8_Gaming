@@ -12,7 +12,6 @@ public interface UtenteDAO {
             String username, String password);
     boolean doCheckUsername(String username);
     boolean doUpdateUtente(Utente utente);
-    boolean doDeleteUtente(String username);
     boolean doSetAdmin(String username);
     Utente doRetrieveUtenteByUsername(String username);
 }

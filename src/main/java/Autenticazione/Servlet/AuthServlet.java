@@ -5,6 +5,7 @@ import com.mysql.cj.Session;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,8 @@ import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidUserException;
 import main.java.Validator.Service.Validator;
 import main.java.Validator.Service.ValidatorImpl;
 
@@ -185,7 +188,7 @@ public class AuthServlet extends HttpServlet {
     switch (path) {
       case "/update":
         username = req.getParameter("username");
-        email = req.getParameter("email");
+        email = req.getParameter("email").toLowerCase();
         password = req.getParameter("password");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
@@ -195,6 +198,17 @@ public class AuthServlet extends HttpServlet {
         cap = Integer.parseInt(req.getParameter("cap"));
         paese = req.getParameter("paese");
         Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
+        try {
+          validator.validateUtente(updateUtente);
+        } catch (InvalidIndirizzoException e) {
+          throw new ServletException("Invalid indirizzo...");
+        } catch (InvalidUserException ex) {
+          throw new ServletException("Invalid user...");
+        } catch (Exception exe) {
+          req.getRequestDispatcher("/WEB-INF/views/user/modifica_profilo.jsp")
+            .forward(req, resp);
+          break;
+        }
         if (utenteService.updateUtente(updateUtente)) {
           HttpSession session = req.getSession();
           session.setAttribute("utente", updateUtente);

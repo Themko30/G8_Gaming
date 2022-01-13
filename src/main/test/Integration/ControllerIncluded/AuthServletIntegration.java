@@ -72,6 +72,7 @@ public class AuthServletIntegration {
     when(request.getPathInfo()).thenReturn("/logout");
     when(request.getSession()).thenReturn(session);
     Utente u = new Utente();
+    when(session.getAttribute("utente")).thenReturn(u);
     Carrello carrello = new Carrello();
     when(session.getAttribute("carrello")).thenReturn(carrello);
     u.setUsername("acaro");
@@ -87,15 +88,14 @@ public class AuthServletIntegration {
   public void testDoPostUpdate() throws ServletException, IOException {
     when(request.getPathInfo()).thenReturn("/update");
     when(request.getSession()).thenReturn(session);
-    when(request.getParameter("username")).thenReturn("emilio");
-    when(request.getParameter("email")).thenReturn("Xiopani");
+    when(request.getParameter("username")).thenReturn("acaro");
+    when(request.getParameter("email")).thenReturn("Xiopani3@gmail.com");
     when(request.getParameter("password")).thenReturn("Xiopani");
     when(request.getParameter("nome")).thenReturn("Xiopani");
     when(request.getParameter("cognome")).thenReturn("Xiopani");
-    when(request.getParameter("sesso")).thenReturn("Xiopani");
+    when(request.getParameter("sesso")).thenReturn("Altro");
     when(request.getParameter("data")).thenReturn("2021-04-01");
-    LocalDate data = LocalDate.now();
-    when(request.getParameter("indirizzo")).thenReturn("Xiopani");
+    when(request.getParameter("indirizzo")).thenReturn("Xiopani, 15");
     when(request.getParameter("cap")).thenReturn("80053");
     when(request.getParameter("paese")).thenReturn("Xiopani");
     when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
@@ -113,12 +113,12 @@ public class AuthServletIntegration {
   }
 
   @Test
-  //TODO
   public void testDoPostUpdateValutazione() throws ServletException, IOException {
     when(request.getPathInfo()).thenReturn("/updateValutazione");
     when(request.getSession()).thenReturn(session);
-    when(request.getParameter("codiceProdotto")).thenReturn("15");
-    when(request.getParameter("password")).thenReturn("antonino");
+    when(request.getParameter("codiceProdotto")).thenReturn("6");
+    when(request.getParameter("valutazione")).thenReturn("3");
+    when(request.getParameter("codiceOrdine")).thenReturn("4");
     when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doPost(request, response);
   }

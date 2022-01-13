@@ -52,7 +52,7 @@ public class RegistazioneServletTest {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(validator.validatePath(anyString())).thenReturn("/save");
         registrazioneServlet.setValidator(validator);
-        registrazioneServlet.doGet(request, response);
+
         when(request.getParameter("username")).thenReturn("mario");
         when(request.getParameter("email")).thenReturn("mario@gmail.com");
         when(request.getParameter("password")).thenReturn("mariomario2");
@@ -70,6 +70,8 @@ public class RegistazioneServletTest {
         registrazioneServlet.setUtenteService(utenteService);
         registrazioneServlet.setCarrelloService(carrelloService);
         registrazioneServlet.doPost(request, response);
+
+        registrazioneServlet.doGet(request, response);
 
     }
 

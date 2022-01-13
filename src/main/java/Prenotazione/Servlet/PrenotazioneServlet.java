@@ -66,7 +66,7 @@ public class PrenotazioneServlet extends HttpServlet {
     switch (path) {
       case "/save":
         Prenotazione savePrenotazione = new Prenotazione();
-        savePrenotazione.setEmailRichiedente(req.getParameter("email"));
+        savePrenotazione.setEmailRichiedente(req.getParameter("email").toLowerCase());
         savePrenotazione.setCategoria(req.getParameter("categoria"));
 
         Part filePart = req.getPart("copertina");

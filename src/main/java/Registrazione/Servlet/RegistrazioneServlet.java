@@ -96,7 +96,7 @@ public class RegistrazioneServlet extends HttpServlet {
     switch (path) {
       case "/save":
         username = req.getParameter("username");
-        email = req.getParameter("email");
+        email = req.getParameter("email").toLowerCase();
         password = req.getParameter("password");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
