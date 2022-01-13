@@ -3,7 +3,7 @@ function validateLogin() {
     let password = $('#password').val();
     let message = "<ul>";
     let valid = true;
-    let regex = /^[a-zA-Z0-9]+[.]?[a-zA-Z0-9]+$/
+    let regex = /^[a-zA-Z0-9]+$/;
 
     if(!regex.test(username)) {
         message += "<li>L'username non rispetta il formato adatto.</li>";
@@ -35,12 +35,18 @@ function validateRegistration() {
     let dataDiNascita = $('#data').val();
     let message = "<ul>";
     let valid = true;
-    let regex = /^[a-zA-Z]+$/
+    let regex = /^[a-zA-Z0-9]+$/;
 
     if(!regex.test(username)) {
         message += "<li>L'username non rispetta il formato adatto.</li>";
         valid = false;
     }
+    if(username.length < 3 || username.length > 20) {
+        message += "<li>L'username deve avere una lunghezza compresa tra i 3 e i 20 caratteri.</li>";
+        valid = false;
+    }
+
+    regex = /^[a-zA-Z]+$/;
     if(!regex.test(name)) {
         message += "<li>Il nome non rispetta il formato adatto.</li>";
         valid = false;
@@ -71,11 +77,6 @@ function validateRegistration() {
     }
     if(password !== confirmPassword) {
         message += "<li>Le password non corrispondono.</li>";
-        valid = false;
-    }
-
-    if(username.length < 3 || username.length > 20) {
-        message += "<li>L'username deve avere una lunghezza compresa tra i 3 e i 20 caratteri.</li>";
         valid = false;
     }
 
