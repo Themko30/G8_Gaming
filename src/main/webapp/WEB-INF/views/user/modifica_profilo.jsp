@@ -13,6 +13,7 @@
 <div class="center">
     <h1>Registrazione</h1>
     <form method="post" onsubmit="return validateRegistration()" action="${context}/account/update">
+        <input type="hidden" id="username" name="username" value="${utente.username}" required>
         <div class="txt_field">
             <input type="text" id="nome" name="nome" value="${utente.nome}" required>
             <span></span>
@@ -27,11 +28,6 @@
             <input type="text" id="email" name="email" value="${utente.email}" required>
             <span></span>
             <label for="email">Email</label>
-        </div>
-        <div class="txt_field">
-            <input type="text" id="username" name="username" value="${utente.username}" required>
-            <span></span>
-            <label for="username">Username</label>
         </div>
         <div class="txt_field">
             <input type="password" id="oldPassword" name="oldPassword" required>

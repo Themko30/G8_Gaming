@@ -32,7 +32,7 @@ function validateRegistration() {
     let sesso = $('#sesso').val();
     let confirmPassword = $('#confirmPassword').val();
     let username = $('#username').val().trim();
-    let dataDiNascita = $('#data').val().split('-');
+    let dataDiNascita = $('#data').val();
     let message = "<ul>";
     let valid = true;
     let regex = /^[a-zA-Z]+$/
