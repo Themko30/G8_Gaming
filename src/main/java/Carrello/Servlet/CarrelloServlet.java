@@ -27,18 +27,41 @@ import main.java.Validator.Service.ValidatorImpl;
 @WebServlet(name = "CarrelloServlet", value = "/cart/*")
 public class CarrelloServlet extends HttpServlet {
 
+    /**
+     * Il CarrelloService della classe.
+     */
     CarrelloService carrelloService = new CarrelloServiceImpl();
+
+    /**
+     * L'OrdineService della classe.
+     */
     OrdineService ordineService = new OrdineServiceImpl();
+
+    /**
+     * Il Validator della classe.
+     */
     Validator validator = new ValidatorImpl();
 
+    /**
+     * Metodo per impostare il CarrelloService della classe.
+     * @param carrelloService Il CarrelloService da impostare
+     */
     public void setCarrelloService(CarrelloService carrelloService) {
         this.carrelloService = carrelloService;
     }
 
+    /**
+     * Metodo per impostare l'OrdineService della classe.
+     * @param ordineService L'OrdineService da impostare
+     */
     public void setOrdineService(OrdineService ordineService) {
         this.ordineService = ordineService;
     }
 
+    /**
+     * Metodo per impostare il Validator della classe.
+     * @param validator Il Validator da impostare
+     */
     public void setValidator(Validator validator) {
         this.validator = validator;
     }

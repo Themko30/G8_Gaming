@@ -32,32 +32,72 @@ import main.java.Validator.Service.ValidatorImpl;
 @WebServlet(name = "Admin", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
 
+    /**
+     * Il Validator della classe.
+     */
     private Validator validator = new ValidatorImpl();
+
+    /**
+     * L'UtenteService della classe.
+     */
     private UtenteService utenteService = new UtenteServiceImpl();
+
+    /**
+     * L'OrdineService della classe.
+     */
     private OrdineService ordineService = new OrdineServiceImpl();
+
+    /**
+     * Il ProdottoService della classe.
+     */
     private ProdottoService prodottoService = new ProdottoServiceImpl();
+
+    /**
+     * Il PrenotazioneService della classe.
+     */
     private PrenotazioneService prenotazioneService =
             new PrenotazioneServiceImpl();
+
+    /**
+     * Il RequestDispatcher della classe.
+     */
     private RequestDispatcher dispatcher;
 
+    /**
+     * Metodo per impostare il Validator della classe.
+     * @param validator Il Validator da impostare
+     */
     public void setValidator(Validator validator) {
         this.validator = validator;
     }
 
+    /**
+     * Metodo per impostare l'UtenteService della classe.
+     * @param utenteService L'UtenteService da impostare
+     */
     public void setUtenteService(UtenteService utenteService) {
         this.utenteService = utenteService;
     }
 
+    /**
+     * Metodo per impostare l'OrdineService della classe.
+     * @param ordineService L'OrdineService da impostare
+     */
     public void setOrdineService(OrdineService ordineService) {
         this.ordineService = ordineService;
     }
 
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
     public void setProdottoService(ProdottoService prodottoService) {
         this.prodottoService = prodottoService;
     }
 
     /**
-     * @param prenotazioneService
+     * Metodo per impostare il PrenotazioneService della classe.
+     * @param prenotazioneService Il PrenotazioneService da impostare
      */
     public void setPrenotazioneService(
             PrenotazioneService prenotazioneService) {

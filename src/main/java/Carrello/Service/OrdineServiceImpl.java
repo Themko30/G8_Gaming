@@ -11,15 +11,22 @@ import main.java.Storage.Entity.Utente;
 
 public class OrdineServiceImpl implements OrdineService {
 
+    /**
+     * L'OrdineBuilder della classe.
+     */
     private OrdineBuilder ordineBuilder = new OrdineBuilderImpl();
+
+    /**
+     * L'OrdineDAO della classe.
+     */
     private final OrdineDAO ordineDAO = new OrdineDAOImpl();
 
     @Override
     public Ordine createOrdine(Carrello carrello,
-                               String indirizzo, Integer CAP,
+                               String indirizzo, Integer cap,
                                String paese, String metodoPagamento) {
 
-        String indirizzoSpedizione = indirizzo + ", " + CAP + ", " + paese;
+        String indirizzoSpedizione = indirizzo + ", " + cap + ", " + paese;
 
         return ordineBuilder.utente(carrello.getUtente())
                 .totale(carrello.getTotale())

@@ -19,8 +19,15 @@ import org.json.JSONObject;
 @WebServlet(name = "ProdottoServlet", value = "/Prodotto/*")
 public class ProdottoServlet extends HttpServlet {
 
+  /**
+   * Il ProdottoService della classe.
+   */
   private ProdottoService prodottoService = new ProdottoServiceImpl();
 
+  /**
+   * Metodo per impostare il ProdottoService della classe.
+   * @param prodottoService Il ProdottoService da impostare
+   */
   public void setProdottoService(ProdottoService prodottoService) {
     this.prodottoService = prodottoService;
   }
@@ -34,8 +41,11 @@ public class ProdottoServlet extends HttpServlet {
       case "/Categoria":
         String categoria = request.getParameter("categoria");
 
-        request.setAttribute("prodotti", prodottoService.prodottiCategoria(categoria));
-        request.setAttribute("categoria", request.getParameter("categoria"));
+        request.setAttribute("prodotti",
+                prodottoService.prodottiCategoria(categoria));
+
+        request.setAttribute("categoria",
+                request.getParameter("categoria"));
 
         dispatcher = request.getRequestDispatcher("/WEB-INF/"
                 + "views/user/categoria.jsp");
@@ -68,9 +78,10 @@ public class ProdottoServlet extends HttpServlet {
         break;
 
       case "/Ricerca/api":
-        if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
           String nome = request.getParameter("nome");
-          ArrayList<Prodotto> prodotti = prodottoService.prodottiNomeLike(nome, 5);
+          ArrayList<Prodotto> prodotti =
+                  prodottoService.prodottiNomeLike(nome, 5);
           JSONObject obj = new JSONObject();
           JSONArray arr = new JSONArray();
           prodotti.forEach(prodotto -> arr.put(prodotto.toJSON()));
@@ -93,7 +104,8 @@ public class ProdottoServlet extends HttpServlet {
         request.setAttribute("prodotto", p);
         /*TODO prodotti consigliati*/
 
-        dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/videogioco.jsp");
+        dispatcher = request.getRequestDispatcher(
+                "/WEB-INF/views/user/videogioco.jsp");
         dispatcher.forward(request, response);
         break;
       default:

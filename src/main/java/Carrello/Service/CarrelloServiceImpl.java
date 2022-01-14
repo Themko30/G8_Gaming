@@ -12,13 +12,28 @@ import main.java.Storage.Entity.Utente;
 
 public class CarrelloServiceImpl implements CarrelloService {
 
+    /**
+     * Il CarrelloDAO della classe.
+     */
     private CarrelloDAO carrelloDAO = new CarrelloDAOImpl();
+
+    /**
+     * Il ProdottoService della classe.
+     */
     private ProdottoService prodottoService = new ProdottoServiceImpl();
 
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
     public void setProdottoService(ProdottoService prodottoService) {
         this.prodottoService = prodottoService;
     }
 
+    /**
+     * Metodo per impostare il CarrelloDAO della classe.
+     * @param carrelloDAO Il CarrelloDAO da impostare
+     */
     public void setCarrelloDAO(CarrelloDAO carrelloDAO) {
         this.carrelloDAO = carrelloDAO;
     }
@@ -74,7 +89,6 @@ public class CarrelloServiceImpl implements CarrelloService {
                 carrello.setTotale(carrello.getTotale()
                         - (prezzoScontato) * prodottiMap.get(p));
                 prodottiMap.remove(p);
-
                 break;
             }
         }

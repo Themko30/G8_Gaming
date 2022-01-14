@@ -8,15 +8,49 @@ import main.java.Storage.Entity.Utente;
 
 public class OrdineBuilderImpl implements OrdineBuilder {
 
+    /**
+     * Il prezzo totale dell'ordine.
+     */
     private double totale;
+
+    /**
+     * Il numero di articoli dell'ordine.
+     */
     private int numeroArticoli;
+
+    /**
+     * L'indirizzo di spedizione dell'ordine.
+     */
     private String indirizzoSpedizione;
+
+    /**
+     * Metodo di pagamento dell'ordine.
+     */
     private String metodoPagamento;
+
+    /**
+     * La data dell'ordine.
+     */
     private LocalDate data;
+
+    /**
+     * Lo stato dell'ordine.
+     */
     private String stato;
+
+    /**
+     * L'HashMap contenente prodotti e relativa quantitò dell'ordine.
+     */
     private LinkedHashMap<Prodotto, Integer> prodotti;
+
+    /**
+     * L'utente che ha effettuato l'ordine.
+     */
     private Utente utente;
 
+    /**
+     * L'ordine completo.
+     */
     private Ordine ordine;
 
     public OrdineBuilderImpl() {

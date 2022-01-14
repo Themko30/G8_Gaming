@@ -8,6 +8,9 @@ import main.java.Storage.Entity.Prodotto;
 
 public class ProdottoServiceImpl implements ProdottoService {
 
+    /**
+     * Il ProdottoDAO della classe.
+     */
     private final ProdottoDAO prodottoDAO = new ProdottoDAOImpl();
 
     @Override
