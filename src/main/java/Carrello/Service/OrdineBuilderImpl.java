@@ -53,6 +53,9 @@ public class OrdineBuilderImpl implements OrdineBuilder {
      */
     private Ordine ordine;
 
+    /**
+     * Il costruttore vuoto della classe
+     */
     public OrdineBuilderImpl() {
 
     }

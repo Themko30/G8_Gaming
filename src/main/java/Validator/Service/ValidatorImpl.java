@@ -21,19 +21,35 @@ import main.java.Validator.Exceptions.InvalidUserException;
 
 public class ValidatorImpl implements Validator {
 
+    /**
+     * L'UtenteService della classe.
+     */
     private UtenteService utenteService =
             new UtenteServiceImpl();
+
+    /**
+     * Il ProdottoService della classe.
+     */
     private ProdottoService prodottoService =
             new ProdottoServiceImpl();
 
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
     public void setProdottoService(ProdottoService prodottoService) {
         this.prodottoService = prodottoService;
     }
 
+    /**
+     * Metodo per impostare l'UtenteService della classe.
+     * @param utenteService L'UtenteService da impostare
+     */
     public void setUtenteService(UtenteService utenteService) {
         this.utenteService = utenteService;
     }
 
+    @Override
     public void validateQuantitaProdotto(Prodotto prodotto, int quantita)
             throws InvalidProductQuantityException {
         int quantitaProdottoDatabase =
@@ -49,6 +65,7 @@ public class ValidatorImpl implements Validator {
 
     }
 
+    @Override
     public void validateIndirizzo(String indirizzo, Integer cap, String paese)
             throws InvalidIndirizzoException {
         Pattern pattern =
@@ -72,6 +89,7 @@ public class ValidatorImpl implements Validator {
         }
     }
 
+    @Override
     public String validatePath(String path) {
         if (path == null) {
             path = "/";
@@ -81,7 +99,7 @@ public class ValidatorImpl implements Validator {
 
     @Override
     public void validateProdotto(Prodotto prodotto)
-            throws InvalidProductException, IOException {
+            throws InvalidProductException {
         if (prodotto.getNome().length() < 3
                 || prodotto.getNome().length() > 100) {
             throw new InvalidProductException();
@@ -203,6 +221,5 @@ public class ValidatorImpl implements Validator {
         validateIndirizzo(utente.getIndirizzo(),
                 utente.getCap(), utente.getPaese());
     }
-
 
 }
