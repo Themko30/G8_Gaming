@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 public class UtenteDAOImpl implements UtenteDAO {
 
+  /**
+   * Metodo per recuperare il numero
+   * di tutti gli utenti nel DB.
+   * @return il numero * di tutti gli utenti nel DB.
+   */
   public int doRetrieveCounterUtenti() {
     try (Connection con = ConPool.getConnection()) {
 
@@ -32,7 +37,13 @@ public class UtenteDAOImpl implements UtenteDAO {
     }
 
   }
-
+  /**
+   * Metodo per salvare un utente nel database.
+   * @param utente il bean dell`utente da inserire.
+   * @return un booleano per controllare la riuscita.
+   * @throws Exception una eccezione generale
+   * che potrebbe lanciare durante l`esecuzione sul DB.
+   */
   public boolean doSaveUtente(Utente utente) throws Exception {
     try (Connection con = ConPool.getConnection()) {
 
@@ -63,7 +74,12 @@ public class UtenteDAOImpl implements UtenteDAO {
     }
 
   }
-
+  /**
+   * Metodo per recuperare tutti gli utenti dal DB.
+   * @param limit il limite finale della lista del DB.
+   * @param offset la compensazione d`inizio della lista dal DB.
+   * @return la lista di tutti gli utenti nel DB.
+   */
   public ArrayList<Utente> doRetrieveAllUtente(int limit, int offset) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -95,7 +111,12 @@ public class UtenteDAOImpl implements UtenteDAO {
       throw new RuntimeException(e);
     }
   }
-
+  /**
+   * Metodo di servizio e testing che recupera
+   * un utente dal DB con solo il suo username.
+   * @param username username dell`utente
+   * @return il bean dell`utente riempito.
+   */
   public Utente doRetrieveUtenteByUsername(String username) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -127,7 +148,12 @@ public class UtenteDAOImpl implements UtenteDAO {
       throw new RuntimeException(e);
     }
   }
-
+  /**
+   * Metodo per trovare un utente nel DB con solo username e password.
+   * @param username username dell`utente.
+   * @param password password dell`utente
+   * @return il bean dell`utente riempito.
+   */
   public Utente doRetrieveUtenteByUsernameAndPassword(
           String username, String password) {
     try (Connection con = ConPool.getConnection()) {
@@ -161,7 +187,12 @@ public class UtenteDAOImpl implements UtenteDAO {
       throw new RuntimeException(e);
     }
   }
-
+  /**
+   * Metodo che controlla se un utente esiste
+   * utilizzando il suo username.
+   * @param username username dell`utente.
+   * @return un booleano per controllare la riuscita.
+   */
   public boolean doCheckUsername(String username) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -182,7 +213,11 @@ public class UtenteDAOImpl implements UtenteDAO {
       throw new RuntimeException(e);
     }
   }
-
+  /**
+   * Metodo che aggiorna un utente nel DB.
+   * @param utente il bean dell`utente da aggiornare.
+   * @return un booleano per controllare la riuscita.
+   */
   public boolean doUpdateUtente(Utente utente) {
 
     try (Connection con = ConPool.getConnection()) {
@@ -212,22 +247,11 @@ public class UtenteDAOImpl implements UtenteDAO {
       throw new RuntimeException(e);
     }
   }
-
-  public boolean doDeleteUtente(String username) {
-    try (Connection con = ConPool.getConnection()) {
-
-      PreparedStatement ps = con.prepareStatement(
-              "DELETE FROM Utente WHERE username=?");
-      ps.setString(1, username);
-
-      int x = ps.executeUpdate();
-      return x == 1;
-
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
+  /**
+   * metodo per settare ad admin un utente.
+   * @param username username dell`utente
+   * @return un booleano per controllare la riuscita.
+   */
   public boolean doSetAdmin(String username) {
     try (Connection con = ConPool.getConnection()) {
 

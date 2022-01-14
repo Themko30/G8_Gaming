@@ -1,11 +1,9 @@
 package main.java.Autenticazione.Servlet;
 
 
-import com.mysql.cj.Session;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,7 +55,7 @@ public class AuthServlet extends HttpServlet {
   /**
    * Set di Validator ai fini di testing.
    *
-   * @param validator
+   * @param validator il validator da dargli per il funzionamento.
    */
   public void setValidator(Validator validator) {
     this.validator = validator;
@@ -66,7 +64,7 @@ public class AuthServlet extends HttpServlet {
   /**
    * Set di UtenteService ai fini di testing.
    *
-   * @param utenteService
+   * @param utenteService il service dell`utente.
    */
   public void setUtenteService(UtenteService utenteService) {
     this.utenteService = utenteService;
@@ -75,7 +73,7 @@ public class AuthServlet extends HttpServlet {
   /**
    * Set di OrdineService ai fini di testing.
    *
-   * @param ordineService
+   * @param ordineService il service dell`ordine.
    */
   public void setOrdineService(OrdineService ordineService) {
     this.ordineService = ordineService;
@@ -84,7 +82,7 @@ public class AuthServlet extends HttpServlet {
   /**
    * Set di ProdottoService ai fini di testing.
    *
-   * @param prodottoService
+   * @param prodottoService il service dell`prodotto.
    */
   public void setProdottoService(ProdottoService prodottoService) {
     this.prodottoService = prodottoService;
@@ -93,7 +91,7 @@ public class AuthServlet extends HttpServlet {
   /**
    * Set di CarrelloService ai fini di testing.
    *
-   * @param carrelloService
+   * @param carrelloService il service del carrello.
    */
   public void setCarrelloService(CarrelloService carrelloService) {
     this.carrelloService = carrelloService;
@@ -105,7 +103,8 @@ public class AuthServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+  public void doGet(HttpServletRequest req,
+    HttpServletResponse resp)
           throws ServletException, IOException {
 
     String path = req.getPathInfo();
@@ -158,10 +157,10 @@ public class AuthServlet extends HttpServlet {
   }
 
   /**
-   * @param req
-   * @param resp
-   * @throws ServletException
-   * @throws IOException
+   * @param req la request del client.
+   * @param resp la response del client.
+   * @throws ServletException eccezione generica in caso di fault.
+   * @throws IOException eccezione
    */
 
   @Override
@@ -197,7 +196,9 @@ public class AuthServlet extends HttpServlet {
         indirizzo = req.getParameter("indirizzo");
         cap = Integer.parseInt(req.getParameter("cap"));
         paese = req.getParameter("paese");
-        Utente updateUtente = utenteService.createUtente(username, email, password, nome, cognome, sesso, dataDiNascita, indirizzo, cap, paese);
+        Utente updateUtente = utenteService.createUtente(
+          username, email, password, nome, cognome, sesso,
+          dataDiNascita, indirizzo, cap, paese);
         try {
           validator.validateUtente(updateUtente);
         } catch (InvalidIndirizzoException e) {
@@ -212,7 +213,8 @@ public class AuthServlet extends HttpServlet {
         if (utenteService.updateUtente(updateUtente)) {
           HttpSession session = req.getSession();
           session.setAttribute("utente", updateUtente);
-          req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/user/profilo.jsp")
+            .forward(req, resp);
         } else {
           throw new ServletException("Errore di aggiornamento...");
         }
@@ -221,12 +223,14 @@ public class AuthServlet extends HttpServlet {
         Utente tmpUtente = new Utente();
         tmpUtente.setUsername(req.getParameter("username"));
         tmpUtente.setPassword(req.getParameter("password"));
-        Utente utente = utenteService.login(tmpUtente.getUsername(), tmpUtente.getPassword());
+        Utente utente = utenteService.login(tmpUtente.getUsername(),
+          tmpUtente.getPassword());
         if (utente == null) {
           req.setAttribute("errate", 1);
           req.setAttribute("us", req.getParameter("username"));
           req.setAttribute("pw", req.getParameter("password"));
-          req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
+          req.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+            .forward(req, resp);
         } else {
           Carrello carrello = carrelloService.recuperaCarrello(utente);
           HttpSession session2 = req.getSession();
@@ -244,10 +248,11 @@ public class AuthServlet extends HttpServlet {
         int valutazione = Integer.parseInt(req.getParameter("valutazione"));
         codiceOrdine = Integer.parseInt(req.getParameter("codiceOrdine"));
         req.setAttribute("codiceOrdine", codiceOrdine);
-        prodottoService.updateValutazione(prodottoService.prodottoCodice(codiceProdotto), valutazione);
+        prodottoService.updateValutazione(
+          prodottoService.prodottoCodice(codiceProdotto), valutazione);
         ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);
-        resp.sendRedirect("/G8_Gaming_war_exploded/" +
-          "Prodotto/Visualizza?prodotto=" + codiceProdotto);
+        resp.sendRedirect("/G8_Gaming_war_exploded/"
+         + "Prodotto/Visualizza?prodotto=" + codiceProdotto);
         break;
       default:
         resp.sendError(404);

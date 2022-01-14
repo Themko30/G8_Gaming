@@ -15,7 +15,7 @@ public interface PrenotazioneService {
   /**
    * Metodo per recuperare una prenotazione dal DB.
    *
-   * @param codice
+   * @param codice codice della prenotazione.
    * @return la prenotazione trovata
    */
   Prenotazione retrievePrenotazione(int codice);
@@ -23,7 +23,7 @@ public interface PrenotazioneService {
   /**
    * Metodo per accettare una richiesta di prenotazione.
    *
-   * @param numero
+   * @param numero numero della prenotazione
    * @return true se il metodo è andato a buon fine
    */
   boolean acceptPrenotazione(int numero);
@@ -31,7 +31,7 @@ public interface PrenotazioneService {
   /**
    * Metodo per salvare una richiesta di prenotazione nel DB.
    *
-   * @param prenotazione
+   * @param prenotazione il bean della prenotazione riempito.
    * @return true se il metodo è andato a buon fine
    */
   boolean savePrenotazione(Prenotazione prenotazione);

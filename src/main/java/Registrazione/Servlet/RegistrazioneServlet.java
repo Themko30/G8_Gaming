@@ -24,18 +24,39 @@ import main.java.Validator.Service.ValidatorImpl;
 @WebServlet(name = "RegistrazioneServlet", value = "/registrazione/*")
 public class RegistrazioneServlet extends HttpServlet {
 
-  private Validator validator = new ValidatorImpl();;
+  /**
+   * Creazione di Validator.
+   */
+  private Validator validator = new ValidatorImpl();
+  /**
+   * Creazione di UtenteService.
+   */
   private UtenteService utenteService = new UtenteServiceImpl();
+  /**
+   * Creazione di CarrelloService.
+   */
   private CarrelloService carrelloService = new CarrelloServiceImpl();
 
+  /**
+   * Set del validator per fini di testing.
+   * @param validator il validator che controlla i dati.
+   */
   public void setValidator(Validator validator) {
     this.validator = validator;
   }
 
+  /**
+   * Set del utenteService per fini di testing.
+   * @param utenteService il service di utente.
+   */
   public void setUtenteService(UtenteService utenteService) {
     this.utenteService = utenteService;
   }
 
+  /**
+   * Set del carrelloService per fini di testing.
+   * @param carrelloService il service di carrello
+   */
   public void setCarrelloService(CarrelloService carrelloService) {
     this.carrelloService = carrelloService;
   }

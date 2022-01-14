@@ -22,14 +22,17 @@ public class UtenteServiceImpl implements UtenteService {
   /**
    * Setta carrelloService per fini di testing.
    *
-   * @param carrelloService
+   * @param carrelloService il service necessario per funzionamento.
    */
   public void setCarrelloService(CarrelloService carrelloService) {
     this.carrelloService = carrelloService;
   }
 
   @Override
-  public Utente createUtente(String username, String email, String password, String nome, String cognome, String sesso, LocalDate dataDiNascita, String indirizzo, int cap, String paese) {
+  public Utente createUtente(String username, String email,
+    String password,String nome,String cognome,
+    String sesso,LocalDate dataDiNascita,
+    String indirizzo,int cap,String paese) {
     Utente utente = new Utente();
     utente.setUsername(username);
     utente.setEmail(email);
@@ -78,7 +81,7 @@ public class UtenteServiceImpl implements UtenteService {
   }
 
   @Override
-  public Utente login(String username, String password) {
+  public Utente login(String username, final String password) {
     return utenteDao.doRetrieveUtenteByUsernameAndPassword(username, password);
   }
 

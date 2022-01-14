@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class PrenotazioneDAOImpl implements PrenotazioneDAO {
 
+  /**
+   * Metodo per salvare una prenotazione nel DB.
+   * @param prenotazione il bean della prenotazione riempito.
+   * @return un booleano per controllare la riuscita.
+   */
   public boolean doSavePrenotazione(Prenotazione prenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -33,7 +38,12 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
       throw new RuntimeException(e);
     }
   }
-
+  /**
+   * Metodo per recuperare una prenotazione dal DB.
+   * @param limit il limite finale della lista del DB.
+   * @param offset la compensazione d`inizio della lista dal DB.
+   * @return ritorna la lista di tutte le prenotazioni dal DB.
+   */
   public ArrayList<Prenotazione> doRetrievePrenotazione(int limit, int offset) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -65,6 +75,11 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
 
   }
 
+  /**
+   * Metodo che recupera una prenotazione dal DB.
+   * @param numeroPrenotazione il numero della prenotazione.
+   * @return il bean della prenotazione riempito.
+   */
   public Prenotazione doRetrievePrenotazioneByCodice(int numeroPrenotazione) {
     try (Connection con = ConPool.getConnection()) {
 
@@ -92,31 +107,12 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     }
   }
 
-  public boolean doUpdatePrenotazione(Prenotazione prenotazione) {
-
-    try (Connection con = ConPool.getConnection()) {
-      PreparedStatement ps = con.prepareStatement(
-              "UPDATE Prenotazione SET categoria=?, descrizione=?, "
-                      + "emailRichiedente=?, copertina=?, accettata=?,"
-                      + " nomeProdotto=? WHERE numeroPrenotazione=?");
-
-      ps.setString(1, prenotazione.getCategoria());
-      ps.setString(2, prenotazione.getDescrizione());
-      ps.setString(3, prenotazione.getEmailRichiedente());
-      ps.setString(4, prenotazione.getCopertina());
-      ps.setInt(5, prenotazione.getAccettata());
-      ps.setInt(6, prenotazione.getNumeroPrenotazione());
-      ps.setString(7, prenotazione.getNomeProdotto());
-
-      int x = ps.executeUpdate();
-
-      return x == 1;
-
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
+  /**
+   * Metodo per accettare una prenotazione
+   * da parte di un admin.
+   * @param numeroPrenotazione il numero della prenotazione.
+   * @return un booleano per controllare la riuscita.
+   */
   public boolean doAcceptPrenotazione(int numeroPrenotazione) {
 
     try (Connection con = ConPool.getConnection()) {
@@ -134,21 +130,10 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     }
   }
 
-  public boolean doDeletePrenotazione(int numeroPrenotazione) {
-    try (Connection con = ConPool.getConnection()) {
-
-      PreparedStatement ps = con.prepareStatement(
-              "DELETE FROM Prenotazione WHERE numeroPrenotazione=?");
-      ps.setInt(1, numeroPrenotazione);
-
-      int x = ps.executeUpdate();
-      return x == 1;
-
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
+  /**
+   * Metodo per contare tutte le prenotazioni nel DB.
+   * @return il numero di prenotazioni nel DB.
+   */
   public int doRetrieveCounterPrenotazioni() {
     try (Connection con = ConPool.getConnection()) {
 

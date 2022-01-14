@@ -33,7 +33,7 @@ public class PrenotazioneServletIntegration {
     prenotazioneServlet.doGet(request, response);
   }
 
-  /*@
+  /*
   //TODO
   public void testDoPostSave() throws ServletException, IOException {
     when(request.getPathInfo()).thenReturn("/save");

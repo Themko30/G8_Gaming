@@ -16,6 +16,11 @@ import java.util.Set;
 
 public class OrdineDAOImpl implements OrdineDAO {
 
+    /**
+     * Metodo che recupera tutti gli ordini di utente del DB.
+     * @param u il bean dell`utente riempito.
+     * @return la lista di ordini dell`utente.
+     */
     public ArrayList<Ordine> doRetrieveOrdiniByUtente(Utente u) {
         try (Connection con = ConPool.getConnection()) {
 
@@ -45,6 +50,12 @@ public class OrdineDAOImpl implements OrdineDAO {
         }
     }
 
+    /**
+     * Metodo che recupera i prodotti acquistati
+     * di uno specifico ordine.
+     * @param codiceOrdine il codice dell`ordine
+     * @return il bean dell`ordine riempito.
+     */
     public Ordine doRetrieveProdottiAcquistati(int codiceOrdine) {
         try (Connection con = ConPool.getConnection()) {
 
@@ -99,6 +110,12 @@ public class OrdineDAOImpl implements OrdineDAO {
     }
 
 
+    /**
+     * Metodo che recupera tutti gli ordini dal DB.
+     * @param offset la compensazione d`inizio della lista dal DB
+     * @param limit il limite finale della lista del DB.
+     * @return la lista di ordini dal DB
+     */
     public ArrayList<Ordine> doRetrieveAllOrdini(int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
 
@@ -131,6 +148,12 @@ public class OrdineDAOImpl implements OrdineDAO {
         }
     }
 
+    /**
+     * Metodo che aggiorna lo stato di un ordine.
+     * @param numero il numero dell`ordine.
+     * @param stato lo stato dell`ordine.
+     * @return un booleano per controllare la riuscita.
+     */
     public boolean doUpdateStatoOrdine(int numero, String stato) {
         try (Connection con = ConPool.getConnection()) {
 
@@ -146,12 +169,16 @@ public class OrdineDAOImpl implements OrdineDAO {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Metodo per salvare l`ordine nel DB.
+     * @param o il bean dell`ordine riempito.
+     * @return un booleano per controllare la riuscita.
+     */
     public boolean doSaveOrdine(Ordine o) {
         try (Connection con = ConPool.getConnection()) {
 
             LinkedHashMap<Prodotto, Integer> prodotti = o.getProdotti();
-            if(prodotti.size() > 0) {
+            if (prodotti.size() > 0) {
 
 
                 Set<Prodotto> key = prodotti.keySet();
@@ -195,8 +222,7 @@ public class OrdineDAOImpl implements OrdineDAO {
                 }
 
                 return rows > 0;
-            }
-            else {
+            } else {
                 return false;
             }
 
@@ -205,7 +231,12 @@ public class OrdineDAOImpl implements OrdineDAO {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Metodo per settare la valutazione di un prodotto.
+     * @param codiceOrdine il codice dell`ordine.
+     * @param codiceProdotto il codice del prodotto.
+     * @return un booleano per controllare la riuscita.
+     */
     public boolean doSetProdottoValutato(int codiceOrdine, int codiceProdotto) {
         try (Connection con = ConPool.getConnection()) {
 
@@ -221,7 +252,10 @@ public class OrdineDAOImpl implements OrdineDAO {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Metodo per recuperare il numero di ordini dal DB.
+     * @return il numero di ordini totali.
+     */
     public int doRetrieveCounterOrdini() {
         try (Connection con = ConPool.getConnection()) {
 

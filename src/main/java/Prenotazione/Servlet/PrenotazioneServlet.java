@@ -21,13 +21,28 @@ import main.java.Validator.Service.ValidatorImpl;
 
 public class PrenotazioneServlet extends HttpServlet {
 
-  PrenotazioneService prenotazioneService = new PrenotazioneServiceImpl();
+  /**
+   * Creazione di prenotazioneService.
+   */
+  private PrenotazioneService prenotazioneService =
+    new PrenotazioneServiceImpl();
+  /**
+   * Creazione del Validator.
+   */
   private Validator validator = new ValidatorImpl();
 
+  /**
+   * Set di prenotazioneService per fini di testing.
+   * @param prenotazioneService il service di prenotazione.
+   */
   public void setPrenotazioneService(PrenotazioneService prenotazioneService) {
     this.prenotazioneService = prenotazioneService;
   }
 
+  /**
+   * Set di Validator per fini di testing.
+   * @param validator il validator che controlla i dati.
+   */
   public void setValidator(Validator validator) {
     this.validator = validator;
   }
@@ -38,7 +53,8 @@ public class PrenotazioneServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
     String path = req.getPathInfo();
     path = validator.validatePath(path);
@@ -66,7 +82,8 @@ public class PrenotazioneServlet extends HttpServlet {
     switch (path) {
       case "/save":
         Prenotazione savePrenotazione = new Prenotazione();
-        savePrenotazione.setEmailRichiedente(req.getParameter("email").toLowerCase());
+        savePrenotazione.setEmailRichiedente(req.getParameter("email")
+          .toLowerCase());
         savePrenotazione.setCategoria(req.getParameter("categoria"));
 
         Part filePart = req.getPart("copertina");
