@@ -203,10 +203,7 @@ public class UtenteDAOImpl implements UtenteDAO {
       ResultSet rs = ps.executeQuery();
       /*Utente utente = new Utente();*/
 
-      if (rs.next()) {
-        return true;
-      }
-      return false;
+      return rs.next();
 
     } catch (SQLException e) {
       e.printStackTrace();
