@@ -103,6 +103,8 @@ public class AuthServletTest {
   @Test
   public void testDoPostUpdateGiusto() throws ServletException, IOException {
     when(httpServletRequest.getPathInfo()).thenReturn("/update");
+    Validator validator = Mockito.mock(Validator.class);
+    when(validator.validatePath(any())).thenReturn("/update");
     AuthServlet authServlet = new AuthServlet();
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
@@ -131,6 +133,7 @@ public class AuthServletTest {
     AuthServlet authServlet = new AuthServlet();
     Validator validator = Mockito.mock(Validator.class);
     Utente utente = Mockito.mock(Utente.class);
+    when(validator.validatePath(any())).thenReturn("/update");
     doNothing().when(validator).validateUtente(any());
     authServlet.setValidator(validator);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
