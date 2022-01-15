@@ -62,6 +62,7 @@ public class AdminServletTest {
     adminServlet.doGet(httpServletRequest, httpServletResponse);
   }
 
+
   @Test
   public void testDoGetStatistics() throws ServletException, IOException {
     when(httpServletRequest.getSession()).thenReturn(session);
@@ -361,6 +362,15 @@ public class AdminServletTest {
 
     when(httpServletRequest.getParameter("numeroPrenotazione")).thenReturn("1");
     adminServlet.setPrenotazioneService(prenotazioneService);
+    adminServlet.doPost(httpServletRequest, httpServletResponse);
+  }
+
+  @Test
+  public void testDoPostAdminNullo() throws ServletException, IOException{
+    when(httpServletRequest.getSession()).thenReturn(session);
+    Utente utente = null;
+    when(session.getAttribute("utente")).thenReturn(utente);
+    when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     adminServlet.doPost(httpServletRequest, httpServletResponse);
   }
 

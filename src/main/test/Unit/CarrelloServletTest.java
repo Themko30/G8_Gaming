@@ -43,10 +43,10 @@ public class CarrelloServletTest {
     @Test
     public void testDoPostAdd() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/Add");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
         when(request.getParameter("prodotto")).thenReturn("1");
         when(request.getParameter("quantita")).thenReturn("1");
-        HttpSession session = Mockito.mock(HttpSession.class);
-        when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
         carrelloServlet.setCarrelloService(carrelloService);
@@ -56,10 +56,10 @@ public class CarrelloServletTest {
     @Test
     public void testDoPostModifica() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/Modifica");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
         when(request.getParameter("prodotto")).thenReturn("1");
         when(request.getParameter("quantita")).thenReturn("1");
-        HttpSession session = Mockito.mock(HttpSession.class);
-        when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
         carrelloServlet.setCarrelloService(carrelloService);
@@ -69,9 +69,9 @@ public class CarrelloServletTest {
     @Test
     public void testDoPostRimuovi() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/Rimuovi");
-        when(request.getParameter("prodotto")).thenReturn("1");
-        HttpSession session = Mockito.mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
+        when(request.getParameter("prodotto")).thenReturn("1");
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
         carrelloServlet.setCarrelloService(carrelloService);
@@ -81,14 +81,14 @@ public class CarrelloServletTest {
     @Test
     public void testDoPostCheckout() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/Checkout");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
         when(request.getParameter("prodotto")).thenReturn("1");
         when(request.getParameter("indirizzo")).thenReturn("Via da qui, 1");
         when(request.getParameter("CAP")).thenReturn("80053");
         when(request.getParameter("paese")).thenReturn("Italia");
         when(request.getParameter("metodoPagamento")).thenReturn("Visa");
 
-        HttpSession session = Mockito.mock(HttpSession.class);
-        when(request.getSession()).thenReturn(session);
         Carrello c = Mockito.mock(Carrello.class);
         when(session.getAttribute("carrello")).thenReturn(c);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
@@ -127,4 +127,34 @@ public class CarrelloServletTest {
 
         carrelloServlet.doGet(request, response);
     }
+
+    @Test
+    public void testDoGetUtenteNull() throws ServletException, IOException {
+        when(request.getSession()).thenReturn(session);
+        Utente utente = null;
+        when(session.getAttribute("utente")).thenReturn(utente);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        carrelloServlet.doGet(request, response);
+    }
+
+    @Test
+    public void testDoPostUtenteNull() throws ServletException, IOException {
+        when(request.getSession()).thenReturn(session);
+        Utente utente = null;
+        when(session.getAttribute("utente")).thenReturn(utente);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        carrelloServlet.doPost(request, response);
+    }
+
+    @Test
+    public void testDoPostDefault() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/ciao");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
+
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+        carrelloServlet.doPost(request, response);
+    }
+
 }

@@ -45,6 +45,16 @@ public class RegistazioneServletTest {
     public void testDoGetDefault() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/");
         when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        when(validator.validatePath(anyString())).thenReturn("/");
+        registrazioneServlet.setValidator(validator);
+        registrazioneServlet.doGet(request, response);
+    }
+
+    @Test
+    public void testDoGetUtenteNotNull() throws ServletException, IOException {
+        when(request.getPathInfo()).thenReturn("/");
+        when(request.getSession()).thenReturn(session);
         when(session.getAttribute("utente")).thenReturn(utente);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(validator.validatePath(anyString())).thenReturn("/");
