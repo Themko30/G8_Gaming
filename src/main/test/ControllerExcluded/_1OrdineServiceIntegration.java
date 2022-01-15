@@ -17,10 +17,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class OrdineServiceIntegration {
+public class _1OrdineServiceIntegration {
 
     OrdineService ordineService = new OrdineServiceImpl();
 
@@ -61,9 +60,10 @@ public class OrdineServiceIntegration {
 
         OrdineDAO ordineDAO = new OrdineDAOImpl();
         ArrayList<Ordine> ordiniAfterTest = ordineDAO.doRetrieveOrdiniByUtente(u);
-        assertTrue(ordiniAfterTest.size() == 13);
+        assertTrue(ordiniAfterTest.size() == 10);
         ProdottoService prodottoService = new ProdottoServiceImpl();
-        assertTrue(prodottoService.quantitaProdotto(prodottoService.prodottoCodice(1)) == 4);
+        int quantitaProdotto = prodottoService.quantitaProdotto(prodottoService.prodottoCodice(1));
+        assertTrue(quantitaProdotto == 12);
 
     }
 
@@ -87,7 +87,7 @@ public class OrdineServiceIntegration {
 
     @Test
     public void testRetrieveOrderFail() {
-        assertThrows(RuntimeException.class, ()->ordineService.retrieveOrder(40));
+        assertTrue(ordineService.retrieveOrder(40).getProdotti().size() == 0);
     }
 
     @Test
@@ -100,12 +100,12 @@ public class OrdineServiceIntegration {
 
     @Test
     public void testSetProdottoValutatoFailNoProductInOrder() {
-        assertThrows(RuntimeException.class, ()->ordineService.setProdottoValutato(9, 1));
+        assertTrue(ordineService.setProdottoValutato(9, 300) == false);
     }
 
     @Test
     public void testSetProdottoValutatoFailNoOrder() {
-        assertThrows(RuntimeException.class, ()->ordineService.setProdottoValutato(40, 1));
+        assertTrue(ordineService.setProdottoValutato(40, 1) == false);
     }
 
     @Test

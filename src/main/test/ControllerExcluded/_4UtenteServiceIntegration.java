@@ -18,7 +18,7 @@ import main.java.Storage.Dao.UtenteDAOImpl;
 import main.java.Storage.Entity.Utente;
 import org.junit.Test;
 
-public class UtenteServiceIntegration {
+public class _4UtenteServiceIntegration {
 
   UtenteDAOImpl UtenteDAOImpl = new UtenteDAOImpl();
   UtenteService utenteService = new UtenteServiceImpl();
@@ -26,25 +26,24 @@ public class UtenteServiceIntegration {
 
   @Test
   public void testSaveUtente() throws Exception {
-    CarrelloService carrelloService = new CarrelloServiceImpl();
-    Utente utente = utenteService.createUtente("eiopani4", "eiopami4@gmail.com", "xiopani123", "Xiopani", "xiopani", "altro", LocalDate.of(2000, 2, 2), "via Donna, 16", 80053, "Xiopanation");
+    Utente utente = utenteService.createUtente("eiopani5", "eiopami5@gmail.com", "xiopani123", "Xiopani", "xiopani", "altro", LocalDate.of(2000, 2, 2), "via Donna, 16", 80053, "Xiopanation");
     boolean result = utenteService.saveUtente(utente);
-    carrelloService.creaCarrello(utente);
     assertTrue(result);
 
-    Utente utenteAfterSave = utenteDao.doRetrieveUtenteByUsername("eiopani4");
-    assertTrue(utenteAfterSave.getUsername().equals("eiopani4"));
+    Utente utenteAfterSave = utenteDao.doRetrieveUtenteByUsername("eiopani5");
+    assertTrue(utenteAfterSave.getUsername().equals("eiopani5"));
   }
 
   @Test
   public void testUpdateUtente() {
-    Utente utente = utenteDao.doRetrieveUtenteByUsername("eiopani3");
-    utente.setSesso("Maschio");
+    Utente utente = utenteDao.doRetrieveUtenteByUsername("espositogennaro");
+    utente.setSesso("Altro");
     boolean result = utenteService.updateUtente(utente);
     assertTrue(result);
 
-    Utente utenteAfterModify = utenteDao.doRetrieveUtenteByUsername("eiopani3");
-    assertTrue(utenteAfterModify.getUsername().equals("eiopani3"));
+    Utente utenteAfterModify = utenteDao.doRetrieveUtenteByUsername("espositogennaro");
+    assertTrue(utenteAfterModify.getUsername().equals("espositogennaro"));
+    assertTrue(utenteAfterModify.getSesso().equals("Altro"));
   }
 
   @Test
@@ -66,13 +65,13 @@ public class UtenteServiceIntegration {
   @Test
   public void testAllUtenti() {
     ArrayList<Utente> allUtenti = utenteService.allUtenti();
-    assertTrue(allUtenti.size() == 8);
+    assertTrue(allUtenti.size() == 9);
   }
 
   @Test
   public void testCounterUtente() {
     int counter = utenteService.counterUtente();
-    assertTrue(counter == 8);
+    assertTrue(counter == 10);
   }
 
   @Test

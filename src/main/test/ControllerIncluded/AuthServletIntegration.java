@@ -87,7 +87,7 @@ public class AuthServletIntegration {
     when(request.getPathInfo()).thenReturn("/update");
     when(request.getSession()).thenReturn(session);
     when(request.getParameter("username")).thenReturn("acaro");
-    when(request.getParameter("email")).thenReturn("Xiopani3@gmail.com");
+    when(request.getParameter("email")).thenReturn("xiopani3@gmail.com");
     when(request.getParameter("password")).thenReturn("Xiopani");
     when(request.getParameter("nome")).thenReturn("Xiopani");
     when(request.getParameter("cognome")).thenReturn("Xiopani");

@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-public class CarrelloServiceIntegration {
+public class _2CarrelloServiceIntegration {
     CarrelloServiceImpl carrelloService = new CarrelloServiceImpl();
     CarrelloDAOImpl carrelloDAO = new CarrelloDAOImpl();
 

@@ -11,7 +11,7 @@ import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
 import main.java.Storage.Entity.Prenotazione;
 import org.junit.Test;
 
-public class PrenotazioneServiceIntegration {
+public class _5PrenotazioneServiceIntegration {
   PrenotazioneService prenotazioneService = new PrenotazioneServiceImpl();
 
   @Test
@@ -57,7 +57,7 @@ public class PrenotazioneServiceIntegration {
   @Test
   public void testCounterPrenotazioni() {
     int counter = prenotazioneService.counterPrenotazioni();
-    assertTrue(counter == 5);
+    assertTrue(counter == 4);
   }
 
 }

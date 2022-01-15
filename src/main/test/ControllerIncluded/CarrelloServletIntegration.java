@@ -4,6 +4,7 @@ import main.java.Carrello.Servlet.CarrelloServlet;
 import main.java.Storage.Dao.OrdineDAOImpl;
 import main.java.Storage.Dao.ProdottoDAOImpl;
 import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
 import main.java.Storage.Entity.Utente;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -145,10 +147,12 @@ public class CarrelloServletIntegration {
 
 
         ProdottoDAOImpl prodottoDAO = new ProdottoDAOImpl();
-        assertTrue(prodottoDAO.doRetrieveQuantitaProdottoByCodice(1) == 8);
+        int quantitaProdotto = prodottoDAO.doRetrieveQuantitaProdottoByCodice(1);
+        assertTrue(quantitaProdotto == 11);
 
         OrdineDAOImpl ordineDAO = new OrdineDAOImpl();
-        assertTrue(ordineDAO.doRetrieveOrdiniByUtente(u).size() == 13);
+        List<Ordine> ordini = ordineDAO.doRetrieveOrdiniByUtente(u);
+        assertTrue(ordini.size() == 11);
     }
 
 
