@@ -186,7 +186,7 @@ public class AuthServlet extends HttpServlet {
     switch (path) {
       case "/update":
         username = req.getParameter("username");
-        email = req.getParameter("email").toLowerCase();
+        email = req.getParameter("email");
         password = req.getParameter("password");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");

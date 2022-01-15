@@ -22,6 +22,7 @@ import main.java.Catalogo.Service.ProdottoService;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Utente;
+import main.java.Validator.Service.Validator;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -125,9 +126,13 @@ public class AuthServletTest {
   }
 
   @Test
-  public void testDoPostUpdateSbagliato() throws ServletException, IOException {
+  public void testDoPostUpdateSbagliato() throws Exception {
     when(httpServletRequest.getPathInfo()).thenReturn("/update");
     AuthServlet authServlet = new AuthServlet();
+    Validator validator = Mockito.mock(Validator.class);
+    Utente utente = Mockito.mock(Utente.class);
+    doNothing().when(validator).validateUtente(any());
+    authServlet.setValidator(validator);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     when(httpServletRequest.getParameter("username")).thenReturn("Xiopani");
     when(httpServletRequest.getParameter("email")).thenReturn("Xiopani");
@@ -142,8 +147,7 @@ public class AuthServletTest {
     when(httpServletRequest.getParameter("paese")).thenReturn("Xiopani");
     UtenteService utenteService = Mockito.mock(UtenteServiceImpl.class);
     authServlet.setUtenteService(utenteService);
-    Utente utente = Mockito.mock(Utente.class);
-    when(utenteService.createUtente("xiopani", "xiopani", "xiopani", "xiopani", "xiopani", "xiopani", data, "xiopani", 80053, "xiopani")).thenReturn(utente);
+    when(utenteService.createUtente("Xiopani", "Xiopani", "Xiopani", "Xiopani", "Xiopani", "Xiopani", data, "Xiopani", 80053, "Xiopani")).thenReturn(utente);
     when(utenteService.updateUtente(any())).thenReturn(false);
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     assertThrows(ServletException.class, () -> authServlet.doPost(httpServletRequest, httpServletResponse));
