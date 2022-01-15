@@ -33,18 +33,4 @@ public class PrenotazioneServletIntegration {
     prenotazioneServlet.doGet(request, response);
   }
 
-  /*
-  //TODO
-  public void testDoPostSave() throws ServletException, IOException {
-    when(request.getPathInfo()).thenReturn("/save");
-    when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
-    when(request.getParameter("descrizione")).thenReturn("aaaaaaaaaaa");
-    when(request.getParameter("nomeProdotto")).thenReturn("Xiopani");
-    doNothing().when(request).getPart(anyString());
-    Part filePart = Mockito.mock(Part.class)
-    doNothing().when(filePart).getSubmittedFileName();
-    Prenotazione savePrenotazione = new Prenotazione();
-    when(savePrenotazione.setCopertina(anyString()))
-    prenotazioneServlet.doGet(request, response);
-  }*/
 }

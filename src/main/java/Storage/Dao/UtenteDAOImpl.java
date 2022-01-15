@@ -201,9 +201,9 @@ public class UtenteDAOImpl implements UtenteDAO {
       ps.setString(1, username);
 
       ResultSet rs = ps.executeQuery();
-      /*Utente utente = new Utente();*/
-
-      return rs.next();
+      boolean x = rs.next();
+      rs.close();
+      return x;
 
     } catch (SQLException e) {
       e.printStackTrace();

@@ -12,8 +12,8 @@ public class InvalidProductQuantityException extends Exception {
     /**
      * Custom Exception per la quantità del prodotto.
      *
-     * @param message
-     * @param p
+     * @param message il messaggio che specifica l`errore
+     * @param p il bean del prodotto che ha lanciato l`eccezione.
      */
     public InvalidProductQuantityException(String message, Prodotto p) {
         super(message);
