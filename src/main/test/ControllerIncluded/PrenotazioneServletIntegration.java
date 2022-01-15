@@ -1,7 +1,6 @@
-package Integration.ControllerIncluded;
+package ControllerIncluded;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -10,11 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import main.java.Autenticazione.Servlet.AuthServlet;
+
 import main.java.Prenotazione.Servlet.PrenotazioneServlet;
-import main.java.Storage.Entity.Prenotazione;
-import main.java.Storage.Entity.Utente;
 import org.junit.Test;
 import org.mockito.Mockito;
 

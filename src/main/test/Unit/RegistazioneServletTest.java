@@ -1,3 +1,5 @@
+package Unit;
+
 import main.java.Autenticazione.Service.UtenteServiceImpl;
 import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
@@ -35,11 +37,15 @@ public class RegistazioneServletTest {
     CarrelloServiceImpl carrelloService = Mockito.mock(CarrelloServiceImpl.class);
     ValidatorImpl validator = Mockito.mock(ValidatorImpl.class);
     RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
+    HttpSession session = Mockito.mock(HttpSession.class);
+
 
 
     @Test
     public void testDoGetDefault() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(validator.validatePath(anyString())).thenReturn("/");
         registrazioneServlet.setValidator(validator);

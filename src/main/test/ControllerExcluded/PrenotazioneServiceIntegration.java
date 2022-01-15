@@ -1,12 +1,11 @@
-package Integration.ControllerExcluded;
+package ControllerExcluded;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import main.java.Catalogo.Service.ProdottoService;
-import main.java.Catalogo.Service.ProdottoServiceImpl;
+
 import main.java.Prenotazione.Service.PrenotazioneService;
 import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
 import main.java.Storage.Entity.Prenotazione;

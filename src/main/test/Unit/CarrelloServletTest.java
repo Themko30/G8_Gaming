@@ -1,3 +1,5 @@
+package Unit;
+
 import main.java.Carrello.Service.CarrelloServiceImpl;
 import main.java.Carrello.Service.OrdineServiceImpl;
 import main.java.Carrello.Servlet.CarrelloServlet;
@@ -6,6 +8,7 @@ import main.java.Catalogo.Servlet.ProdottoServlet;
 import main.java.Storage.Entity.Carrello;
 import main.java.Storage.Entity.Ordine;
 import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
 import main.java.Validator.Service.ValidatorImpl;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -34,6 +37,8 @@ public class CarrelloServletTest {
     OrdineServiceImpl ordineService = Mockito.mock(OrdineServiceImpl.class);
     ValidatorImpl validator = Mockito.mock(ValidatorImpl.class);
     RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
+    HttpSession session = Mockito.mock(HttpSession.class);
+    Utente utente = Mockito.mock(Utente.class);
 
     @Test
     public void testDoPostAdd() throws ServletException, IOException {
@@ -104,6 +109,8 @@ public class CarrelloServletTest {
     @Test
     public void testDoGetDefaultNull() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn(null);
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
@@ -113,6 +120,8 @@ public class CarrelloServletTest {
     @Test
     public void testDoGetConfirmOrder() throws ServletException, IOException {
         when(request.getPathInfo()).thenReturn("/confirmOrder");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("utente")).thenReturn(utente);
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 

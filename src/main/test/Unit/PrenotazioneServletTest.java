@@ -1,3 +1,5 @@
+package Unit;
+
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
@@ -11,10 +13,12 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import main.java.Prenotazione.Service.PrenotazioneService;
 import main.java.Prenotazione.Servlet.PrenotazioneServlet;
 import main.java.Storage.Entity.Prenotazione;
+import main.java.Storage.Entity.Utente;
 import main.java.Validator.Exceptions.InvalidProductException;
 import main.java.Validator.Service.Validator;
 import org.junit.Test;
@@ -24,6 +28,8 @@ public class PrenotazioneServletTest {
 
   HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
   HttpServletResponse httpServletResponse = Mockito.mock(HttpServletResponse.class);
+  HttpSession session = Mockito.mock(HttpSession.class);
+  Utente utente = Mockito.mock(Utente.class);
 
   @Test
   public void testDoGetDefault() throws ServletException, IOException {
@@ -57,6 +63,9 @@ public class PrenotazioneServletTest {
     prenotazioneServlet.setPrenotazioneService(prenotazioneService);
     when(prenotazioneService.savePrenotazione(any())).thenReturn(true);
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
+    when(httpServletRequest.getParameter("email")).thenReturn("ciao@gmail.com");
     prenotazioneServlet.doPost(httpServletRequest, httpServletResponse);
 
   }
@@ -75,6 +84,7 @@ public class PrenotazioneServletTest {
     Part part = Mockito.mock(Part.class);
     when(httpServletRequest.getPart(any())).thenReturn(part);
     when(part.getSubmittedFileName()).thenReturn("Paolo");
+    when(httpServletRequest.getParameter("email")).thenReturn("ciao@gmail.com");
     doNothing().when(prenotazione).setCategoria(any());
     doNothing().when(prenotazione).setDescrizione(any());
     doNothing().when(prenotazione).setNomeProdotto(any());
@@ -108,6 +118,9 @@ public class PrenotazioneServletTest {
     prenotazioneServlet.setPrenotazioneService(prenotazioneService);
     when(prenotazioneService.savePrenotazione(any())).thenReturn(true);
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
+    when(httpServletRequest.getParameter("email")).thenReturn("ciao@gmail.com");
     prenotazioneServlet.doPost(httpServletRequest, httpServletResponse);
   }
 

@@ -1,6 +1,5 @@
-package Integration.ControllerIncluded;
+package ControllerIncluded;
 
-import main.java.Catalogo.Servlet.ProdottoServlet;
 import main.java.Gestione_Admin.Servlet.AdminServlet;
 import main.java.Storage.Dao.*;
 import main.java.Storage.Entity.Ordine;
@@ -14,9 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 

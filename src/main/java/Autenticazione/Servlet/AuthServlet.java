@@ -168,7 +168,6 @@ public class AuthServlet extends HttpServlet {
           throws ServletException, IOException {
 
     String path = req.getPathInfo();
-    validator = new ValidatorImpl();
     path = validator.validatePath(path);
 
     String username;

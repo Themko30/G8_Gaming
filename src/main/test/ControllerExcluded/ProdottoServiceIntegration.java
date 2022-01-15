@@ -1,4 +1,4 @@
-package Integration.ControllerExcluded;
+package ControllerExcluded;
 
 import main.java.Catalogo.Service.ProdottoService;
 import main.java.Catalogo.Service.ProdottoServiceImpl;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
-public class ProdottoServiceTest {
+public class ProdottoServiceIntegration {
     ProdottoService prodottoService = new ProdottoServiceImpl();
 
     @Test
