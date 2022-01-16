@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="center">
-    <h1>Registrazione</h1>
+    <h1>Modifica Profilo</h1>
     <form method="post" onsubmit="return validateRegistration()" action="${context}/account/update">
         <input type="hidden" id="username" name="username" value="${utente.username}" required>
         <div class="txt_field">
