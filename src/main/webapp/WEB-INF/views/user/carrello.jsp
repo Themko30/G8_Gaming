@@ -56,11 +56,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-
-            <form method="post" action="">
-                <input type="hidden" name="" value="">
-                <button type="button" class="btn btn-danger">Svuota Carrello</button>
-            </form>
         </c:otherwise>
     </c:choose>
 </div>
