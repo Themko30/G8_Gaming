@@ -1,3 +1,5 @@
+package Unit;
+
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -31,10 +33,14 @@ public class AuthServletTest {
 
   HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
   HttpServletResponse httpServletResponse = Mockito.mock(HttpServletResponse.class);
+  HttpSession session = Mockito.mock(HttpSession.class);
+  Utente utente = Mockito.mock(Utente.class);
 
   @Test
   public void testDoGetLogin() throws ServletException, IOException {
     when(httpServletRequest.getPathInfo()).thenReturn("/login");
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     AuthServlet authServlet = new AuthServlet();
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
@@ -44,6 +50,8 @@ public class AuthServletTest {
   @Test
   public void testDoGetProfile() throws ServletException, IOException {
     when(httpServletRequest.getPathInfo()).thenReturn("/profile");
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     AuthServlet authServlet = new AuthServlet();
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
@@ -53,6 +61,8 @@ public class AuthServletTest {
   @Test
   public void testDoGetUpdate() throws ServletException, IOException {
     when(httpServletRequest.getPathInfo()).thenReturn("/update");
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     AuthServlet authServlet = new AuthServlet();
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
@@ -75,6 +85,8 @@ public class AuthServletTest {
   @Test
   public void testDoGetOrderView() throws ServletException, IOException {
     when(httpServletRequest.getPathInfo()).thenReturn("/orderView");
+    when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
     when(httpServletRequest.getParameter("codice")).thenReturn("1");
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
     AuthServlet authServlet = new AuthServlet();
@@ -96,6 +108,7 @@ public class AuthServletTest {
     HttpSession session = Mockito.mock(HttpSession.class);
     authServlet.setCarrelloService(carrelloService);
     when(httpServletRequest.getSession()).thenReturn(session);
+    when(session.getAttribute("utente")).thenReturn(utente);
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doGet(httpServletRequest, httpServletResponse);
   }
@@ -209,6 +222,7 @@ public class AuthServletTest {
     when(httpServletRequest.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     authServlet.doPost(httpServletRequest, httpServletResponse);
   }
+
 
 }
 
