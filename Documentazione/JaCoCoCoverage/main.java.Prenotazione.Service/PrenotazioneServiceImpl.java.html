@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrenotazioneServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Prenotazione.Service</a> &gt; <span class="el_source">PrenotazioneServiceImpl.java</span></div><h1>PrenotazioneServiceImpl.java</h1><pre class="source lang-java linenums">package main.java.Prenotazione.Service;
+
+import java.util.ArrayList;
+import main.java.Storage.Dao.PrenotazioneDAO;
+import main.java.Storage.Dao.PrenotazioneDAOImpl;
+import main.java.Storage.Entity.Prenotazione;
+
+<span class="fc" id="L8">public class PrenotazioneServiceImpl implements PrenotazioneService {</span>
+
+  /**
+   * Creazione di PrenotazioneDAO.
+   */
+<span class="fc" id="L13">  private PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAOImpl();</span>
+
+  @Override
+  public ArrayList&lt;Prenotazione&gt; allPrenotazioni() {
+<span class="nc" id="L17">    return prenotazioneDAO.doRetrievePrenotazione(0, 100);</span>
+  }
+
+  @Override
+  public Prenotazione retrievePrenotazione(int codice) {
+<span class="nc" id="L22">    return prenotazioneDAO.doRetrievePrenotazioneByCodice(codice);</span>
+  }
+
+  @Override
+  public boolean acceptPrenotazione(int numero) {
+<span class="nc" id="L27">    return prenotazioneDAO.doAcceptPrenotazione(numero);</span>
+  }
+
+  @Override
+  public boolean savePrenotazione(Prenotazione prenotazione) {
+<span class="nc" id="L32">    return prenotazioneDAO.doSavePrenotazione(prenotazione);</span>
+  }
+
+  @Override
+  public int counterPrenotazioni() {
+<span class="nc" id="L37">    return prenotazioneDAO.doRetrieveCounterPrenotazioni();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

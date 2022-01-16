@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarrelloServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Carrello.Service</a> &gt; <span class="el_source">CarrelloServiceImpl.java</span></div><h1>CarrelloServiceImpl.java</h1><pre class="source lang-java linenums">package main.java.Carrello.Service;
+
+import java.util.LinkedHashMap;
+import java.util.Set;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
+import main.java.Storage.Dao.CarrelloDAO;
+import main.java.Storage.Dao.CarrelloDAOImpl;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+
+<span class="fc" id="L13">public class CarrelloServiceImpl implements CarrelloService {</span>
+
+    /**
+     * Il CarrelloDAO della classe.
+     */
+<span class="fc" id="L18">    private CarrelloDAO carrelloDAO = new CarrelloDAOImpl();</span>
+
+    /**
+     * Il ProdottoService della classe.
+     */
+<span class="fc" id="L23">    private ProdottoService prodottoService = new ProdottoServiceImpl();</span>
+
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
+    public void setProdottoService(ProdottoService prodottoService) {
+<span class="fc" id="L30">        this.prodottoService = prodottoService;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Metodo per impostare il CarrelloDAO della classe.
+     * @param carrelloDAO Il CarrelloDAO da impostare
+     */
+    public void setCarrelloDAO(CarrelloDAO carrelloDAO) {
+<span class="fc" id="L38">        this.carrelloDAO = carrelloDAO;</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public Carrello updateQuantitaCarrelloSession(Carrello carrello,
+                                                  int codiceProdotto,
+                                                  int quantita) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (quantita &lt; 1) {</span>
+<span class="fc" id="L46">            return rimuoviProdottoCarrelloSession(carrello, codiceProdotto);</span>
+        }
+<span class="fc" id="L48">        LinkedHashMap&lt;Prodotto, Integer&gt; prodottiMap = carrello.getProdotti();</span>
+<span class="fc" id="L49">        Set&lt;Prodotto&gt; prodotti = prodottiMap.keySet();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (Prodotto p : prodotti) {</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (p.getCodice() == codiceProdotto) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                if (quantita &gt; p.getQuantita()) {</span>
+<span class="fc" id="L53">                    return carrello;</span>
+                }
+<span class="fc" id="L55">                double prezzoScontato =</span>
+<span class="fc" id="L56">                        Math.floor((p.getPrezzo()</span>
+<span class="fc" id="L57">                                - p.getPrezzo()</span>
+<span class="fc" id="L58">                                * p.getScontoAttivo()) * 100) / 100;</span>
+<span class="fc" id="L59">                carrello.setNumeroArticoli(carrello.getNumeroArticoli()</span>
+<span class="fc" id="L60">                        - prodottiMap.get(p));</span>
+<span class="fc" id="L61">                carrello.setTotale(carrello.getTotale()</span>
+<span class="fc" id="L62">                        - (prezzoScontato) * prodottiMap.get(p));</span>
+<span class="fc" id="L63">                prodottiMap.replace(p, quantita);</span>
+<span class="fc" id="L64">                carrello.setNumeroArticoli(carrello.getNumeroArticoli()</span>
+<span class="fc" id="L65">                        + prodottiMap.get(p));</span>
+<span class="fc" id="L66">                carrello.setTotale(carrello.getTotale()</span>
+<span class="fc" id="L67">                        + (prezzoScontato) * prodottiMap.get(p));</span>
+
+<span class="fc" id="L69">                break;</span>
+            }
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">        carrello.setProdotti(prodottiMap);</span>
+<span class="fc" id="L73">        return carrello;</span>
+    }
+
+    @Override
+    public Carrello rimuoviProdottoCarrelloSession(Carrello carrello,
+                                                   int codiceProdotto) {
+
+<span class="fc" id="L80">        LinkedHashMap&lt;Prodotto, Integer&gt; prodottiMap = carrello.getProdotti();</span>
+<span class="fc" id="L81">        Set&lt;Prodotto&gt; prodotti = prodottiMap.keySet();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (Prodotto p : prodotti) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (p.getCodice() == codiceProdotto) {</span>
+<span class="fc" id="L84">                double prezzoScontato =</span>
+<span class="fc" id="L85">                        Math.floor((p.getPrezzo() - p.getPrezzo()</span>
+<span class="fc" id="L86">                                * p.getScontoAttivo()) * 100) / 100;</span>
+<span class="fc" id="L87">                carrello.setNumeroArticoli(carrello.getNumeroArticoli()</span>
+<span class="fc" id="L88">                        - prodottiMap.get(p));</span>
+<span class="fc" id="L89">                carrello.setTotale(carrello.getTotale()</span>
+<span class="fc" id="L90">                        - (prezzoScontato) * prodottiMap.get(p));</span>
+<span class="fc" id="L91">                prodottiMap.remove(p);</span>
+<span class="fc" id="L92">                break;</span>
+            }
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        carrello.setProdotti(prodottiMap);</span>
+<span class="fc" id="L96">        return carrello;</span>
+    }
+
+    @Override
+    public Carrello clearCarrello(Carrello carrello) {
+
+<span class="fc" id="L102">        Utente utente = carrello.getUtente();</span>
+
+<span class="fc" id="L104">        carrelloDAO.doClearCarrello(carrello);</span>
+
+<span class="fc" id="L106">        carrello = new Carrello();</span>
+<span class="fc" id="L107">        carrello.setUtente(utente);</span>
+<span class="fc" id="L108">        return carrello;</span>
+    }
+
+    @Override
+    public boolean updateCarrello(Carrello carrello) {
+<span class="nc" id="L113">        return carrelloDAO.doUpdateCarrello(carrello);</span>
+    }
+
+    @Override
+    public boolean creaCarrello(Utente utente) {
+<span class="nc" id="L118">        return carrelloDAO.doCreateCarrello(utente);</span>
+    }
+
+    @Override
+    public Carrello recuperaCarrello(Utente utente) {
+<span class="nc" id="L123">        return carrelloDAO.doRetrieveCarrelloByUtente(utente);</span>
+    }
+
+    @Override
+    public Carrello aggiungiProdotto(Carrello carrello,
+                                     int codiceProdotto,
+                                     int quantita) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (quantita &gt; 0) {</span>
+<span class="fc" id="L131">            LinkedHashMap&lt;Prodotto, Integer&gt; prodottiCarrelloMap =</span>
+<span class="fc" id="L132">                    carrello.getProdotti();</span>
+<span class="fc" id="L133">            Set&lt;Prodotto&gt; prodottiCarrello =</span>
+<span class="fc" id="L134">                    prodottiCarrelloMap.keySet();</span>
+<span class="fc" id="L135">            boolean added = false;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            for (Prodotto p : prodottiCarrello) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">                if (p.getCodice() == codiceProdotto) {</span>
+<span class="fc" id="L138">                    double prezzoScontato =</span>
+<span class="fc" id="L139">                            Math.floor((p.getPrezzo() - p.getPrezzo()</span>
+<span class="fc" id="L140">                                    * p.getScontoAttivo()) * 100) / 100;</span>
+<span class="fc" id="L141">                    prodottiCarrelloMap.replace(p,</span>
+<span class="fc" id="L142">                            prodottiCarrelloMap.get(p) + quantita);</span>
+<span class="fc" id="L143">                    carrello.setNumeroArticoli(carrello.getNumeroArticoli()</span>
+                            + quantita);
+<span class="fc" id="L145">                    carrello.setTotale(carrello.getTotale()</span>
+                            + (prezzoScontato) * quantita);
+<span class="fc" id="L147">                    added = true;</span>
+<span class="fc" id="L148">                    break;</span>
+                }
+<span class="fc" id="L150">            }</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            if (!added) {</span>
+<span class="fc" id="L152">                Prodotto p =</span>
+<span class="fc" id="L153">                        prodottoService.prodottoCodice(codiceProdotto);</span>
+<span class="fc" id="L154">                double prezzoScontato =</span>
+<span class="fc" id="L155">                        Math.floor((p.getPrezzo() - p.getPrezzo()</span>
+<span class="fc" id="L156">                                * p.getScontoAttivo()) * 100) / 100;</span>
+<span class="fc" id="L157">                prodottiCarrelloMap.put(p, quantita);</span>
+<span class="fc" id="L158">                carrello.setNumeroArticoli(carrello.getNumeroArticoli()</span>
+                        + quantita);
+<span class="fc" id="L160">                carrello.setTotale(carrello.getTotale()</span>
+                        + (prezzoScontato) * quantita);
+            }
+
+<span class="fc" id="L164">            carrello.setProdotti(prodottiCarrelloMap);</span>
+        }
+<span class="fc" id="L166">        return carrello;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

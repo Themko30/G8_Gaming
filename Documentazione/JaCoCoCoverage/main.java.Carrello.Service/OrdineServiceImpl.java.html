@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdineServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Carrello.Service</a> &gt; <span class="el_source">OrdineServiceImpl.java</span></div><h1>OrdineServiceImpl.java</h1><pre class="source lang-java linenums">package main.java.Carrello.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import main.java.Storage.Dao.OrdineDAO;
+import main.java.Storage.Dao.OrdineDAOImpl;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Utente;
+
+<span class="fc" id="L12">public class OrdineServiceImpl implements OrdineService {</span>
+
+    /**
+     * L'OrdineBuilder della classe.
+     */
+<span class="fc" id="L17">    private OrdineBuilder ordineBuilder = new OrdineBuilderImpl();</span>
+
+    /**
+     * L'OrdineDAO della classe.
+     */
+<span class="fc" id="L22">    private final OrdineDAO ordineDAO = new OrdineDAOImpl();</span>
+
+    @Override
+    public Ordine createOrdine(Carrello carrello,
+                               String indirizzo, Integer cap,
+                               String paese, String metodoPagamento) {
+
+<span class="nc" id="L29">        String indirizzoSpedizione = indirizzo + &quot;, &quot; + cap + &quot;, &quot; + paese;</span>
+
+<span class="nc" id="L31">        return ordineBuilder.utente(carrello.getUtente())</span>
+<span class="nc" id="L32">                .totale(carrello.getTotale())</span>
+<span class="nc" id="L33">                .numeroArticoli(carrello.getNumeroArticoli())</span>
+<span class="nc" id="L34">                .indirizzoSpedizione(indirizzoSpedizione)</span>
+<span class="nc" id="L35">                .metodoPagamento(metodoPagamento)</span>
+<span class="nc" id="L36">                .data(LocalDate.now())</span>
+<span class="nc" id="L37">                .prodotti(carrello.getProdotti())</span>
+<span class="nc" id="L38">                .build();</span>
+    }
+
+    @Override
+    public boolean saveOrdine(Ordine ordine) {
+<span class="nc" id="L43">        return ordineDAO.doSaveOrdine(ordine);</span>
+    }
+
+    @Override
+    public ArrayList&lt;Ordine&gt; retrieveOrders(Utente utente) {
+<span class="nc" id="L48">        return ordineDAO.doRetrieveOrdiniByUtente(utente);</span>
+    }
+
+    @Override
+    public Ordine retrieveOrder(int codiceOrdine) {
+<span class="nc" id="L53">        return ordineDAO.doRetrieveProdottiAcquistati(codiceOrdine);</span>
+    }
+
+    @Override
+    public boolean setProdottoValutato(int codiceOrdine, int codiceProdotto) {
+<span class="nc" id="L58">        return ordineDAO.doSetProdottoValutato(codiceOrdine, codiceProdotto);</span>
+    }
+
+    @Override
+    public ArrayList&lt;Ordine&gt; allOrders() {
+<span class="nc" id="L63">        return ordineDAO.doRetrieveAllOrdini(0, 100);</span>
+    }
+
+    @Override
+    public boolean updateStato(int numeroOrdine, String stato) {
+<span class="nc" id="L68">        return ordineDAO.doUpdateStatoOrdine(numeroOrdine, stato);</span>
+    }
+
+    @Override
+    public int counterOrdini() {
+<span class="nc" id="L73">        return ordineDAO.doRetrieveCounterOrdini();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UtenteServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Autenticazione.Service</a> &gt; <span class="el_source">UtenteServiceImpl.java</span></div><h1>UtenteServiceImpl.java</h1><pre class="source lang-java linenums">package main.java.Autenticazione.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Storage.Dao.UtenteDAO;
+import main.java.Storage.Dao.UtenteDAOImpl;
+import main.java.Storage.Entity.Utente;
+
+<span class="fc" id="L11">public class UtenteServiceImpl implements UtenteService {</span>
+
+  /**
+   * Crea UtenteDao.
+   */
+<span class="fc" id="L16">  private UtenteDAO utenteDao = new UtenteDAOImpl();</span>
+  /**
+   * Crea CarrelloService.
+   */
+<span class="fc" id="L20">  private CarrelloService carrelloService = new CarrelloServiceImpl();</span>
+
+  /**
+   * Setta carrelloService per fini di testing.
+   *
+   * @param carrelloService il service necessario per funzionamento.
+   */
+  public void setCarrelloService(CarrelloService carrelloService) {
+<span class="nc" id="L28">    this.carrelloService = carrelloService;</span>
+<span class="nc" id="L29">  }</span>
+
+  @Override
+  public Utente createUtente(String username, String email,
+    String password,String nome,String cognome,
+    String sesso,LocalDate dataDiNascita,
+    String indirizzo,int cap,String paese) {
+<span class="fc" id="L36">    Utente utente = new Utente();</span>
+<span class="fc" id="L37">    utente.setUsername(username);</span>
+<span class="fc" id="L38">    utente.setEmail(email);</span>
+<span class="fc" id="L39">    utente.setPassword(password);</span>
+<span class="fc" id="L40">    utente.setNome(nome);</span>
+<span class="fc" id="L41">    utente.setCognome(cognome);</span>
+<span class="fc" id="L42">    utente.setSesso(sesso);</span>
+<span class="fc" id="L43">    utente.setDataDiNascita(dataDiNascita);</span>
+<span class="fc" id="L44">    utente.setAdmin(false);</span>
+<span class="fc" id="L45">    utente.setIndirizzo(indirizzo);</span>
+<span class="fc" id="L46">    utente.setCap(cap);</span>
+<span class="fc" id="L47">    utente.setPaese(paese);</span>
+<span class="fc" id="L48">    return utente;</span>
+  }
+
+  @Override
+  public boolean saveUtente(Utente utente) throws Exception {
+<span class="nc" id="L53">    boolean result = utenteDao.doSaveUtente(utente);</span>
+<span class="nc" id="L54">    carrelloService.creaCarrello(utente);</span>
+<span class="nc" id="L55">    return result;</span>
+  }
+
+  @Override
+  public boolean updateUtente(Utente utente) {
+<span class="nc" id="L60">    return utenteDao.doUpdateUtente(utente);</span>
+  }
+
+  @Override
+  public boolean checkUtente(String username) {
+<span class="nc" id="L65">    return utenteDao.doCheckUsername(username);</span>
+  }
+
+  @Override
+  public boolean setAdmin(String username) {
+<span class="nc" id="L70">    return utenteDao.doSetAdmin(username);</span>
+  }
+
+  @Override
+  public ArrayList&lt;Utente&gt; allUtenti() {
+<span class="nc" id="L75">    return utenteDao.doRetrieveAllUtente(0, 100);</span>
+  }
+
+  @Override
+  public int counterUtente() {
+<span class="nc" id="L80">    return utenteDao.doRetrieveCounterUtenti();</span>
+  }
+
+  @Override
+  public Utente login(String username, final String password) {
+<span class="nc" id="L85">    return utenteDao.doRetrieveUtenteByUsernameAndPassword(username, password);</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
