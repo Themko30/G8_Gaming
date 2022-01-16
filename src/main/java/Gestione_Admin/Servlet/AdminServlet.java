@@ -107,10 +107,6 @@ public class AdminServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-       /* utenteService = new UtenteServiceImpl();
-        ordineService = new OrdineServiceImpl();
-        prodottoService = new ProdottoServiceImpl();
-        prenotazioneService = new PrenotazioneServiceImpl();*/
         ServletContext ctx = getServletContext();
         HashMap<String, Integer> statistics = new HashMap<>();
         statistics.put("Utenti",
