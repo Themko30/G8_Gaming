@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdineBuilderImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Carrello.Service</a> &gt; <span class="el_source">OrdineBuilderImpl.java</span></div><h1>OrdineBuilderImpl.java</h1><pre class="source lang-java linenums">package main.java.Carrello.Service;
+
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+
+public class OrdineBuilderImpl implements OrdineBuilder {
+
+    /**
+     * Il prezzo totale dell'ordine.
+     */
+    private double totale;
+
+    /**
+     * Il numero di articoli dell'ordine.
+     */
+    private int numeroArticoli;
+
+    /**
+     * L'indirizzo di spedizione dell'ordine.
+     */
+    private String indirizzoSpedizione;
+
+    /**
+     * Metodo di pagamento dell'ordine.
+     */
+    private String metodoPagamento;
+
+    /**
+     * La data dell'ordine.
+     */
+    private LocalDate data;
+
+    /**
+     * Lo stato dell'ordine.
+     */
+    private String stato;
+
+    /**
+     * L'HashMap contenente prodotti e relativa quantitò dell'ordine.
+     */
+    private LinkedHashMap&lt;Prodotto, Integer&gt; prodotti;
+
+    /**
+     * L'utente che ha effettuato l'ordine.
+     */
+    private Utente utente;
+
+    /**
+     * L'ordine completo.
+     */
+    private Ordine ordine;
+
+    /**
+     * Il costruttore vuoto della classe
+     */
+<span class="fc" id="L59">    public OrdineBuilderImpl() {</span>
+
+<span class="fc" id="L61">    }</span>
+
+    public OrdineBuilderImpl totale(double totale) {
+<span class="nc" id="L64">        this.totale = totale;</span>
+<span class="nc" id="L65">        return this;</span>
+    }
+
+    public OrdineBuilderImpl numeroArticoli(int numeroArticoli) {
+<span class="nc" id="L69">        this.numeroArticoli = numeroArticoli;</span>
+<span class="nc" id="L70">        return this;</span>
+    }
+
+    public OrdineBuilderImpl indirizzoSpedizione(String indirizzoSpedizione) {
+<span class="nc" id="L74">        this.indirizzoSpedizione = indirizzoSpedizione;</span>
+<span class="nc" id="L75">        return this;</span>
+    }
+
+    public OrdineBuilderImpl metodoPagamento(String metodoPagamento) {
+<span class="nc" id="L79">        this.metodoPagamento = metodoPagamento;</span>
+<span class="nc" id="L80">        return this;</span>
+    }
+
+    public OrdineBuilderImpl data(LocalDate data) {
+<span class="nc" id="L84">        this.data = data;</span>
+<span class="nc" id="L85">        return this;</span>
+    }
+
+    public OrdineBuilderImpl stato(String stato) {
+<span class="nc" id="L89">        this.stato = stato;</span>
+<span class="nc" id="L90">        return this;</span>
+    }
+
+    public OrdineBuilderImpl prodotti(LinkedHashMap&lt;Prodotto,
+            Integer&gt; prodotti) {
+<span class="nc" id="L95">        this.prodotti = prodotti;</span>
+<span class="nc" id="L96">        return this;</span>
+    }
+
+    public OrdineBuilderImpl utente(Utente utente) {
+<span class="nc" id="L100">        this.utente = utente;</span>
+<span class="nc" id="L101">        return this;</span>
+    }
+
+    public Ordine build() {
+<span class="nc" id="L105">        ordine = new Ordine(this);</span>
+<span class="nc" id="L106">        return ordine;</span>
+    }
+
+    public double getTotale() {
+<span class="nc" id="L110">        return totale;</span>
+    }
+
+    public int getNumeroArticoli() {
+<span class="nc" id="L114">        return numeroArticoli;</span>
+    }
+
+    public String getIndirizzoSpedizione() {
+<span class="nc" id="L118">        return indirizzoSpedizione;</span>
+    }
+
+    public String getMetodoPagamento() {
+<span class="nc" id="L122">        return metodoPagamento;</span>
+    }
+
+    public LocalDate getData() {
+<span class="nc" id="L126">        return data;</span>
+    }
+
+    public String getStato() {
+<span class="nc" id="L130">        return stato;</span>
+    }
+
+    public LinkedHashMap&lt;Prodotto, Integer&gt; getProdotti() {
+<span class="nc" id="L134">        return prodotti;</span>
+    }
+
+    public Utente getUtente() {
+<span class="nc" id="L138">        return utente;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

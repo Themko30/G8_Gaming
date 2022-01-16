@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidatorImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Validator.Service</a> &gt; <span class="el_source">ValidatorImpl.java</span></div><h1>ValidatorImpl.java</h1><pre class="source lang-java linenums">package main.java.Validator.Service;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
+import javax.servlet.http.Part;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Exceptions.InvalidProductQuantityException;
+import main.java.Validator.Exceptions.InvalidUserException;
+
+<span class="fc" id="L22">public class ValidatorImpl implements Validator {</span>
+
+    /**
+     * L'UtenteService della classe.
+     */
+<span class="fc" id="L27">    private UtenteService utenteService =</span>
+            new UtenteServiceImpl();
+
+    /**
+     * Il ProdottoService della classe.
+     */
+<span class="fc" id="L33">    private ProdottoService prodottoService =</span>
+            new ProdottoServiceImpl();
+
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
+    public void setProdottoService(ProdottoService prodottoService) {
+<span class="fc" id="L41">        this.prodottoService = prodottoService;</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Metodo per impostare l'UtenteService della classe.
+     * @param utenteService L'UtenteService da impostare
+     */
+    public void setUtenteService(UtenteService utenteService) {
+<span class="fc" id="L49">        this.utenteService = utenteService;</span>
+<span class="fc" id="L50">    }</span>
+
+    @Override
+    public void validateQuantitaProdotto(Prodotto prodotto, int quantita)
+            throws InvalidProductQuantityException {
+<span class="fc" id="L55">        int quantitaProdottoDatabase =</span>
+<span class="fc" id="L56">                prodottoService.quantitaProdotto(prodotto);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (quantitaProdottoDatabase &lt; quantita) {</span>
+<span class="fc" id="L58">            throw new InvalidProductQuantityException(</span>
+                    &quot;Quantità eccessiva&quot;, prodotto);
+        }
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (quantita &lt; 1) {</span>
+<span class="nc" id="L62">            throw new InvalidProductQuantityException(</span>
+                    &quot;Quantità negativa&quot;, prodotto);
+        }
+
+<span class="fc" id="L66">    }</span>
+
+    @Override
+    public void validateIndirizzo(String indirizzo, Integer cap, String paese)
+            throws InvalidIndirizzoException {
+<span class="fc" id="L71">        Pattern pattern =</span>
+<span class="fc" id="L72">                Pattern.compile(&quot;[A-Za-z ]+[,][ ]?[0-9A-Za-z]+&quot;);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (!(pattern.matcher(indirizzo).matches())) {</span>
+<span class="fc" id="L74">            throw new InvalidIndirizzoException();</span>
+        }
+
+<span class="fc" id="L77">        String cap1 = &quot;&quot; + cap;</span>
+<span class="fc" id="L78">        String init = &quot;00010&quot;;</span>
+<span class="fc" id="L79">        String end = &quot;97100&quot;;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (cap1.compareTo(init) &lt; 0</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                || cap1.compareTo(end) &gt; 0</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                || cap1.length() != 5) {</span>
+<span class="fc" id="L83">            throw new InvalidIndirizzoException();</span>
+        }
+
+<span class="fc" id="L86">        pattern = Pattern.compile(&quot;[A-Za-z ]+&quot;);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (!(pattern.matcher(paese).matches())) {</span>
+<span class="fc" id="L88">            throw new InvalidIndirizzoException();</span>
+        }
+<span class="fc" id="L90">    }</span>
+
+    @Override
+    public String validatePath(String path) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (path == null) {</span>
+<span class="fc" id="L95">            path = &quot;/&quot;;</span>
+        }
+<span class="fc" id="L97">        return path;</span>
+    }
+
+    @Override
+    public void validateProdotto(Prodotto prodotto)
+            throws InvalidProductException {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (prodotto.getNome().length() &lt; 3</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">                || prodotto.getNome().length() &gt; 100) {</span>
+<span class="fc" id="L105">            throw new InvalidProductException();</span>
+        }
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (prodotto.getDescrizione().length() &lt; 10</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                || prodotto.getDescrizione().length() &gt; 2048) {</span>
+<span class="fc" id="L109">            throw new InvalidProductException();</span>
+        }
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (!(prodotto.getCopertina().endsWith(&quot;.png&quot;)</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">                || prodotto.getCopertina().endsWith(&quot;.jpg&quot;))) {</span>
+<span class="fc" id="L113">            throw new InvalidProductException();</span>
+        }
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (prodotto.getQuantita() &lt; 1) {</span>
+<span class="fc" id="L116">            throw new InvalidProductException();</span>
+        }
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (prodotto.getPrezzo() &lt; 0.01) {</span>
+<span class="fc" id="L119">            throw new InvalidProductException();</span>
+        }
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (prodotto.getScontoAttivo() &lt; 0</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                || prodotto.getScontoAttivo() &gt; 0.99) {</span>
+<span class="fc" id="L123">            throw new InvalidProductException();</span>
+        }
+
+<span class="fc" id="L126">    }</span>
+
+    @Override
+    public void validateImage(String copertina, Collection&lt;Part&gt; image)
+            throws IOException, InvalidProductException {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (Part part : image) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (part.getContentType() != null) {</span>
+<span class="fc" id="L133">                part.write(&quot;C:\\Program Files\\Apache Software Foundation\\&quot;</span>
+                        + &quot;Tomcat 9.0\\webapps\\&quot;
+                        + &quot;G8_Gaming_war_exploded\\tmp\\&quot; + copertina);
+            }
+<span class="fc" id="L137">        }</span>
+
+<span class="fc" id="L139">        File imgFile = new File(&quot;C:\\Program Files\\&quot;</span>
+                + &quot;Apache Software Foundation\\&quot;
+                + &quot;Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\&quot;
+                + &quot;tmp\\&quot; + copertina);
+
+<span class="fc" id="L144">        BufferedImage bimg = ImageIO.read(imgFile);</span>
+<span class="fc" id="L145">        int width = bimg.getWidth();</span>
+<span class="fc" id="L146">        int height = bimg.getHeight();</span>
+
+<span class="pc bpc" id="L148" title="4 of 8 branches missed.">        if (width &gt; 1300 || width &lt; 800</span>
+                || height &gt; 1600
+                || height &lt; 1000) {
+            //noinspection ResultOfMethodCallIgnored
+<span class="fc" id="L152">            imgFile.delete();</span>
+<span class="fc" id="L153">            throw new InvalidProductException();</span>
+        }
+
+        //noinspection ResultOfMethodCallIgnored
+<span class="nc" id="L157">        imgFile.renameTo(new File(&quot;C:\\Program Files\\&quot;</span>
+                + &quot;Apache Software Foundation\\&quot;
+                + &quot;Tomcat 9.0\\webapps\\G8_Gaming_war_exploded\\&quot;
+<span class="nc" id="L160">                + &quot;images\\&quot; + imgFile.getName()));</span>
+<span class="nc" id="L161">    }</span>
+
+    @Override
+    public void validateUtente(Utente utente)
+            throws InvalidUserException,
+            InvalidIndirizzoException,
+            Exception {
+<span class="fc" id="L168">        Pattern pattern = Pattern.compile(&quot;[a-zA-Z0-9]+&quot;);</span>
+
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (!(pattern.matcher(utente.getUsername()).matches())) {</span>
+<span class="fc" id="L171">            throw new InvalidUserException();</span>
+        }
+//TODO
+        /*if (utenteService.checkUtente(utente.getUsername())) {
+            throw new Exception();
+        }*/
+<span class="fc" id="L177">        pattern = Pattern.compile(&quot;[a-zA-Z ]+&quot;);</span>
+
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (!pattern.matcher(utente.getNome()).matches()) {</span>
+<span class="fc" id="L180">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (utente.getNome().length() &lt; 2</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">                || utente.getNome().length() &gt; 32) {</span>
+<span class="fc" id="L185">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (!pattern.matcher(utente.getCognome()).matches()) {</span>
+<span class="fc" id="L189">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (utente.getCognome().length() &lt; 2</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">                || utente.getCognome().length() &gt; 32) {</span>
+<span class="fc" id="L194">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (!(utente.getSesso().equals(&quot;Maschio&quot;)</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                || utente.getSesso().equals(&quot;Femmina&quot;)</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                || utente.getSesso().equals(&quot;Altro&quot;))) {</span>
+<span class="fc" id="L200">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc" id="L203">        LocalDate localDateStart =</span>
+<span class="fc" id="L204">                LocalDate.of(1900, 1, 1);</span>
+        LocalDate localDateFinish =
+<span class="fc" id="L206">                LocalDate.now();</span>
+
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (utente.getDataDiNascita().isBefore(localDateStart)</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">                || utente.getDataDiNascita().isAfter(localDateFinish)) {</span>
+<span class="fc" id="L210">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc" id="L213">        pattern = Pattern.compile(</span>
+          &quot;(?:[a-z0-9!#$%&amp;'*+/=?^_{|}~-]+(?:\\.[a-z0-9!#$%&amp;'*+/=?^_{|}~-]+)*|\&quot;(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])&quot;);
+
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (!pattern.matcher(utente.getEmail()).matches()) {</span>
+<span class="fc" id="L217">            throw new InvalidUserException();</span>
+        }
+
+<span class="fc" id="L220">        validateIndirizzo(utente.getIndirizzo(),</span>
+<span class="fc" id="L221">                utente.getCap(), utente.getPaese());</span>
+<span class="fc" id="L222">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

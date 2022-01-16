@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrenotazioneServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Prenotazione.Servlet</a> &gt; <span class="el_source">PrenotazioneServlet.java</span></div><h1>PrenotazioneServlet.java</h1><pre class="source lang-java linenums">package main.java.Prenotazione.Servlet;
+
+import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import main.java.Prenotazione.Service.PrenotazioneService;
+import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
+import main.java.Storage.Entity.Prenotazione;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
+
+@WebServlet(name = &quot;PrenotazioneServlet&quot;, value = &quot;/prenotazione/*&quot;)
+@MultipartConfig
+
+<span class="fc" id="L22">public class PrenotazioneServlet extends HttpServlet {</span>
+
+  /**
+   * Creazione di prenotazioneService.
+   */
+<span class="fc" id="L27">  private PrenotazioneService prenotazioneService =</span>
+    new PrenotazioneServiceImpl();
+  /**
+   * Creazione del Validator.
+   */
+<span class="fc" id="L32">  private Validator validator = new ValidatorImpl();</span>
+
+  /**
+   * Set di prenotazioneService per fini di testing.
+   * @param prenotazioneService il service di prenotazione.
+   */
+  public void setPrenotazioneService(PrenotazioneService prenotazioneService) {
+<span class="fc" id="L39">    this.prenotazioneService = prenotazioneService;</span>
+<span class="fc" id="L40">  }</span>
+
+  /**
+   * Set di Validator per fini di testing.
+   * @param validator il validator che controlla i dati.
+   */
+  public void setValidator(Validator validator) {
+<span class="fc" id="L47">    this.validator = validator;</span>
+<span class="fc" id="L48">  }</span>
+
+  @Override
+  public void init() throws ServletException {
+<span class="nc" id="L52">    super.init();</span>
+<span class="nc" id="L53">  }</span>
+
+  @Override
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException {
+<span class="fc" id="L58">    req.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L59">    String path = req.getPathInfo();</span>
+<span class="fc" id="L60">    path = validator.validatePath(path);</span>
+
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">    switch (path) {</span>
+      case &quot;/&quot;:
+<span class="fc" id="L64">        RequestDispatcher dispatcher =</span>
+<span class="fc" id="L65">                req.getRequestDispatcher(&quot;/WEB-INF/views/user/prenota.jsp&quot;);</span>
+<span class="fc" id="L66">        dispatcher.forward(req, resp);</span>
+<span class="fc" id="L67">        break;</span>
+      default:
+<span class="nc" id="L69">        resp.sendError(404);</span>
+        break;
+    }
+<span class="fc" id="L72">  }</span>
+
+  @Override
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
+<span class="fc" id="L77">    req.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+
+<span class="fc" id="L79">    String path = req.getPathInfo();</span>
+<span class="fc" id="L80">    path = validator.validatePath(path);</span>
+
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    switch (path) {</span>
+      case &quot;/save&quot;:
+<span class="fc" id="L84">        Prenotazione savePrenotazione = new Prenotazione();</span>
+<span class="fc" id="L85">        savePrenotazione.setEmailRichiedente(req.getParameter(&quot;email&quot;)</span>
+<span class="fc" id="L86">          .toLowerCase());</span>
+<span class="fc" id="L87">        savePrenotazione.setCategoria(req.getParameter(&quot;categoria&quot;));</span>
+
+<span class="fc" id="L89">        Part filePart = req.getPart(&quot;copertina&quot;);</span>
+<span class="fc" id="L90">        String copertina = filePart.getSubmittedFileName();</span>
+
+<span class="fc" id="L92">        savePrenotazione.setCopertina(copertina);</span>
+
+<span class="fc" id="L94">        savePrenotazione.setDescrizione(req.getParameter(&quot;descrizione&quot;));</span>
+<span class="fc" id="L95">        savePrenotazione.setNomeProdotto(req.getParameter(&quot;nomeProdotto&quot;));</span>
+
+        try {
+<span class="fc" id="L98">          validator.validateImage(copertina, req.getParts());</span>
+<span class="fc" id="L99">        } catch (InvalidProductException e) {</span>
+<span class="fc" id="L100">          req.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                  + &quot;views/errors/prenotazione.jsp&quot;)
+<span class="fc" id="L102">                  .forward(req, resp);</span>
+<span class="fc" id="L103">          break;</span>
+<span class="fc" id="L104">        }</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (prenotazioneService.savePrenotazione(savePrenotazione)) {</span>
+<span class="fc" id="L106">          resp.setStatus(HttpServletResponse.SC_CREATED);</span>
+<span class="fc" id="L107">          req.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                  + &quot;views/user/prenotazione_effettuata.jsp&quot;)
+<span class="fc" id="L109">                  .forward(req, resp);</span>
+        } else {
+<span class="fc" id="L111">          throw new ServletException(&quot;Errore di inserimento...&quot;);</span>
+        }
+        break;
+      default:
+<span class="nc" id="L115">        resp.sendError(404);</span>
+        break;
+    }
+<span class="fc" id="L118">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

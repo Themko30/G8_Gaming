@@ -190,10 +190,6 @@ public class AdminServlet extends HttpServlet {
                 dispatcher.forward(req, resp);
                 break;
             case "/Statistics/Update":
-                /*utenteService = new UtenteServiceImpl();
-                ordineService = new OrdineServiceImpl();
-                prodottoService = new ProdottoServiceImpl();
-                prenotazioneService = new PrenotazioneServiceImpl();*/
                 ServletContext ctx = getServletContext();
                 HashMap<String, Integer> statistics = new HashMap<>();
                 statistics.put("Utenti", utenteService.counterUtente());

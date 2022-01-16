@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarrelloServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Carrello.Servlet</a> &gt; <span class="el_source">CarrelloServlet.java</span></div><h1>CarrelloServlet.java</h1><pre class="source lang-java linenums">package main.java.Carrello.Servlet;
+
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Set;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidProductQuantityException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
+
+@WebServlet(name = &quot;CarrelloServlet&quot;, value = &quot;/cart/*&quot;)
+<span class="fc" id="L28">public class CarrelloServlet extends HttpServlet {</span>
+
+    /**
+     * Il CarrelloService della classe.
+     */
+<span class="fc" id="L33">    CarrelloService carrelloService = new CarrelloServiceImpl();</span>
+
+    /**
+     * L'OrdineService della classe.
+     */
+<span class="fc" id="L38">    OrdineService ordineService = new OrdineServiceImpl();</span>
+
+    /**
+     * Il Validator della classe.
+     */
+<span class="fc" id="L43">    Validator validator = new ValidatorImpl();</span>
+
+    /**
+     * Metodo per impostare il CarrelloService della classe.
+     * @param carrelloService Il CarrelloService da impostare
+     */
+    public void setCarrelloService(CarrelloService carrelloService) {
+<span class="fc" id="L50">        this.carrelloService = carrelloService;</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Metodo per impostare l'OrdineService della classe.
+     * @param ordineService L'OrdineService da impostare
+     */
+    public void setOrdineService(OrdineService ordineService) {
+<span class="fc" id="L58">        this.ordineService = ordineService;</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Metodo per impostare il Validator della classe.
+     * @param validator Il Validator da impostare
+     */
+    public void setValidator(Validator validator) {
+<span class="fc" id="L66">        this.validator = validator;</span>
+<span class="fc" id="L67">    }</span>
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+<span class="fc" id="L72">        String path = request.getPathInfo();</span>
+        RequestDispatcher dispatcher;
+<span class="fc" id="L74">        HttpSession session = request.getSession();</span>
+        Carrello carrello;
+        int codiceProdotto;
+
+<span class="fc" id="L78">        Utente u = (Utente) session.getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (u == null) {</span>
+<span class="fc" id="L80">            response.sendError(401);</span>
+<span class="fc" id="L81">            return;</span>
+        }
+
+<span class="fc bfc" id="L84" title="All 5 branches covered.">        switch (path) {</span>
+            case &quot;/Add&quot;:
+<span class="fc" id="L86">                codiceProdotto =</span>
+<span class="fc" id="L87">                        Integer.parseInt(request.getParameter(&quot;prodotto&quot;));</span>
+<span class="fc" id="L88">                int quantitaProdotto =</span>
+<span class="fc" id="L89">                        Integer.parseInt(request.getParameter(&quot;quantita&quot;));</span>
+
+<span class="fc" id="L91">                carrello =</span>
+<span class="fc" id="L92">                        (Carrello) session.getAttribute(&quot;carrello&quot;);</span>
+
+<span class="fc" id="L94">                synchronized (session) {</span>
+
+<span class="fc" id="L96">                    carrello =</span>
+<span class="fc" id="L97">                            carrelloService.aggiungiProdotto(carrello,</span>
+                                    codiceProdotto, quantitaProdotto);
+
+<span class="fc" id="L100">                    session.removeAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L101">                    session.setAttribute(&quot;carrello&quot;, carrello);</span>
+
+<span class="fc" id="L103">                }</span>
+
+<span class="fc" id="L105">                dispatcher =</span>
+<span class="fc" id="L106">                        request.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                                + &quot;views/user/carrello.jsp&quot;);
+<span class="fc" id="L108">                dispatcher.forward(request, response);</span>
+<span class="fc" id="L109">                break;</span>
+
+            case &quot;/Modifica&quot;:
+<span class="fc" id="L112">                codiceProdotto =</span>
+<span class="fc" id="L113">                        Integer.parseInt(request.getParameter(&quot;prodotto&quot;));</span>
+<span class="fc" id="L114">                int quantita =</span>
+<span class="fc" id="L115">                        Integer.parseInt(request.getParameter(&quot;quantita&quot;));</span>
+
+<span class="fc" id="L117">                synchronized (session) {</span>
+<span class="fc" id="L118">                    carrello =</span>
+<span class="fc" id="L119">                            (Carrello) session.getAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L120">                    carrello =</span>
+                            carrelloService
+<span class="fc" id="L122">                                    .updateQuantitaCarrelloSession(carrello,</span>
+                                            codiceProdotto, quantita);
+<span class="fc" id="L124">                    session.removeAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L125">                    session.setAttribute(&quot;carrello&quot;, carrello);</span>
+<span class="fc" id="L126">                }</span>
+
+<span class="fc" id="L128">                response.sendRedirect(&quot;/G8_Gaming_war_exploded/cart/&quot;);</span>
+<span class="fc" id="L129">                break;</span>
+
+            case &quot;/Rimuovi&quot;:
+<span class="fc" id="L132">                session = request.getSession();</span>
+<span class="fc" id="L133">                codiceProdotto =</span>
+<span class="fc" id="L134">                        Integer.parseInt(request.getParameter(&quot;prodotto&quot;));</span>
+
+<span class="fc" id="L136">                synchronized (session) {</span>
+
+<span class="fc" id="L138">                    carrello =</span>
+<span class="fc" id="L139">                            (Carrello) session.getAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L140">                    carrello =</span>
+                            carrelloService
+<span class="fc" id="L142">                                    .rimuoviProdottoCarrelloSession(</span>
+                                            carrello, codiceProdotto);
+
+<span class="fc" id="L145">                    session.removeAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L146">                    session.setAttribute(&quot;carrello&quot;, carrello);</span>
+<span class="fc" id="L147">                }</span>
+
+<span class="fc" id="L149">                dispatcher =</span>
+<span class="fc" id="L150">                        request.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                                + &quot;views/user/carrello.jsp&quot;);
+<span class="fc" id="L152">                dispatcher.forward(request, response);</span>
+<span class="fc" id="L153">                break;</span>
+
+            case &quot;/Checkout&quot;:
+
+<span class="fc" id="L157">                synchronized (session) {</span>
+<span class="fc" id="L158">                    carrello = (Carrello) session.getAttribute(&quot;carrello&quot;);</span>
+
+<span class="fc" id="L160">                    String indirizzo =</span>
+<span class="fc" id="L161">                            request.getParameter(&quot;indirizzo&quot;);</span>
+<span class="fc" id="L162">                    Integer CAP =</span>
+<span class="fc" id="L163">                            Integer.parseInt(request.getParameter(&quot;CAP&quot;));</span>
+<span class="fc" id="L164">                    String paese =</span>
+<span class="fc" id="L165">                            request.getParameter(&quot;paese&quot;);</span>
+<span class="fc" id="L166">                    String metodoPagamento =</span>
+<span class="fc" id="L167">                            request.getParameter(&quot;metodoPagamento&quot;);</span>
+
+                    try {
+<span class="fc" id="L170">                        validator.validateIndirizzo(indirizzo,</span>
+                                CAP, paese);
+<span class="fc" id="L172">                        Ordine ordine =</span>
+<span class="fc" id="L173">                                ordineService.createOrdine(carrello,</span>
+                                        indirizzo, CAP, paese, metodoPagamento);
+<span class="fc" id="L175">                        LinkedHashMap&lt;Prodotto, Integer&gt; prodotti =</span>
+<span class="fc" id="L176">                                ordine.getProdotti();</span>
+<span class="fc" id="L177">                        Set&lt;Prodotto&gt; key = prodotti.keySet();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">                        for (Prodotto p : key) {</span>
+<span class="fc" id="L179">                            validator.validateQuantitaProdotto(p,</span>
+<span class="fc" id="L180">                                    prodotti.get(p));</span>
+<span class="fc" id="L181">                        }</span>
+
+<span class="fc" id="L183">                        ordineService.saveOrdine(ordine);</span>
+
+<span class="fc" id="L185">                        carrello =</span>
+<span class="fc" id="L186">                                carrelloService.clearCarrello(carrello);</span>
+
+<span class="fc" id="L188">                        session.removeAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L189">                        session.setAttribute(&quot;carrello&quot;, carrello);</span>
+
+<span class="fc" id="L191">                        dispatcher =</span>
+<span class="fc" id="L192">                                request.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                                        + &quot;views/user/ordine_completato.jsp&quot;);
+<span class="fc" id="L194">                        dispatcher.forward(request, response);</span>
+
+
+<span class="nc" id="L197">                    } catch (InvalidIndirizzoException e) {</span>
+<span class="nc" id="L198">                        e.printStackTrace();</span>
+<span class="nc" id="L199">                        dispatcher =</span>
+<span class="nc" id="L200">                                request.getRequestDispatcher(&quot;/WEB-INF/&quot;</span>
+                                        + &quot;views/errors/ordine.jsp&quot;);
+<span class="nc" id="L202">                        dispatcher.forward(request, response);</span>
+
+<span class="nc" id="L204">                    } catch (InvalidProductQuantityException ex) {</span>
+<span class="nc" id="L205">                        ex.printStackTrace();</span>
+<span class="nc" id="L206">                        request.setAttribute(&quot;prodotto&quot;, ex.getProdotto());</span>
+<span class="nc" id="L207">                        dispatcher =</span>
+<span class="nc" id="L208">                                request.getRequestDispatcher(</span>
+                                        &quot;/WEB-INF/views/errors/quantita.jsp&quot;);
+<span class="nc" id="L210">                        dispatcher.forward(request, response);</span>
+<span class="pc" id="L211">                    }</span>
+<span class="fc" id="L212">                }</span>
+<span class="fc" id="L213">                break;</span>
+            default:
+<span class="fc" id="L215">                response.sendError(404);</span>
+                break;
+        }
+<span class="fc" id="L218">    }</span>
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+<span class="fc" id="L223">        String path = request.getPathInfo();</span>
+<span class="fc" id="L224">        path = validator.validatePath(path);</span>
+
+<span class="fc" id="L226">        HttpSession session = request.getSession();</span>
+<span class="fc" id="L227">        Utente utente = (Utente) session.getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (utente == null) {</span>
+<span class="fc" id="L229">            response.sendRedirect(</span>
+                    &quot;http://localhost:8080/G8_Gaming_war_exploded/account/login&quot;);
+<span class="fc" id="L231">            return;</span>
+        }
+
+<span class="pc bpc" id="L234" title="1 of 3 branches missed.">        switch (path) {</span>
+            case &quot;/&quot;:
+<span class="fc" id="L236">                request.getRequestDispatcher(</span>
+                                &quot;/WEB-INF/views/user/carrello.jsp&quot;)
+<span class="fc" id="L238">                        .forward(request, response);</span>
+<span class="fc" id="L239">                break;</span>
+            case &quot;/confirmOrder&quot;:
+<span class="fc" id="L241">                request.getRequestDispatcher(</span>
+                                &quot;/WEB-INF/views/user/conferma_ordine.jsp&quot;)
+<span class="fc" id="L243">                        .forward(request, response);</span>
+<span class="fc" id="L244">                break;</span>
+            default:
+<span class="nc" id="L246">                response.sendError(404);</span>
+                break;
+        }
+<span class="fc" id="L249">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

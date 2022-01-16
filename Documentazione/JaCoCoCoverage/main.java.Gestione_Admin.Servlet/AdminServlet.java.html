@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Gestione_Admin.Servlet</a> &gt; <span class="el_source">AdminServlet.java</span></div><h1>AdminServlet.java</h1><pre class="source lang-java linenums">package main.java.Gestione_Admin.Servlet;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
+import main.java.Prenotazione.Service.PrenotazioneService;
+import main.java.Prenotazione.Service.PrenotazioneServiceImpl;
+import main.java.Storage.Entity.Prodotto;
+import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidProductException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
+
+@MultipartConfig
+@WebServlet(name = &quot;Admin&quot;, value = &quot;/admin/*&quot;)
+<span class="fc" id="L33">public class AdminServlet extends HttpServlet {</span>
+
+    /**
+     * Il Validator della classe.
+     */
+<span class="fc" id="L38">    private Validator validator = new ValidatorImpl();</span>
+
+    /**
+     * L'UtenteService della classe.
+     */
+<span class="fc" id="L43">    private UtenteService utenteService = new UtenteServiceImpl();</span>
+
+    /**
+     * L'OrdineService della classe.
+     */
+<span class="fc" id="L48">    private OrdineService ordineService = new OrdineServiceImpl();</span>
+
+    /**
+     * Il ProdottoService della classe.
+     */
+<span class="fc" id="L53">    private ProdottoService prodottoService = new ProdottoServiceImpl();</span>
+
+    /**
+     * Il PrenotazioneService della classe.
+     */
+<span class="fc" id="L58">    private PrenotazioneService prenotazioneService =</span>
+            new PrenotazioneServiceImpl();
+
+    /**
+     * Il RequestDispatcher della classe.
+     */
+    private RequestDispatcher dispatcher;
+
+    /**
+     * Metodo per impostare il Validator della classe.
+     * @param validator Il Validator da impostare
+     */
+    public void setValidator(Validator validator) {
+<span class="fc" id="L71">        this.validator = validator;</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Metodo per impostare l'UtenteService della classe.
+     * @param utenteService L'UtenteService da impostare
+     */
+    public void setUtenteService(UtenteService utenteService) {
+<span class="fc" id="L79">        this.utenteService = utenteService;</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Metodo per impostare l'OrdineService della classe.
+     * @param ordineService L'OrdineService da impostare
+     */
+    public void setOrdineService(OrdineService ordineService) {
+<span class="fc" id="L87">        this.ordineService = ordineService;</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Metodo per impostare il ProdottoService della classe.
+     * @param prodottoService Il ProdottoService da impostare
+     */
+    public void setProdottoService(ProdottoService prodottoService) {
+<span class="fc" id="L95">        this.prodottoService = prodottoService;</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Metodo per impostare il PrenotazioneService della classe.
+     * @param prenotazioneService Il PrenotazioneService da impostare
+     */
+    public void setPrenotazioneService(
+            PrenotazioneService prenotazioneService) {
+<span class="fc" id="L104">        this.prenotazioneService = prenotazioneService;</span>
+<span class="fc" id="L105">    }</span>
+
+    @Override
+    public void init() throws ServletException {
+<span class="nc" id="L109">        super.init();</span>
+       /* utenteService = new UtenteServiceImpl();
+        ordineService = new OrdineServiceImpl();
+        prodottoService = new ProdottoServiceImpl();
+        prenotazioneService = new PrenotazioneServiceImpl();*/
+<span class="nc" id="L114">        ServletContext ctx = getServletContext();</span>
+<span class="nc" id="L115">        HashMap&lt;String, Integer&gt; statistics = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L116">        statistics.put(&quot;Utenti&quot;,</span>
+<span class="nc" id="L117">                utenteService.counterUtente());</span>
+<span class="nc" id="L118">        statistics.put(&quot;Ordini&quot;,</span>
+<span class="nc" id="L119">                ordineService.counterOrdini());</span>
+<span class="nc" id="L120">        statistics.put(&quot;Prodotti&quot;,</span>
+<span class="nc" id="L121">                prodottoService.counterProdotti());</span>
+<span class="nc" id="L122">        statistics.put(&quot;Prenotazioni&quot;,</span>
+<span class="nc" id="L123">                prenotazioneService.counterPrenotazioni());</span>
+<span class="nc" id="L124">        synchronized (ctx) {</span>
+<span class="nc" id="L125">            ctx.setAttribute(&quot;statistics&quot;, statistics);</span>
+
+<span class="nc" id="L127">            ArrayList&lt;Prodotto&gt; home = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L128">            home.add(prodottoService.prodottoCodice(30));</span>
+<span class="nc" id="L129">            home.add(prodottoService.prodottoCodice(23));</span>
+<span class="nc" id="L130">            home.add(prodottoService.prodottoCodice(16));</span>
+<span class="nc" id="L131">            home.add(prodottoService.prodottoCodice(14));</span>
+<span class="nc" id="L132">            home.add(prodottoService.prodottoCodice(12));</span>
+<span class="nc" id="L133">            home.add(prodottoService.prodottoCodice(11));</span>
+<span class="nc" id="L134">            home.add(prodottoService.prodottoCodice(20));</span>
+<span class="nc" id="L135">            home.add(prodottoService.prodottoCodice(22));</span>
+<span class="nc" id="L136">            home.add(prodottoService.prodottoCodice(7));</span>
+<span class="nc" id="L137">            home.add(prodottoService.prodottoCodice(3));</span>
+
+<span class="nc" id="L139">            ctx.setAttribute(&quot;home&quot;, home);</span>
+<span class="nc" id="L140">            ctx.setAttribute(&quot;mostVoted&quot;,</span>
+<span class="nc" id="L141">                    prodottoService.mostVoted());</span>
+<span class="nc" id="L142">        }</span>
+<span class="nc" id="L143">    }</span>
+
+    @Override
+    public void doGet(HttpServletRequest req,
+                      HttpServletResponse resp)
+            throws ServletException, IOException {
+<span class="fc" id="L149">        req.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L150">        HttpSession session = req.getSession();</span>
+<span class="fc" id="L151">        Utente u = (Utente) session.getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (u == null) {</span>
+<span class="fc" id="L153">            resp.sendError(401);</span>
+<span class="fc" id="L154">            return;</span>
+        }
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (!u.isAdmin()) {</span>
+<span class="fc" id="L157">            resp.sendError(403);</span>
+<span class="fc" id="L158">            return;</span>
+        }
+
+<span class="fc" id="L161">        String path = req.getPathInfo();</span>
+<span class="fc" id="L162">        validator = new ValidatorImpl();</span>
+<span class="fc" id="L163">        path = validator.validatePath(path);</span>
+<span class="pc bpc" id="L164" title="3 of 13 branches missed.">        switch (path) {</span>
+            case &quot;/&quot;:
+            case &quot;/Statistics&quot;:
+<span class="fc" id="L167">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/index.jsp&quot;);
+<span class="fc" id="L169">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L170">                break;</span>
+            case &quot;/Products&quot;:
+<span class="fc" id="L172">                req.setAttribute(&quot;prodotti&quot;,</span>
+<span class="fc" id="L173">                        prodottoService.allProdotti());</span>
+<span class="fc" id="L174">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/prodotti.jsp&quot;);
+<span class="fc" id="L176">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L177">                break;</span>
+            case &quot;/Orders&quot;:
+<span class="fc" id="L179">                req.setAttribute(&quot;ordini&quot;,</span>
+<span class="fc" id="L180">                        ordineService.allOrders());</span>
+<span class="fc" id="L181">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/ordini.jsp&quot;);
+<span class="fc" id="L183">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L184">                break;</span>
+            case &quot;/Users&quot;:
+<span class="fc" id="L186">                req.setAttribute(&quot;utenti&quot;,</span>
+<span class="fc" id="L187">                        utenteService.allUtenti());</span>
+<span class="fc" id="L188">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/utenti.jsp&quot;);
+<span class="fc" id="L190">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L191">                break;</span>
+            case &quot;/Statistics/Update&quot;:
+                /*utenteService = new UtenteServiceImpl();
+                ordineService = new OrdineServiceImpl();
+                prodottoService = new ProdottoServiceImpl();
+                prenotazioneService = new PrenotazioneServiceImpl();*/
+<span class="nc" id="L197">                ServletContext ctx = getServletContext();</span>
+<span class="nc" id="L198">                HashMap&lt;String, Integer&gt; statistics = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L199">                statistics.put(&quot;Utenti&quot;, utenteService.counterUtente());</span>
+<span class="nc" id="L200">                statistics.put(&quot;Ordini&quot;, ordineService.counterOrdini());</span>
+<span class="nc" id="L201">                statistics.put(&quot;Prodotti&quot;, prodottoService.counterProdotti());</span>
+<span class="nc" id="L202">                statistics.put(&quot;Prenotazioni&quot;,</span>
+<span class="nc" id="L203">                        prenotazioneService.counterPrenotazioni());</span>
+
+<span class="nc" id="L205">                ArrayList&lt;Prodotto&gt; home = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L206">                home.add(prodottoService.prodottoCodice(1));</span>
+<span class="nc" id="L207">                home.add(prodottoService.prodottoCodice(3));</span>
+<span class="nc" id="L208">                home.add(prodottoService.prodottoCodice(4));</span>
+<span class="nc" id="L209">                home.add(prodottoService.prodottoCodice(5));</span>
+<span class="nc" id="L210">                synchronized (ctx) {</span>
+<span class="nc" id="L211">                    ctx.setAttribute(&quot;statistics&quot;, statistics);</span>
+<span class="nc" id="L212">                    ctx.setAttribute(&quot;home&quot;, home);</span>
+<span class="nc" id="L213">                }</span>
+<span class="nc" id="L214">                req.setAttribute(&quot;aggiornato&quot;, 1);</span>
+<span class="nc" id="L215">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/index.jsp&quot;);
+<span class="nc" id="L217">                dispatcher.forward(req, resp);</span>
+<span class="nc" id="L218">                break;</span>
+            case &quot;/Booking&quot;:
+<span class="fc" id="L220">                req.setAttribute(&quot;prenotazioni&quot;,</span>
+<span class="fc" id="L221">                        prenotazioneService.allPrenotazioni());</span>
+<span class="fc" id="L222">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/prenotazioni.jsp&quot;);
+<span class="fc" id="L224">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L225">                break;</span>
+            case &quot;/ShowHomePage&quot;:
+<span class="fc" id="L227">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/prodotti_home.jsp&quot;);
+<span class="fc" id="L229">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L230">                break;</span>
+            case &quot;/Products/AddProduct&quot;:
+<span class="fc" id="L232">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/aggiungi_prodotto.jsp&quot;);
+<span class="fc" id="L234">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L235">                break;</span>
+            case &quot;/Products/ModifyProduct&quot;:
+<span class="fc" id="L237">                int codiceProdotto = Integer.parseInt(</span>
+<span class="fc" id="L238">                        req.getParameter(&quot;codice&quot;));</span>
+<span class="fc" id="L239">                req.setAttribute(&quot;prodotto&quot;,</span>
+<span class="fc" id="L240">                        prodottoService.prodottoCodice(codiceProdotto));</span>
+<span class="fc" id="L241">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/modifica_prodotto.jsp&quot;);
+<span class="fc" id="L243">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L244">                break;</span>
+            case &quot;/Products/MostVotedUpdate&quot;:
+<span class="nc" id="L246">                ServletContext context = getServletContext();</span>
+<span class="nc" id="L247">                synchronized (context) {</span>
+<span class="nc" id="L248">                    context.removeAttribute(&quot;mostVoted&quot;);</span>
+<span class="nc" id="L249">                    context.setAttribute(&quot;mostVoted&quot;,</span>
+<span class="nc" id="L250">                            prodottoService.mostVoted());</span>
+<span class="nc" id="L251">                }</span>
+<span class="nc" id="L252">                req.setAttribute(&quot;aggiornato&quot;, 1);</span>
+<span class="nc" id="L253">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/index.jsp&quot;);
+<span class="nc" id="L255">                dispatcher.forward(req, resp);</span>
+<span class="nc" id="L256">                break;</span>
+            case &quot;/Orders/ManageOrder&quot;:
+<span class="fc" id="L258">                int codiceOrdine = Integer.parseInt(req.getParameter(&quot;numero&quot;));</span>
+<span class="fc" id="L259">                req.setAttribute(&quot;ordine&quot;,</span>
+<span class="fc" id="L260">                        ordineService.retrieveOrder(codiceOrdine));</span>
+<span class="fc" id="L261">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/ordine.jsp&quot;);
+<span class="fc" id="L263">                dispatcher.forward(req, resp);</span>
+<span class="fc" id="L264">                break;</span>
+            case &quot;/Booking/ManageBooking&quot;:
+<span class="fc" id="L266">                int codicePrenotazione = Integer.parseInt(</span>
+<span class="fc" id="L267">                        req.getParameter(&quot;numeroPrenotazione&quot;));</span>
+<span class="fc" id="L268">                req.setAttribute(&quot;prenotazione&quot;,</span>
+                        prenotazioneService
+<span class="fc" id="L270">                                .retrievePrenotazione(codicePrenotazione));</span>
+<span class="fc" id="L271">                dispatcher = req.getRequestDispatcher(</span>
+                        &quot;/WEB-INF/views/admin/prenotazione.jsp&quot;);
+<span class="fc" id="L273">                dispatcher.forward(req, resp);</span>
+                break;
+        }
+<span class="fc" id="L276">    }</span>
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+<span class="fc" id="L281">        req.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L282">        HttpSession session = req.getSession();</span>
+<span class="fc" id="L283">        Utente u = (Utente) session.getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        if (u == null) {</span>
+<span class="fc" id="L285">            resp.sendError(401);</span>
+<span class="fc" id="L286">            return;</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        } else if (!u.isAdmin()) {</span>
+<span class="nc" id="L288">            resp.sendError(403);</span>
+<span class="nc" id="L289">            return;</span>
+        }
+<span class="fc" id="L291">        String path = req.getPathInfo();</span>
+<span class="fc" id="L292">        path = validator.validatePath(path);</span>
+        int codiceProdotto;
+<span class="pc bpc" id="L294" title="3 of 8 branches missed.">        switch (path) {</span>
+            case &quot;/Products/AddProductHomePage&quot;:
+<span class="nc" id="L296">                ArrayList&lt;Prodotto&gt; homeAdd =</span>
+<span class="nc" id="L297">                        (ArrayList&lt;Prodotto&gt;) getServletContext()</span>
+<span class="nc" id="L298">                                .getAttribute(&quot;home&quot;);</span>
+<span class="nc" id="L299">                codiceProdotto = Integer.parseInt(</span>
+<span class="nc" id="L300">                        req.getParameter(&quot;codiceProdotto&quot;));</span>
+
+<span class="nc" id="L302">                synchronized (homeAdd) {</span>
+<span class="nc" id="L303">                    homeAdd.add(prodottoService.prodottoCodice(codiceProdotto));</span>
+<span class="nc" id="L304">                    getServletContext().removeAttribute(&quot;home&quot;);</span>
+<span class="nc" id="L305">                    getServletContext().setAttribute(&quot;home&quot;, homeAdd);</span>
+<span class="nc" id="L306">                }</span>
+<span class="nc" id="L307">                resp.sendRedirect(</span>
+                        &quot;/G8_Gaming_war_exploded/admin/ShowHomePage&quot;);
+<span class="nc" id="L309">                break;</span>
+            case &quot;/SetHomePage&quot;:
+<span class="nc" id="L311">                ArrayList&lt;Prodotto&gt; home =</span>
+<span class="nc" id="L312">                        (ArrayList&lt;Prodotto&gt;) getServletContext()</span>
+<span class="nc" id="L313">                                .getAttribute(&quot;home&quot;);</span>
+<span class="nc" id="L314">                codiceProdotto =</span>
+<span class="nc" id="L315">                        Integer.parseInt(req.getParameter(&quot;codiceProdotto&quot;));</span>
+<span class="nc" id="L316">                synchronized (home) {</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">                    for (Prodotto p : home) {</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">                        if (p.getCodice() == codiceProdotto) {</span>
+<span class="nc" id="L319">                            home.remove(p);</span>
+<span class="nc" id="L320">                            break;</span>
+                        }
+<span class="nc" id="L322">                    }</span>
+<span class="nc" id="L323">                    getServletContext().removeAttribute(&quot;home&quot;);</span>
+<span class="nc" id="L324">                    getServletContext().setAttribute(&quot;home&quot;, home);</span>
+<span class="nc" id="L325">                }</span>
+<span class="nc" id="L326">                resp.sendRedirect(&quot;/G8_Gaming_war_exploded/admin/ShowHomePage&quot;);</span>
+<span class="nc" id="L327">                break;</span>
+            case &quot;/Products/AddProduct&quot;:
+<span class="fc" id="L329">                String categoria = req.getParameter(&quot;categoria&quot;);</span>
+<span class="fc" id="L330">                String nome = req.getParameter(&quot;nome&quot;);</span>
+<span class="fc" id="L331">                String piattaforma = req.getParameter(&quot;piattaforma&quot;);</span>
+<span class="fc" id="L332">                double prezzo =</span>
+<span class="fc" id="L333">                        Double.parseDouble(req.getParameter(&quot;prezzo&quot;));</span>
+<span class="fc" id="L334">                double scontoAttivo =</span>
+<span class="fc" id="L335">                        Double.parseDouble(req.getParameter(&quot;scontoAttivo&quot;));</span>
+<span class="fc" id="L336">                int quantita =</span>
+<span class="fc" id="L337">                        Integer.parseInt(req.getParameter(&quot;quantita&quot;));</span>
+<span class="fc" id="L338">                String descrizione = req.getParameter(&quot;descrizione&quot;);</span>
+
+<span class="fc" id="L340">                Part filePart = req.getPart(&quot;copertina&quot;);</span>
+<span class="fc" id="L341">                String copertina =</span>
+<span class="fc" id="L342">                        filePart.getSubmittedFileName();</span>
+
+<span class="fc" id="L344">                Prodotto prodotto =</span>
+<span class="fc" id="L345">                        prodottoService.creaProdotto(categoria, nome,</span>
+                                piattaforma, prezzo, scontoAttivo, quantita,
+                                descrizione, copertina);
+                try {
+<span class="fc" id="L349">                    validator.validateProdotto(prodotto);</span>
+<span class="fc" id="L350">                    validator.validateImage(copertina, req.getParts());</span>
+<span class="fc" id="L351">                    prodottoService.saveProdotto(prodotto);</span>
+<span class="fc" id="L352">                    resp.sendRedirect(</span>
+                            &quot;/G8_Gaming_war_exploded/admin/Products&quot;);
+<span class="fc" id="L354">                } catch (InvalidProductException e) {</span>
+<span class="fc" id="L355">                    dispatcher = req.getRequestDispatcher(</span>
+                            &quot;/WEB-INF/views/errors/prodotto.jsp&quot;);
+<span class="fc" id="L357">                    dispatcher.forward(req, resp);</span>
+<span class="fc" id="L358">                }</span>
+<span class="fc" id="L359">                break;</span>
+            case &quot;/Products/ModifyProduct&quot;:
+<span class="fc" id="L361">                codiceProdotto =</span>
+<span class="fc" id="L362">                        Integer.parseInt(req.getParameter(&quot;codice&quot;));</span>
+<span class="fc" id="L363">                String categoriaM = req.getParameter(&quot;categoria&quot;);</span>
+<span class="fc" id="L364">                String nomeM = req.getParameter(&quot;nome&quot;);</span>
+<span class="fc" id="L365">                String piattaformaM =</span>
+<span class="fc" id="L366">                        req.getParameter(&quot;piattaforma&quot;);</span>
+<span class="fc" id="L367">                double prezzoM =</span>
+<span class="fc" id="L368">                        Double.parseDouble(req.getParameter(&quot;prezzo&quot;));</span>
+<span class="fc" id="L369">                double scontoAttivoM =</span>
+<span class="fc" id="L370">                        Double.parseDouble(req.getParameter(&quot;scontoAttivo&quot;));</span>
+<span class="fc" id="L371">                int quantitaM =</span>
+<span class="fc" id="L372">                        Integer.parseInt(req.getParameter(&quot;quantita&quot;));</span>
+<span class="fc" id="L373">                String descrizioneM =</span>
+<span class="fc" id="L374">                        req.getParameter(&quot;descrizione&quot;);</span>
+
+<span class="fc" id="L376">                Part filePartM = req.getPart(&quot;copertina&quot;);</span>
+<span class="fc" id="L377">                String copertinaM =</span>
+<span class="fc" id="L378">                        filePartM.getSubmittedFileName();</span>
+
+<span class="fc" id="L380">                Prodotto prodottoM =</span>
+                        prodottoService
+<span class="fc" id="L382">                                .creaProdotto(categoriaM, nomeM, piattaformaM,</span>
+                                prezzoM, scontoAttivoM, quantitaM,
+                                descrizioneM, copertinaM);
+<span class="fc" id="L385">                prodottoM.setCodice(codiceProdotto);</span>
+                try {
+<span class="fc" id="L387">                    validator.validateProdotto(prodottoM);</span>
+<span class="fc" id="L388">                    validator.validateImage(copertinaM, req.getParts());</span>
+<span class="fc" id="L389">                    String oldCopertina =</span>
+<span class="fc" id="L390">                            prodottoService.updateProdotto(prodottoM);</span>
+
+<span class="fc" id="L392">                    File oldCopertinaFile =</span>
+                            new File(&quot;C:\\Program Files\\&quot;
+                                    + &quot;Apache Software Foundation\\&quot;
+                                    + &quot;Tomcat 9.0\\&quot;
+                                    + &quot;webapps\\G8_Gaming_war_exploded\\&quot;
+                                    + &quot;images\\&quot;
+                                    + oldCopertina);
+<span class="fc" id="L399">                    oldCopertinaFile.delete();</span>
+
+<span class="fc" id="L401">                    resp.sendRedirect(</span>
+                            &quot;/G8_Gaming_war_exploded/admin/Products&quot;);
+<span class="fc" id="L403">                } catch (InvalidProductException e) {</span>
+<span class="fc" id="L404">                    dispatcher =</span>
+<span class="fc" id="L405">                            req.getRequestDispatcher(</span>
+                                    &quot;/WEB-INF/views/errors/prodotto.jsp&quot;);
+<span class="fc" id="L407">                    dispatcher.forward(req, resp);</span>
+<span class="fc" id="L408">                }</span>
+<span class="fc" id="L409">                break;</span>
+            case &quot;/Users/SetAdmin&quot;:
+<span class="fc" id="L411">                String username = req.getParameter(&quot;username&quot;);</span>
+<span class="fc" id="L412">                utenteService.setAdmin(username);</span>
+<span class="fc" id="L413">                resp.sendRedirect(</span>
+                        &quot;/G8_Gaming_war_exploded/admin/Users&quot;);
+<span class="fc" id="L415">                break;</span>
+            case &quot;/Orders/ManageOrder&quot;:
+<span class="fc" id="L417">                int codiceOrdine =</span>
+<span class="fc" id="L418">                        Integer.parseInt(req.getParameter(&quot;numero&quot;));</span>
+<span class="fc" id="L419">                String stato = req.getParameter(&quot;stato&quot;);</span>
+
+<span class="fc" id="L421">                ordineService.updateStato(codiceOrdine, stato);</span>
+<span class="fc" id="L422">                resp.sendRedirect(&quot;/G8_Gaming_war_exploded/admin/Orders&quot;);</span>
+<span class="fc" id="L423">                break;</span>
+            case &quot;/Booking/ManageBooking&quot;:
+<span class="fc" id="L425">                int codicePrenotazione =</span>
+<span class="fc" id="L426">                        Integer.parseInt(req.getParameter(</span>
+                                &quot;numeroPrenotazione&quot;));
+<span class="fc" id="L428">                prenotazioneService.acceptPrenotazione(codicePrenotazione);</span>
+<span class="fc" id="L429">                resp.sendRedirect(&quot;/G8_Gaming_war_exploded/admin/Booking&quot;);</span>
+                break;
+        }
+<span class="fc" id="L432">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

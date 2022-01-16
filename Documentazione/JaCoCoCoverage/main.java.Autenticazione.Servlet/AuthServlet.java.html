@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">G8_Gaming$Unit_in_G8_Gaming.exec</a> &gt; <a href="index.source.html" class="el_package">main.java.Autenticazione.Servlet</a> &gt; <span class="el_source">AuthServlet.java</span></div><h1>AuthServlet.java</h1><pre class="source lang-java linenums">package main.java.Autenticazione.Servlet;
+
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import main.java.Autenticazione.Service.UtenteService;
+import main.java.Autenticazione.Service.UtenteServiceImpl;
+import main.java.Carrello.Service.CarrelloService;
+import main.java.Carrello.Service.CarrelloServiceImpl;
+import main.java.Carrello.Service.OrdineService;
+import main.java.Carrello.Service.OrdineServiceImpl;
+import main.java.Catalogo.Service.ProdottoService;
+import main.java.Catalogo.Service.ProdottoServiceImpl;
+import main.java.Storage.Entity.Carrello;
+import main.java.Storage.Entity.Ordine;
+import main.java.Storage.Entity.Utente;
+import main.java.Validator.Exceptions.InvalidIndirizzoException;
+import main.java.Validator.Exceptions.InvalidUserException;
+import main.java.Validator.Service.Validator;
+import main.java.Validator.Service.ValidatorImpl;
+
+
+@WebServlet(name = &quot;AuthServlet&quot;, value = &quot;/account/*&quot;)
+
+<span class="fc" id="L32">public class AuthServlet extends HttpServlet {</span>
+
+  /**
+   * Creazione di Validator.
+   */
+<span class="fc" id="L37">  private Validator validator = new ValidatorImpl();</span>
+  /**
+   * Creazione di UtenteService.
+   */
+<span class="fc" id="L41">  private UtenteService utenteService = new UtenteServiceImpl();</span>
+  /**
+   * Creazione di OrdineService.
+   */
+<span class="fc" id="L45">  private OrdineService ordineService = new OrdineServiceImpl();</span>
+  /**
+   * Creazione di ProdottoService.
+   */
+<span class="fc" id="L49">  private ProdottoService prodottoService = new ProdottoServiceImpl();</span>
+  /**
+   * Creazione di CarrelloService.
+   */
+<span class="fc" id="L53">  private CarrelloService carrelloService = new CarrelloServiceImpl();</span>
+
+  /**
+   * Set di Validator ai fini di testing.
+   *
+   * @param validator il validator da dargli per il funzionamento.
+   */
+  public void setValidator(Validator validator) {
+<span class="fc" id="L61">    this.validator = validator;</span>
+<span class="fc" id="L62">  }</span>
+
+  /**
+   * Set di UtenteService ai fini di testing.
+   *
+   * @param utenteService il service dell`utente.
+   */
+  public void setUtenteService(UtenteService utenteService) {
+<span class="fc" id="L70">    this.utenteService = utenteService;</span>
+<span class="fc" id="L71">  }</span>
+
+  /**
+   * Set di OrdineService ai fini di testing.
+   *
+   * @param ordineService il service dell`ordine.
+   */
+  public void setOrdineService(OrdineService ordineService) {
+<span class="fc" id="L79">    this.ordineService = ordineService;</span>
+<span class="fc" id="L80">  }</span>
+
+  /**
+   * Set di ProdottoService ai fini di testing.
+   *
+   * @param prodottoService il service dell`prodotto.
+   */
+  public void setProdottoService(ProdottoService prodottoService) {
+<span class="fc" id="L88">    this.prodottoService = prodottoService;</span>
+<span class="fc" id="L89">  }</span>
+
+  /**
+   * Set di CarrelloService ai fini di testing.
+   *
+   * @param carrelloService il service del carrello.
+   */
+  public void setCarrelloService(CarrelloService carrelloService) {
+<span class="fc" id="L97">    this.carrelloService = carrelloService;</span>
+<span class="fc" id="L98">  }</span>
+
+  @Override
+  public void init() throws ServletException {
+<span class="nc" id="L102">    super.init();</span>
+<span class="nc" id="L103">  }</span>
+
+  @Override
+  public void doGet(HttpServletRequest req,
+    HttpServletResponse resp)
+          throws ServletException, IOException {
+
+<span class="fc" id="L110">    String path = req.getPathInfo();</span>
+<span class="fc" id="L111">    validator = new ValidatorImpl();</span>
+<span class="fc" id="L112">    path = validator.validatePath(path);</span>
+<span class="fc" id="L113">    HttpSession session = req.getSession();</span>
+<span class="fc" id="L114">    Utente utente = (Utente) session.getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">    if (utente == null) {</span>
+<span class="fc" id="L116">      req.getRequestDispatcher(&quot;/WEB-INF/views/user/login.jsp&quot;)</span>
+<span class="fc" id="L117">              .forward(req, resp);</span>
+<span class="fc" id="L118">      return;</span>
+    }
+
+    // Entra solo se un utente è già loggato
+<span class="pc bpc" id="L122" title="2 of 6 branches missed.">    switch (path) {</span>
+      case &quot;/login&quot;: // porta alla pagina del profilo
+      case &quot;/profile&quot;:
+<span class="fc" id="L125">        req.getRequestDispatcher(&quot;/WEB-INF/views/user/profilo.jsp&quot;)</span>
+<span class="fc" id="L126">                .forward(req, resp);</span>
+<span class="fc" id="L127">        break;</span>
+      case &quot;/update&quot;:
+<span class="fc" id="L129">        req.getRequestDispatcher(&quot;/WEB-INF/views/user/modifica_profilo.jsp&quot;)</span>
+<span class="fc" id="L130">                .forward(req, resp);</span>
+<span class="fc" id="L131">        break;</span>
+      case &quot;/ordersPage&quot;:
+<span class="nc" id="L133">        ArrayList&lt;Ordine&gt; ordini = ordineService.retrieveOrders(utente);</span>
+<span class="nc" id="L134">        req.setAttribute(&quot;ordini&quot;, ordini);</span>
+<span class="nc" id="L135">        req.getRequestDispatcher(&quot;/WEB-INF/views/user/ordini.jsp&quot;)</span>
+<span class="nc" id="L136">                .forward(req, resp);</span>
+<span class="nc" id="L137">        break;</span>
+      case &quot;/orderView&quot;:
+<span class="fc" id="L139">        int codiceOrdine = Integer.parseInt(req.getParameter(&quot;codice&quot;));</span>
+<span class="fc" id="L140">        Ordine ordine = ordineService.retrieveOrder(codiceOrdine);</span>
+<span class="fc" id="L141">        req.setAttribute(&quot;ordine&quot;, ordine);</span>
+<span class="fc" id="L142">        req.getRequestDispatcher(&quot;/WEB-INF/views/user/ordine.jsp&quot;)</span>
+<span class="fc" id="L143">                .forward(req, resp);</span>
+<span class="fc" id="L144">        break;</span>
+      case &quot;/logout&quot;:
+<span class="fc" id="L146">        Carrello carrello = (Carrello) session.getAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L147">        carrelloService.updateCarrello(carrello);</span>
+<span class="fc" id="L148">        session.removeAttribute(&quot;utente&quot;);</span>
+<span class="fc" id="L149">        session.removeAttribute(&quot;carrello&quot;);</span>
+<span class="fc" id="L150">        session.invalidate();</span>
+<span class="fc" id="L151">        resp.sendRedirect(&quot;http://localhost:8080/G8_Gaming_war_exploded/&quot;);</span>
+<span class="fc" id="L152">        break;</span>
+      default:
+<span class="nc" id="L154">        resp.sendError(404);</span>
+        break;
+    }
+<span class="fc" id="L157">  }</span>
+
+  /**
+   * @param req la request del client.
+   * @param resp la response del client.
+   * @throws ServletException eccezione generica in caso di fault.
+   * @throws IOException eccezione
+   */
+
+  @Override
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+          throws ServletException, IOException {
+
+<span class="fc" id="L170">    String path = req.getPathInfo();</span>
+<span class="fc" id="L171">    path = validator.validatePath(path);</span>
+
+    String username;
+    String email;
+    String password;
+    String nome;
+    String cognome;
+    String sesso;
+    String indirizzo;
+    String paese;
+    LocalDate dataDiNascita;
+    int codiceOrdine;
+    int codiceProdotto;
+    int cap;
+
+<span class="pc bpc" id="L186" title="1 of 4 branches missed.">    switch (path) {</span>
+      case &quot;/update&quot;:
+<span class="fc" id="L188">        username = req.getParameter(&quot;username&quot;);</span>
+<span class="fc" id="L189">        email = req.getParameter(&quot;email&quot;);</span>
+<span class="fc" id="L190">        password = req.getParameter(&quot;password&quot;);</span>
+<span class="fc" id="L191">        nome = req.getParameter(&quot;nome&quot;);</span>
+<span class="fc" id="L192">        cognome = req.getParameter(&quot;cognome&quot;);</span>
+<span class="fc" id="L193">        sesso = req.getParameter(&quot;sesso&quot;);</span>
+<span class="fc" id="L194">        dataDiNascita = LocalDate.parse(req.getParameter(&quot;data&quot;));</span>
+<span class="fc" id="L195">        indirizzo = req.getParameter(&quot;indirizzo&quot;);</span>
+<span class="fc" id="L196">        cap = Integer.parseInt(req.getParameter(&quot;cap&quot;));</span>
+<span class="fc" id="L197">        paese = req.getParameter(&quot;paese&quot;);</span>
+<span class="fc" id="L198">        Utente updateUtente = utenteService.createUtente(</span>
+          username, email, password, nome, cognome, sesso,
+          dataDiNascita, indirizzo, cap, paese);
+        try {
+<span class="fc" id="L202">          validator.validateUtente(updateUtente);</span>
+<span class="nc" id="L203">        } catch (InvalidIndirizzoException e) {</span>
+<span class="nc" id="L204">          throw new ServletException(&quot;Invalid indirizzo...&quot;);</span>
+<span class="nc" id="L205">        } catch (InvalidUserException ex) {</span>
+<span class="nc" id="L206">          throw new ServletException(&quot;Invalid user...&quot;);</span>
+<span class="fc" id="L207">        } catch (Exception exe) {</span>
+<span class="fc" id="L208">          req.getRequestDispatcher(&quot;/WEB-INF/views/user/modifica_profilo.jsp&quot;)</span>
+<span class="fc" id="L209">            .forward(req, resp);</span>
+<span class="fc" id="L210">          break;</span>
+<span class="fc" id="L211">        }</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">        if (utenteService.updateUtente(updateUtente)) {</span>
+<span class="nc" id="L213">          HttpSession session = req.getSession();</span>
+<span class="nc" id="L214">          session.setAttribute(&quot;utente&quot;, updateUtente);</span>
+<span class="nc" id="L215">          req.getRequestDispatcher(&quot;/WEB-INF/views/user/profilo.jsp&quot;)</span>
+<span class="nc" id="L216">            .forward(req, resp);</span>
+<span class="nc" id="L217">        } else {</span>
+<span class="fc" id="L218">          throw new ServletException(&quot;Errore di aggiornamento...&quot;);</span>
+        }
+        break;
+      case &quot;/login&quot;:
+<span class="fc" id="L222">        Utente tmpUtente = new Utente();</span>
+<span class="fc" id="L223">        tmpUtente.setUsername(req.getParameter(&quot;username&quot;));</span>
+<span class="fc" id="L224">        tmpUtente.setPassword(req.getParameter(&quot;password&quot;));</span>
+<span class="fc" id="L225">        Utente utente = utenteService.login(tmpUtente.getUsername(),</span>
+<span class="fc" id="L226">          tmpUtente.getPassword());</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (utente == null) {</span>
+<span class="fc" id="L228">          req.setAttribute(&quot;errate&quot;, 1);</span>
+<span class="fc" id="L229">          req.setAttribute(&quot;us&quot;, req.getParameter(&quot;username&quot;));</span>
+<span class="fc" id="L230">          req.setAttribute(&quot;pw&quot;, req.getParameter(&quot;password&quot;));</span>
+<span class="fc" id="L231">          req.getRequestDispatcher(&quot;/WEB-INF/views/user/login.jsp&quot;)</span>
+<span class="fc" id="L232">            .forward(req, resp);</span>
+        } else {
+<span class="fc" id="L234">          Carrello carrello = carrelloService.recuperaCarrello(utente);</span>
+<span class="fc" id="L235">          HttpSession session2 = req.getSession();</span>
+<span class="fc" id="L236">          session2.setAttribute(&quot;utente&quot;, utente);</span>
+<span class="fc" id="L237">          session2.setAttribute(&quot;carrello&quot;, carrello);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">          if (utente.isAdmin()) {</span>
+<span class="fc" id="L239">            resp.sendRedirect(&quot;/G8_Gaming_war_exploded/admin/&quot;);</span>
+          } else {
+<span class="nc" id="L241">            resp.sendRedirect(&quot;/G8_Gaming_war_exploded/&quot;);</span>
+          }
+        }
+<span class="fc" id="L244">        break;</span>
+      case &quot;/updateValutazione&quot;:
+<span class="fc" id="L246">        codiceProdotto = Integer.parseInt(req.getParameter(&quot;codiceProdotto&quot;));</span>
+<span class="fc" id="L247">        int valutazione = Integer.parseInt(req.getParameter(&quot;valutazione&quot;));</span>
+<span class="fc" id="L248">        codiceOrdine = Integer.parseInt(req.getParameter(&quot;codiceOrdine&quot;));</span>
+<span class="fc" id="L249">        req.setAttribute(&quot;codiceOrdine&quot;, codiceOrdine);</span>
+<span class="fc" id="L250">        prodottoService.updateValutazione(</span>
+<span class="fc" id="L251">          prodottoService.prodottoCodice(codiceProdotto), valutazione);</span>
+<span class="fc" id="L252">        ordineService.setProdottoValutato(codiceOrdine, codiceProdotto);</span>
+<span class="fc" id="L253">        resp.sendRedirect(&quot;/G8_Gaming_war_exploded/&quot;</span>
+         + &quot;Prodotto/Visualizza?prodotto=&quot; + codiceProdotto);
+<span class="fc" id="L255">        break;</span>
+      default:
+<span class="nc" id="L257">        resp.sendError(404);</span>
+        break;
+    }
+<span class="fc" id="L260">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
